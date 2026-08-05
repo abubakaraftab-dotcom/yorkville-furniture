@@ -1,0 +1,24 @@
+{
+  "posts": [
+    {
+      "slug": "choosing-right-sofa-bed",
+      "title": "Choosing the Right Sofa Bed for Your Guest Room",
+      "date": "2026-07-28",
+      "excerpt": "A complete guide to selecting the perfect space-saving sofa bed that keeps your guests comfortable.",
+      "coverImage": "/images/blog/choosing-sofa.jpg",
+      "author": "Maple Furniture Team",
+      "tags": ["buying-guide", "sofas"],
+      "content": "Selecting the right sofa bed requires balancing seating comfort, sleep quality, and space constraints. In this guide, we dive deep into cushion stiffness, mechanisms (click-clocks, pull-outs), and sizes.\n\n### Form Factor Matters\n\nMeasure the room while the sofa is fully extended to ensure smooth guest movements. Solid wood frame construction ensures longevity and prevents wobbling."
+    },
+    {
+      "slug": "caring-for-solid-wood-furniture",
+      "title": "Caring for Solid Wood Furniture: Care & Maintenance",
+      "date": "2026-08-01",
+      "excerpt": "How to dust, oil, and clean your solid oak or walnut furniture so it lasts for decades.",
+      "coverImage": "/images/blog/wood-care.jpg",
+      "author": "Master Craftsman",
+      "tags": ["maintenance", "solid-wood"],
+      "content": "Dry humidity and direct sunlight are the enemies of high-quality wood. Since our furniture uses genuine Oak and Walnut hardwoods, it is susceptible to expansion under varying humdities.\n\n### Best Cleaning Practices\n\n- Dust weekly with a soft dry microfiber cloth.\n- Use a damp cloth for spills, and dry immediately.\n- Apply natural beeswax polish twice a year to maintain the rich grain texture."
+    }
+  ]
+}

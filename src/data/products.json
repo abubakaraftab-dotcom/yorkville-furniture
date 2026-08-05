@@ -1,0 +1,150 @@
+{
+  "products": [
+    {
+      "id": "prod-001",
+      "slug": "oak-dining-table-6-seater",
+      "title": "Oak Dining Table - 6 Seater",
+      "description": "Handcrafted solid oak dining table that seats 6 comfortably. Features a natural grain finish and sturdy tapered legs. Perfect for family dinners and gatherings.",
+      "shortDescription": "Solid oak dining table for 6, natural finish.",
+      "categorySlug": "dining-tables",
+      "price": 1299.99,
+      "compareAtPrice": 1499.99,
+      "currency": "CAD",
+      "sizes": [
+        { "label": "Standard (180cm x 90cm)", "dimensions": "180cm L x 90cm W x 76cm H", "priceAdjustment": 0 },
+        { "label": "Large (220cm x 100cm)", "dimensions": "220cm L x 100cm W x 76cm H", "priceAdjustment": 200 }
+      ],
+      "colours": [
+        { "name": "Natural Oak", "hex": "#D4A574" },
+        { "name": "Dark Walnut", "hex": "#5C4033" },
+        { "name": "White Wash", "hex": "#F5F0E8" }
+      ],
+      "images": ["/images/products/oak-dining-table-6-seater/main.jpg"],
+      "provinceAvailability": ["ON", "QC", "BC", "AB"],
+      "tags": ["bestseller", "solid-wood"],
+      "material": "Solid Oak Wood",
+      "weight": "45 kg",
+      "assemblyRequired": true,
+      "deliveryEstimate": "5-10 business days",
+      "featured": true,
+      "inStock": true,
+      "createdAt": "2025-01-15"
+    },
+    {
+      "id": "prod-002",
+      "slug": "modern-grey-sectional-sofa",
+      "title": "Modern Grey Sectional Sofa",
+      "description": "A spacious L-shaped sectional sofa upholstered in premium grey fabric. Features deep cushions, removable covers, and a chaise lounge section. Seats up to 5 people.",
+      "shortDescription": "L-shaped grey sectional sofa, seats 5.",
+      "categorySlug": "sofas",
+      "price": 1899.99,
+      "compareAtPrice": 2299.99,
+      "currency": "CAD",
+      "sizes": [
+        { "label": "Standard (280cm x 180cm)", "dimensions": "280cm L x 180cm W x 85cm H", "priceAdjustment": 0 },
+        { "label": "Compact (240cm x 160cm)", "dimensions": "240cm L x 160cm W x 85cm H", "priceAdjustment": -200 }
+      ],
+      "colours": [
+        { "name": "Charcoal Grey", "hex": "#4A4A4A" },
+        { "name": "Light Grey", "hex": "#B0B0B0" },
+        { "name": "Navy Blue", "hex": "#1B2A4A" }
+      ],
+      "images": ["/images/products/modern-grey-sectional-sofa/main.jpg"],
+      "provinceAvailability": ["ON", "BC", "AB"],
+      "tags": ["bestseller", "new-arrival"],
+      "material": "Premium Fabric, Solid Wood Frame",
+      "weight": "78 kg",
+      "assemblyRequired": false,
+      "deliveryEstimate": "7-14 business days",
+      "featured": true,
+      "inStock": true,
+      "createdAt": "2025-02-10"
+    },
+    {
+      "id": "prod-003",
+      "slug": "walnut-queen-bed-frame",
+      "title": "Walnut Queen Bed Frame",
+      "description": "Elegant queen-size bed frame crafted from solid walnut wood. Features a high headboard with subtle panel detailing and solid slat support. No box spring needed.",
+      "shortDescription": "Solid walnut queen bed frame with headboard.",
+      "categorySlug": "beds",
+      "price": 999.99,
+      "currency": "CAD",
+      "sizes": [
+        { "label": "Queen", "dimensions": "213cm L x 162cm W x 120cm H", "priceAdjustment": 0 },
+        { "label": "King", "dimensions": "213cm L x 193cm W x 120cm H", "priceAdjustment": 300 }
+      ],
+      "colours": [
+        { "name": "Dark Walnut", "hex": "#5C4033" },
+        { "name": "Natural Walnut", "hex": "#8B7355" }
+      ],
+      "images": ["/images/products/walnut-queen-bed-frame/main.jpg"],
+      "provinceAvailability": ["ON", "QC"],
+      "tags": ["solid-wood"],
+      "material": "Solid Walnut Wood",
+      "weight": "55 kg",
+      "assemblyRequired": true,
+      "deliveryEstimate": "7-14 business days",
+      "featured": true,
+      "inStock": true,
+      "createdAt": "2025-03-01"
+    },
+    {
+      "id": "prod-004",
+      "slug": "minimalist-work-desk",
+      "title": "Minimalist Work Desk",
+      "description": "Clean-lined work desk perfect for home offices. Features a spacious desktop surface, cable management hole, and a small drawer. Made from engineered wood with steel legs.",
+      "shortDescription": "Modern minimalist desk with drawer and cable management.",
+      "categorySlug": "desks",
+      "price": 449.99,
+      "compareAtPrice": 549.99,
+      "currency": "CAD",
+      "sizes": [
+        { "label": "Standard (120cm x 60cm)", "dimensions": "120cm L x 60cm W x 75cm H", "priceAdjustment": 0 },
+        { "label": "Wide (150cm x 70cm)", "dimensions": "150cm L x 70cm W x 75cm H", "priceAdjustment": 100 }
+      ],
+      "colours": [
+        { "name": "White", "hex": "#FFFFFF" },
+        { "name": "Natural Wood", "hex": "#C9A96E" },
+        { "name": "Matte Black", "hex": "#2C2C2C" }
+      ],
+      "images": ["/images/products/minimalist-work-desk/main.jpg"],
+      "provinceAvailability": ["ON", "QC", "BC", "AB"],
+      "tags": ["new-arrival"],
+      "material": "Engineered Wood, Powder-Coated Steel",
+      "weight": "25 kg",
+      "assemblyRequired": true,
+      "deliveryEstimate": "3-7 business days",
+      "featured": true,
+      "inStock": true,
+      "createdAt": "2025-04-20"
+    },
+    {
+      "id": "prod-005",
+      "slug": "round-marble-coffee-table",
+      "title": "Round Marble Coffee Table",
+      "description": "Stunning round coffee table with a genuine marble top and brushed gold metal base. A statement piece that elevates any living room. Each marble top has unique natural veining.",
+      "shortDescription": "Round marble top coffee table with gold base.",
+      "categorySlug": "coffee-tables",
+      "price": 699.99,
+      "currency": "CAD",
+      "sizes": [
+        { "label": "Small (80cm diameter)", "dimensions": "80cm D x 45cm H", "priceAdjustment": 0 },
+        { "label": "Medium (100cm diameter)", "dimensions": "100cm D x 45cm H", "priceAdjustment": 150 }
+      ],
+      "colours": [
+        { "name": "White Marble / Gold", "hex": "#F0EAE0" },
+        { "name": "Black Marble / Black", "hex": "#1C1C1C" }
+      ],
+      "images": ["/images/products/round-marble-coffee-table/main.jpg"],
+      "provinceAvailability": ["ON", "BC"],
+      "tags": ["bestseller"],
+      "material": "Genuine Marble, Brushed Metal",
+      "weight": "32 kg",
+      "assemblyRequired": false,
+      "deliveryEstimate": "5-10 business days",
+      "featured": true,
+      "inStock": true,
+      "createdAt": "2025-05-05"
+    }
+  ]
+}

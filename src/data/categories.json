@@ -1,0 +1,24 @@
+{
+  "categories": [
+    { "slug": "dining-tables", "name": "Dining Tables", "description": "Beautiful dining tables for every home, from modern to rustic.", "image": "/images/categories/dining-tables.jpg", "parentSlug": null, "order": 1, "featured": true },
+    { "slug": "dining-chairs", "name": "Dining Chairs", "description": "Comfortable and stylish dining chairs to complement your table.", "image": "/images/categories/dining-chairs.jpg", "parentSlug": null, "order": 2, "featured": false },
+    { "slug": "sofas", "name": "Sofas & Couches", "description": "Comfortable sofas and sectionals for your living room.", "image": "/images/categories/sofas.jpg", "parentSlug": null, "order": 3, "featured": true },
+    { "slug": "coffee-tables", "name": "Coffee Tables", "description": "Elegant coffee tables to complete your living space.", "image": "/images/categories/coffee-tables.jpg", "parentSlug": null, "order": 4, "featured": true },
+    { "slug": "tv-stands", "name": "TV Stands & Media Units", "description": "Modern TV stands and entertainment centers.", "image": "/images/categories/tv-stands.jpg", "parentSlug": null, "order": 5, "featured": false },
+    { "slug": "beds", "name": "Beds & Bed Frames", "description": "Quality bed frames for a perfect night's sleep.", "image": "/images/categories/beds.jpg", "parentSlug": null, "order": 6, "featured": true },
+    { "slug": "nightstands", "name": "Nightstands", "description": "Bedside tables with style and storage.", "image": "/images/categories/nightstands.jpg", "parentSlug": null, "order": 7, "featured": false },
+    { "slug": "dressers", "name": "Dressers & Wardrobes", "description": "Spacious dressers and wardrobes for your bedroom.", "image": "/images/categories/dressers.jpg", "parentSlug": null, "order": 8, "featured": false },
+    { "slug": "desks", "name": "Desks & Office Furniture", "description": "Work from home in style with our office furniture.", "image": "/images/categories/desks.jpg", "parentSlug": null, "order": 9, "featured": true },
+    { "slug": "bookshelves", "name": "Bookshelves & Storage", "description": "Organize your space with beautiful shelving units.", "image": "/images/categories/bookshelves.jpg", "parentSlug": null, "order": 10, "featured": false },
+    { "slug": "outdoor", "name": "Outdoor Furniture", "description": "Durable and stylish furniture for your patio and garden.", "image": "/images/categories/outdoor.jpg", "parentSlug": null, "order": 11, "featured": true },
+    { "slug": "kitchen-islands", "name": "Kitchen Islands & Carts", "description": "Add workspace and storage to your kitchen.", "image": "/images/categories/kitchen-islands.jpg", "parentSlug": null, "order": 12, "featured": false },
+    { "slug": "accent-chairs", "name": "Accent Chairs", "description": "Statement pieces to add character to any room.", "image": "/images/categories/accent-chairs.jpg", "parentSlug": null, "order": 13, "featured": true },
+    { "slug": "side-tables", "name": "Side Tables & End Tables", "description": "Perfect companions for your sofa or bed.", "image": "/images/categories/side-tables.jpg", "parentSlug": null, "order": 14, "featured": false },
+    { "slug": "shoe-racks", "name": "Shoe Racks & Entryway", "description": "Keep your entryway organized and welcoming.", "image": "/images/categories/shoe-racks.jpg", "parentSlug": null, "order": 15, "featured": false },
+    { "slug": "bathroom-vanities", "name": "Bathroom Vanities", "description": "Elegant vanities to upgrade your bathroom.", "image": "/images/categories/bathroom-vanities.jpg", "parentSlug": null, "order": 16, "featured": false },
+    { "slug": "kids-furniture", "name": "Kids Furniture", "description": "Safe and fun furniture for children's rooms.", "image": "/images/categories/kids-furniture.jpg", "parentSlug": null, "order": 17, "featured": false },
+    { "slug": "lighting", "name": "Lighting", "description": "Floor lamps, table lamps, and pendant lights.", "image": "/images/categories/lighting.jpg", "parentSlug": null, "order": 18, "featured": false },
+    { "slug": "home-decor", "name": "Home Decor", "description": "Mirrors, wall shelves, and decorative pieces.", "image": "/images/categories/home-decor.jpg", "parentSlug": null, "order": 19, "featured": true },
+    { "slug": "custom-build", "name": "Custom Build", "description": "Design your own furniture. Tell us what you need and we'll build it.", "image": "/images/categories/custom-build.jpg", "parentSlug": null, "order": 20, "featured": true, "isCustom": true }
+  ]
+}

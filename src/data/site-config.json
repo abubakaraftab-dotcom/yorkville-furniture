@@ -1,0 +1,25 @@
+{
+  "storeName": "Yorkville Furniture Canada",
+  "tagline": "Handcrafted Premium Canadian Furniture",
+  "phone": "+14161234567",
+  "whatsappNumber": "14161234567",
+  "email": "orders@yorkvillefurniture.ca",
+  "address": {
+    "street": "123 Yorkville Avenue",
+    "city": "Toronto",
+    "province": "Ontario",
+    "postalCode": "M5R 1C2"
+  },
+  "socialMedia": {
+    "instagram": "https://instagram.com/yorkvillefurniture",
+    "facebook": "https://facebook.com/yorkvillefurniture"
+  },
+  "seo": {
+    "defaultTitle": "Yorkville Furniture Canada | Premium Custom Furniture",
+    "defaultDescription": "Shop premium handcrafted Canadian furniture. Free delivery across Ontario, Quebec, British Columbia, and Alberta. Cash on delivery.",
+    "siteUrl": "https://yorkvillefurniture.ca",
+    "ogImage": "/images/brand/og-image.jpg"
+  },
+  "freeDeliveryThreshold": 500,
+  "currency": "CAD"
+}
