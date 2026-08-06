@@ -3,7 +3,7 @@ export interface Category {
   name: string;
   description: string;
   image: string;
-  parentSlug: string | null;
+  subcategories?: { slug: string; name: string }[];
   order: number;
   featured: boolean;
   isCustom?: boolean;

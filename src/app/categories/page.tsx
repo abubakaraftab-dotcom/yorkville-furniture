@@ -46,7 +46,11 @@ export default function CategoriesPage() {
               <h2 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors">
                 {category.name}
               </h2>
-              <p className="text-sm text-muted mt-1">{category.description}</p>
+              {category.subcategories && category.subcategories.length > 0 && (
+                <p className="text-sm text-muted mt-1 truncate">
+                  {category.subcategories.map(s => s.name).join(", ")}
+                </p>
+              )}
             </div>
           </Link>
         ))}
