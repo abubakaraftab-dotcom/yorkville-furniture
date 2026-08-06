@@ -1,9 +1,23 @@
 import Button from "@/components/ui/Button";
+import Image from "next/image";
 
 export default function HeroBanner() {
   return (
-    <section className="relative bg-primary overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
+    <section className="relative bg-primary overflow-hidden group">
+      {/* Background image with hover zoom effect */}
+      <div className="absolute inset-0 w-full h-full">
+        <Image
+          src="/images/Hero/hero-furniture.jpg"
+          alt="Handcrafted Furniture"
+          fill
+          priority
+          className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
+        />
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-primary/80" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 relative z-10">
         <div className="max-w-2xl relative z-10">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
             Handcrafted Furniture for{" "}
@@ -42,13 +56,6 @@ export default function HeroBanner() {
             </span>
           </div>
         </div>
-      </div>
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30z' fill='%23fff' fill-opacity='0.15'/%3E%3C/svg%3E")`,
-          backgroundSize: '60px 60px'
-        }} />
       </div>
     </section>
   );

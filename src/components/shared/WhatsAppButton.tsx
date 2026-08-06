@@ -4,8 +4,8 @@ import React from "react";
 import siteConfig from "@/data/site-config.json";
 
 export default function WhatsAppButton() {
-  const message = encodeURIComponent("Hi! I have a question about your furniture options and delivery.");
-  const url = `https://wa.me/${siteConfig.whatsappNumber}?text=${message}`;
+  const message = encodeURIComponent("Hi, I have a question about my order / delivery.");
+  const url = `https://wa.me/14387006095?text=${message}`;
 
   return (
     <a
@@ -26,7 +26,7 @@ export default function WhatsAppButton() {
 
       {/* Hover tooltip label */}
       <span className="absolute right-16 scale-0 bg-primary font-sans text-xs font-semibold text-white px-3 py-1.5 rounded-lg group-hover:scale-100 transition-all duration-200 shadow-md whitespace-nowrap">
-        Chat with us
+        Need help? Chat with us live.
       </span>
     </a>
   );

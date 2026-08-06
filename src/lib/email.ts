@@ -22,6 +22,7 @@ export async function sendOwnerNotification(order: Order): Promise<void> {
           `${i.title} (${i.selectedSize}, ${i.selectedColour}) x${i.quantity} - $${(i.price * i.quantity).toFixed(2)}`
         ).join('\n'),
         subtotal: `$${order.subtotal.toFixed(2)}`,
+        delivery_charge: order.deliveryCharge !== null ? `$${order.deliveryCharge.toFixed(2)}` : 'Quote Requested',
         tax: `$${order.taxAmount.toFixed(2)}`,
         total: `$${order.total.toFixed(2)}`,
         notes: order.customer.notes || 'None',
@@ -43,6 +44,7 @@ export async function sendOwnerNotification(order: Order): Promise<void> {
         `${i.title} (${i.selectedSize}, ${i.selectedColour}) x${i.quantity} - $${(i.price * i.quantity).toFixed(2)}`
       ).join('\n'),
       subtotal: `$${order.subtotal.toFixed(2)}`,
+      delivery_charge: order.deliveryCharge !== null ? `$${order.deliveryCharge.toFixed(2)}` : 'Quote Requested',
       tax: `$${order.taxAmount.toFixed(2)}`,
       total: `$${order.total.toFixed(2)}`,
       notes: order.customer.notes || 'None',
