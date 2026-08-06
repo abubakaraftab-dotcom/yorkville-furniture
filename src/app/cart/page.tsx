@@ -127,8 +127,8 @@ export default function CartPage() {
 
             <div className="flex justify-between">
               <span className="text-muted">Delivery</span>
-              <span className="font-medium text-success">
-                {subtotal >= 500 ? "FREE" : "Calculated at checkout"}
+              <span className="font-medium text-foreground">
+                Calculated at checkout
               </span>
             </div>
 

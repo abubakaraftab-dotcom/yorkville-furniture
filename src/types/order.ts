@@ -17,6 +17,7 @@ export interface Order {
   customer: OrderFormData;
   items: CartItem[];
   subtotal: number;
+  deliveryCharge: number | null;
   taxRate: number;
   taxAmount: number;
   total: number;

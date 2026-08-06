@@ -138,6 +138,11 @@ export default function OrderConfirmationPage() {
           </div>
 
           <div className="flex justify-between text-xs text-muted">
+            <span>Delivery</span>
+            <span>{order.deliveryCharge !== null ? formatPrice(order.deliveryCharge) : 'Quote Requested'}</span>
+          </div>
+
+          <div className="flex justify-between text-xs text-muted">
             <span>Tax (ON / QC / BC / AB rates)</span>
             <span>{formatPrice(order.taxAmount)}</span>
           </div>

@@ -18,6 +18,7 @@ export function buildWhatsAppOrderUrl(order: Order): string {
     `*Items Ordered:*\n` +
     `${itemsList}\n\n` +
     `*Subtotal:* $${order.subtotal.toFixed(2)} CAD\n` +
+    `*Delivery:* ${order.deliveryCharge !== null ? '$' + order.deliveryCharge.toFixed(2) + ' CAD' : 'Quote Requested'}\n` +
     `*Tax:* $${order.taxAmount.toFixed(2)} CAD\n` +
     `*Total:* $${order.total.toFixed(2)} CAD\n\n` +
     `*Payment Method:* Cash on Delivery (COD)\n` +

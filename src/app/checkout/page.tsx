@@ -10,6 +10,7 @@ import { buildWhatsAppOrderUrl } from "@/lib/whatsapp";
 import type { OrderFormData, Order } from "@/types/order";
 import Button from "@/components/ui/Button";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import deliveryCitiesData from "@/data/delivery-cities.json";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -30,6 +31,25 @@ export default function CheckoutPage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+
+  // Helper to safely get delivery charge (returns null if city not found)
+  const getDeliveryCharge = (city: string): number | null => {
+    const deliveryCities = deliveryCitiesData as Record<string, number>;
+    // Try exact match first
+    if (deliveryCities.hasOwnProperty(city)) {
+      return deliveryCities[city];
+    }
+    // Try case-insensitive match
+    const normalizedCity = city.trim().toLowerCase();
+    for (const [key, val] of Object.entries(deliveryCities)) {
+      if (key.toLowerCase() === normalizedCity) {
+        return val;
+      }
+    }
+    return null;
+  };
+
+  const deliveryCharge = getDeliveryCharge(formData.city);
 
   // Sync province dropdown with global selected province on mount
   useEffect(() => {
@@ -93,13 +113,15 @@ export default function CheckoutPage() {
       const orderId = `ORD-${Date.now()}`;
       const taxRate = selectedProvince?.taxRate ?? 0;
       const taxAmount = subtotal * taxRate;
-      const total = subtotal + taxAmount;
+      const delivery = deliveryCharge ?? 0;
+      const total = subtotal + taxAmount + delivery;
 
       const order: Order = {
         orderId,
         customer: formData,
         items: cart,
         subtotal,
+        deliveryCharge,
         taxRate,
         taxAmount,
         total,
@@ -270,10 +292,16 @@ export default function CheckoutPage() {
                   required
                   type="text"
                   name="city"
+                  list="delivery-cities-list"
                   value={formData.city}
                   onChange={handleInputChange}
                   className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
                 />
+                <datalist id="delivery-cities-list">
+                  {Object.keys(deliveryCitiesData).map((city) => (
+                    <option key={city} value={city} />
+                  ))}
+                </datalist>
               </div>
               <div>
                 <label className="block text-sm font-semibold mb-1 text-foreground">
@@ -372,16 +400,22 @@ export default function CheckoutPage() {
 
               <div className="flex justify-between">
                 <span className="text-muted">Delivery</span>
-                <span className="font-medium text-success">
-                  {subtotal >= 500 ? "FREE" : "FREE COD Delivery"}
-                </span>
+                {formData.city === "" ? (
+                  <span className="font-medium text-foreground">Enter city to calculate</span>
+                ) : deliveryCharge !== null ? (
+                  <span className="font-medium text-foreground">{deliveryCharge === 0 ? "FREE" : formatPrice(deliveryCharge)}</span>
+                ) : (
+                  <span className="font-medium text-error">Contact us for quote</span>
+                )}
               </div>
 
               <hr className="border-border" />
 
               <div className="flex justify-between text-base font-bold text-foreground">
                 <span>Total</span>
-                <span>{formatPrice(total)}</span>
+                <span>
+                  {formatPrice(subtotal + (subtotal * (selectedProvince?.taxRate ?? 0)) + (deliveryCharge ?? 0))}
+                </span>
               </div>
             </div>
 
