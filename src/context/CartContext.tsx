@@ -50,7 +50,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         item.selectedColour === colourName
     );
 
-    let newCart = [...cart];
+    const newCart = [...cart];
     if (existingIdx > -1) {
       newCart[existingIdx].quantity += qty;
     } else {
