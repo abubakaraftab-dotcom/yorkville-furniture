@@ -13,11 +13,7 @@ export default function CartPage() {
   const { cart, updateQuantity, removeFromCart, subtotal, isLoading } = useCart();
   const { selectedProvince } = useProvince();
 
-  // Calculate tax estimation based on selected province
-  const taxRate = selectedProvince?.taxRate ?? 0;
-  const taxLabel = selectedProvince?.taxLabel ?? "Tax";
-  const taxAmount = subtotal * taxRate;
-  const total = subtotal + taxAmount;
+  const total = subtotal;
 
   if (isLoading) {
     return (
@@ -116,13 +112,6 @@ export default function CartPage() {
             <div className="flex justify-between">
               <span className="text-muted">Subtotal</span>
               <span className="font-medium text-foreground">{formatPrice(subtotal)}</span>
-            </div>
-
-            <div className="flex justify-between">
-              <span className="text-muted">
-                Estimated {taxLabel} {selectedProvince && `(${selectedProvince.name})`}
-              </span>
-              <span className="font-medium text-foreground">{formatPrice(taxAmount)}</span>
             </div>
 
             <div className="flex justify-between">

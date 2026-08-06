@@ -26,10 +26,12 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   const [customMsg, setCustomMsg] = useState("");
   const [addedMessageVisible, setAddedMessageVisible] = useState(false);
 
-  const currentPrice = product.price + selectedSize.priceAdjustment;
+  const provinceCode = selectedProvince?.code || "ON";
+  const basePrice = product.priceByProvince[provinceCode as keyof typeof product.priceByProvince] || 0;
+  const currentPrice = basePrice + selectedSize.priceAdjustment;
 
   const isAvailableLocally = selectedProvince
-    ? product.provinceAvailability.includes(selectedProvince.code)
+    ? product.priceByProvince[selectedProvince.code as keyof typeof product.priceByProvince] !== undefined
     : true;
 
   // Build temporary WhatsApp message links
@@ -227,7 +229,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         </div>
 
         {/* Location Availability */}
-        <ProvinceAvailability availability={product.provinceAvailability} />
+        <ProvinceAvailability priceByProvince={product.priceByProvince} />
       </div>
     </div>
   );

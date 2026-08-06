@@ -16,6 +16,25 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
+const LogoIcon = ({ className = "w-8 h-8" }: { className?: string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 100 100"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="6"
+    className={`${className} text-primary`}
+  >
+    <path
+      d="M50 12 C30 15 22 25 22 48 C22 72 50 88 50 88 C50 88 78 72 78 48 C78 25 70 15 50 12 Z"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path d="M38 34 L45 46 M52 34 L45 46 M45 46 V64" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M56 36 H66 M56 46 H64 M56 36 V64" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -24,8 +43,20 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
+<<<<<<< Updated upstream
           <Link href="/" className="flex items-center gap-2">
             <img src="/images/logo.svg" alt="Yorkville Furniture Logo" className="h-8 w-8 object-contain" />
+=======
+          <Link href="/" className="flex items-center gap-3">
+            <LogoIcon className="w-9 h-9" />
+            <div className="flex flex-col">
+              <div className="flex items-baseline gap-0.5 leading-none">
+                <span className="text-lg font-bold font-serif tracking-tight text-primary">Yorkville</span>
+                <span className="text-lg font-medium font-sans text-foreground">Furniture</span>
+              </div>
+              <span className="text-[9px] font-bold text-muted uppercase tracking-widest leading-none mt-0.5">Canada</span>
+            </div>
+>>>>>>> Stashed changes
           </Link>
 
           {/* Desktop Nav */}

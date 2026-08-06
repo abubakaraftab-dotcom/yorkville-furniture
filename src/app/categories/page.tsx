@@ -19,7 +19,7 @@ export default function CategoriesPage() {
         Browse by Category
       </h1>
       <p className="text-muted mb-8">
-        Find outstanding handcrafted furniture pieces for each room in your house.
+        Find outstanding premium furniture pieces for each room in your house.
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

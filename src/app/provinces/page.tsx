@@ -19,7 +19,7 @@ export default function ProvincesPage() {
           Furniture Delivery across Canada
         </h1>
         <p className="text-muted mt-3">
-          We deliver handcrafted furniture directly to your home. Explore availability and tax rates for your province.
+          We deliver premium furniture directly to your home. Explore availability for your province.
         </p>
       </div>
 
@@ -44,10 +44,6 @@ export default function ProvincesPage() {
             </div>
 
             <div className="border-t border-border mt-6 pt-4 text-xs text-muted space-y-1">
-              <div className="flex justify-between">
-                <span>Tax Rate:</span>
-                <span className="font-semibold text-foreground">{province.taxLabel}</span>
-              </div>
               <div className="flex justify-between">
                 <span>Cities Serviced:</span>
                 <span className="font-semibold text-foreground">{province.cities.length}</span>

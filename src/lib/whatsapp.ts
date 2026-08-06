@@ -18,8 +18,11 @@ export function buildWhatsAppOrderUrl(order: Order): string {
     `*Items Ordered:*\n` +
     `${itemsList}\n\n` +
     `*Subtotal:* $${order.subtotal.toFixed(2)} CAD\n` +
+<<<<<<< Updated upstream
     `*Delivery:* ${order.deliveryCharge !== null ? '$' + order.deliveryCharge.toFixed(2) + ' CAD' : 'Quote Requested'}\n` +
     `*Tax:* $${order.taxAmount.toFixed(2)} CAD\n` +
+=======
+>>>>>>> Stashed changes
     `*Total:* $${order.total.toFixed(2)} CAD\n\n` +
     `*Payment Method:* Cash on Delivery (COD)\n` +
     `*Notes:* ${order.customer.notes || 'None'}`;

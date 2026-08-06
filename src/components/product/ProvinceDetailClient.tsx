@@ -35,10 +35,10 @@ export default function ProvinceDetailClient({ province, products }: ProvinceDet
             Locally Delivered
           </span>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-serif mt-2">
-            Handcrafted Furniture in {province.name}
+            Premium Furniture in {province.name}
           </h1>
           <p className="text-white/80 mt-4 leading-relaxed">
-            {province.deliveryNote}. We provide cash-on-delivery across all servicing cities. The tax rate is local to {province.name}.
+            {province.deliveryNote}. We provide cash-on-delivery across all servicing cities.
           </p>
 
           {/* Quick toggle check */}

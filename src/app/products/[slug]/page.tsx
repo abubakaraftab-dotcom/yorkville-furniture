@@ -52,7 +52,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
     "sku": product.id,
     "offers": {
       "@type": "Offer",
-      "price": product.price,
+      "price": product.priceByProvince.ON || product.priceByProvince.QC || product.priceByProvince.BC || product.priceByProvince.AB || 0,
       "priceCurrency": "CAD",
       "availability": product.inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
       "url": `https://yorkvillefurniture.ca/products/${product.slug}`,

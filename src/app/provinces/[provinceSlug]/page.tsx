@@ -21,8 +21,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!province) return {};
 
   return {
-    title: `Handcrafted Furniture in ${province.name}`,
-    description: `Shop high-quality handcrafted furniture in ${province.name}. ${province.deliveryNote}. Cash on delivery.`,
+    title: `Premium Furniture in ${province.name}`,
+    description: `Shop high-quality premium furniture in ${province.name}. ${province.deliveryNote}. Cash on delivery.`,
   };
 }
 

@@ -19,6 +19,25 @@ const footerLinks = {
   ],
 };
 
+const LogoIcon = ({ className = "w-8 h-8" }: { className?: string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 100 100"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="6"
+    className={`${className} text-accent`}
+  >
+    <path
+      d="M50 12 C30 15 22 25 22 48 C22 72 50 88 50 88 C50 88 78 72 78 48 C78 25 70 15 50 12 Z"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path d="M38 34 L45 46 M52 34 L45 46 M45 46 V64" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M56 36 H66 M56 46 H64 M56 36 V64" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
 export default function Footer() {
   return (
     <footer className="bg-primary text-white mt-auto">
@@ -26,8 +45,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
+<<<<<<< Updated upstream
             <Link href="/" className="flex items-center gap-2 mb-4">
               <img src="/images/logo.svg" alt="Yorkville Furniture Logo" className="h-8 w-8 object-contain filter invert brightness-0" />
+=======
+            <Link href="/" className="flex items-center gap-3 mb-4">
+              <LogoIcon className="w-8 h-8" />
+              <span className="text-xl font-bold font-serif">{siteConfig.storeName}</span>
+>>>>>>> Stashed changes
             </Link>
             <p className="text-white/70 text-sm mb-4">{siteConfig.tagline}</p>
             <div className="space-y-2 text-sm text-white/70">

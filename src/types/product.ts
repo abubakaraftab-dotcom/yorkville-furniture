@@ -16,14 +16,22 @@ export interface Product {
   description: string;
   shortDescription: string;
   categorySlug: string;
+<<<<<<< Updated upstream
   subcategorySlug?: string;
   price: number;
+=======
+  priceByProvince: {
+    ON?: number;
+    QC?: number;
+    BC?: number;
+    AB?: number;
+  };
+>>>>>>> Stashed changes
   compareAtPrice?: number;
   currency: string;
   sizes: ProductSize[];
   colours: ProductColour[];
   images: string[];
-  provinceAvailability: string[];
   tags: string[];
   material: string;
   weight: string;

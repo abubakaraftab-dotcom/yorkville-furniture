@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 import type { CartItem, Product } from "@/types/product";
+import { useProvince } from "@/context/ProvinceContext";
 
 interface CartContextType {
   cart: CartItem[];
@@ -16,9 +17,10 @@ interface CartContextType {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-export function CartProvider({ children }: { children: React.ReactNode }) {
+  export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { selectedProvince } = useProvince();
 
   // Load cart from localStorage on mount
   useEffect(() => {
@@ -39,9 +41,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   };
 
   const addToCart = (product: Product, sizeLabel: string, colourName: string, qty: number) => {
+    const provinceCode = selectedProvince?.code || "ON";
+    const basePrice = product.priceByProvince[provinceCode as keyof typeof product.priceByProvince] || 0;
     const size = product.sizes.find((s) => s.label === sizeLabel);
     const priceAdjustment = size?.priceAdjustment ?? 0;
-    const itemPrice = product.price + priceAdjustment;
+    const itemPrice = basePrice + priceAdjustment;
 
     const existingIdx = cart.findIndex(
       (item) =>

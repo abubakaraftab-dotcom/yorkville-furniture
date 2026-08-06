@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: `Furniture Delivery in ${city.name}, ${province.name}`,
-    description: `Shop luxury handcrafted wood furniture delivered straight to your door in ${city.name}, ${province.name}. Payment on delivery.`,
+    description: `Shop premium quality wood furniture delivered straight to your door in ${city.name}, ${province.name}. Payment on delivery.`,
   };
 }
 
@@ -67,7 +67,7 @@ export default async function CityPage({ params }: PageProps) {
           Furniture Delivery in {city.name}, {province.code}
         </h1>
         <p className="text-muted mt-2 text-sm leading-relaxed">
-          Need premium handcrafted dining tables, bed frames, or sectionals? We deliver directly to {city.name} households. Order online and pay cash when your furniture arrives!
+          Need premium quality dining tables, bed frames, or sectionals? We deliver directly to {city.name} households. Order online and pay cash when your furniture arrives!
         </p>
       </div>
 

@@ -11,7 +11,7 @@ export default function FeaturedProducts() {
 
   // Filter products by selected province
   const filteredProducts = selectedProvince
-    ? allFeatured.filter((p) => p.provinceAvailability.includes(selectedProvince.code))
+    ? allFeatured.filter((p) => p.priceByProvince[selectedProvince.code as keyof typeof p.priceByProvince] !== undefined)
     : allFeatured;
 
   return (
@@ -20,7 +20,7 @@ export default function FeaturedProducts() {
         <div className="text-center mb-10">
           <h2 className="text-3xl font-bold text-foreground">Featured Products</h2>
           <p className="text-muted mt-2">
-            Our most popular handcrafted pieces
+            Our most popular premium pieces
             {selectedProvince && ` delivering in ${selectedProvince.name}`}
           </p>
         </div>

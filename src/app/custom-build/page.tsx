@@ -96,10 +96,10 @@ export default function CustomBuildPage() {
 
       <div className="text-center max-w-2xl mx-auto mb-10">
         <h1 className="text-3xl sm:text-4xl font-bold font-serif text-foreground">
-          Custom Built Furniture Request
+          Custom Furniture Request / Inquiry
         </h1>
         <p className="text-muted mt-2">
-          Can't find the exact size, wood type, or specifications you need? Send us your requirements and our craftsmen will make a custom build quote for you.
+          Can't find the exact size or specifications you need? Send us your requirements and we will search our warehouses to fetch a custom quote for you.
         </p>
       </div>
 
@@ -243,7 +243,6 @@ export default function CustomBuildPage() {
               >
                 <option value="oak">Solid Oak Wood</option>
                 <option value="walnut">Solid Walnut Wood</option>
-                <option value="maple">Solid Maple Wood</option>
                 <option value="pine">Rustic Pine Wood</option>
                 <option value="other-wood">Other / I am not sure</option>
               </select>
@@ -265,7 +264,7 @@ export default function CustomBuildPage() {
 
           <div>
             <label className="block text-sm font-semibold mb-1 text-foreground">
-              Describe What You Want Us To Build <span className="text-error">*</span>
+              Describe Your Requirements <span className="text-error">*</span>
             </label>
             <textarea
               required

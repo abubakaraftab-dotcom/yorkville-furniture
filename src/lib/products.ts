@@ -17,7 +17,7 @@ export function getProductsByCategory(categorySlug: string): Product[] {
 
 export function getProductsByProvince(provinceCode: string): Product[] {
   return products.filter((p) =>
-    p.provinceAvailability.includes(provinceCode)
+    p.priceByProvince[provinceCode as keyof typeof p.priceByProvince] !== undefined
   );
 }
 

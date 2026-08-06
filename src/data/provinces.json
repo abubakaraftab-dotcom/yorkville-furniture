@@ -4,8 +4,6 @@
       "code": "ON",
       "slug": "ontario",
       "name": "Ontario",
-      "taxRate": 0.13,
-      "taxLabel": "HST (13%)",
       "cities": [
         { "slug": "toronto", "name": "Toronto" },
         { "slug": "ottawa", "name": "Ottawa" },
@@ -22,8 +20,6 @@
       "code": "QC",
       "slug": "quebec",
       "name": "Quebec",
-      "taxRate": 0.14975,
-      "taxLabel": "GST + QST (14.975%)",
       "cities": [
         { "slug": "montreal", "name": "Montreal" },
         { "slug": "quebec-city", "name": "Quebec City" },
@@ -37,8 +33,6 @@
       "code": "BC",
       "slug": "british-columbia",
       "name": "British Columbia",
-      "taxRate": 0.12,
-      "taxLabel": "GST + PST (12%)",
       "cities": [
         { "slug": "vancouver", "name": "Vancouver" },
         { "slug": "surrey", "name": "Surrey" },
@@ -53,8 +47,6 @@
       "code": "AB",
       "slug": "alberta",
       "name": "Alberta",
-      "taxRate": 0.05,
-      "taxLabel": "GST (5%)",
       "cities": [
         { "slug": "calgary", "name": "Calgary" },
         { "slug": "edmonton", "name": "Edmonton" },

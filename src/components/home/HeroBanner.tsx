@@ -20,7 +20,7 @@ export default function HeroBanner() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 relative z-10">
         <div className="max-w-2xl relative z-10">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
-            Handcrafted Furniture for{" "}
+            Premium Quality Furniture for{" "}<br className="hidden lg:inline"/>
             <span className="text-accent">Canadian Homes</span>
           </h1>
           <p className="text-lg text-white/80 mt-6 max-w-lg">
@@ -32,7 +32,7 @@ export default function HeroBanner() {
               Shop Now
             </Button>
             <Button href="/custom-build" variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-primary">
-              Custom Build
+              Custom Sizes
             </Button>
           </div>
           <div className="flex items-center gap-6 mt-8 text-sm text-white/60">
@@ -52,7 +52,7 @@ export default function HeroBanner() {
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-accent">
                 <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clipRule="evenodd" />
               </svg>
-              Canadian Made
+              Quality Guaranteed
             </span>
           </div>
         </div>

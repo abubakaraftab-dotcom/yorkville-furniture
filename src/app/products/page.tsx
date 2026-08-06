@@ -4,7 +4,7 @@ import ProductsClient from "@/components/product/ProductsClient";
 
 export const metadata = {
   title: "All Products",
-  description: "Browse our complete collection of handcrafted furniture available for delivery across Canada.",
+  description: "Browse our complete collection of premium quality furniture available for delivery across Canada.",
 };
 
 export default function ProductsPage() {

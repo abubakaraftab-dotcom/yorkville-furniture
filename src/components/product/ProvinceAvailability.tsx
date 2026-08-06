@@ -1,7 +1,12 @@
 import Badge from "@/components/ui/Badge";
 
 interface ProvinceAvailabilityProps {
-  availability: string[];
+  priceByProvince: {
+    ON?: number;
+    QC?: number;
+    BC?: number;
+    AB?: number;
+  };
 }
 
 const provinceNames: Record<string, string> = {
@@ -11,13 +16,13 @@ const provinceNames: Record<string, string> = {
   AB: "Alberta",
 };
 
-export default function ProvinceAvailability({ availability }: ProvinceAvailabilityProps) {
+export default function ProvinceAvailability({ priceByProvince }: ProvinceAvailabilityProps) {
   return (
     <div className="border border-border rounded-xl p-4 bg-muted-light/50">
       <h3 className="text-sm font-semibold text-foreground mb-2">Delivery Availability</h3>
       <div className="flex flex-wrap gap-2">
         {["ON", "QC", "BC", "AB"].map((code) => {
-          const isAvail = availability.includes(code);
+          const isAvail = priceByProvince[code as keyof typeof priceByProvince] !== undefined;
           return (
             <div
               key={code}

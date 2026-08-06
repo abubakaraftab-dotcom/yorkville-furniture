@@ -33,8 +33,6 @@ export default function ProvinceCards() {
               <p className="text-sm text-muted mt-1">{province.deliveryNote}</p>
               <div className="flex items-center gap-1 mt-3 text-sm text-muted">
                 <span>{province.cities.length} cities</span>
-                <span className="mx-1">&middot;</span>
-                <span>{province.taxLabel}</span>
               </div>
             </Link>
           ))}

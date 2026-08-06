@@ -4,10 +4,15 @@
       "id": "prod-001",
       "slug": "oak-dining-table-6-seater",
       "title": "Oak Dining Table - 6 Seater",
-      "description": "Handcrafted solid oak dining table that seats 6 comfortably. Features a natural grain finish and sturdy tapered legs. Perfect for family dinners and gatherings.",
+      "description": "Premium solid oak dining table that seats 6 comfortably. Features a natural grain finish and stable tapered legs. Perfect for family dinners and gatherings.",
       "shortDescription": "Solid oak dining table for 6, natural finish.",
       "categorySlug": "dining-tables",
-      "price": 1299.99,
+      "priceByProvince": {
+        "ON": 1299.99,
+        "QC": 1349.99,
+        "BC": 1399.99,
+        "AB": 1379.99
+      },
       "compareAtPrice": 1499.99,
       "currency": "CAD",
       "sizes": [
@@ -49,6 +54,11 @@
         "bestseller",
         "solid-wood"
       ],
+<<<<<<< Updated upstream
+=======
+      "images": ["https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&q=80&w=800"],
+      "tags": ["bestseller", "solid-wood"],
+>>>>>>> Stashed changes
       "material": "Solid Oak Wood",
       "weight": "45 kg",
       "assemblyRequired": true,
@@ -64,7 +74,11 @@
       "description": "A spacious L-shaped sectional sofa upholstered in premium grey fabric. Features deep cushions, removable covers, and a chaise lounge section. Seats up to 5 people.",
       "shortDescription": "L-shaped grey sectional sofa, seats 5.",
       "categorySlug": "sofas",
-      "price": 1899.99,
+      "priceByProvince": {
+        "ON": 1899.99,
+        "BC": 1999.99,
+        "AB": 1949.99
+      },
       "compareAtPrice": 2299.99,
       "currency": "CAD",
       "sizes": [
@@ -105,6 +119,11 @@
         "bestseller",
         "new-arrival"
       ],
+<<<<<<< Updated upstream
+=======
+      "images": ["https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=800"],
+      "tags": ["bestseller", "new-arrival"],
+>>>>>>> Stashed changes
       "material": "Premium Fabric, Solid Wood Frame",
       "weight": "78 kg",
       "assemblyRequired": false,
@@ -119,8 +138,16 @@
       "title": "Walnut Queen Bed Frame",
       "description": "Elegant queen-size bed frame crafted from solid walnut wood. Features a high headboard with subtle panel detailing and solid slat support. No box spring needed.",
       "shortDescription": "Solid walnut queen bed frame with headboard.",
+<<<<<<< Updated upstream
       "categorySlug": "wooden-beds",
       "price": 999.99,
+=======
+      "categorySlug": "beds",
+      "priceByProvince": {
+        "ON": 999.99,
+        "QC": 1049.99
+      },
+>>>>>>> Stashed changes
       "currency": "CAD",
       "sizes": [
         {
@@ -154,6 +181,11 @@
       "tags": [
         "solid-wood"
       ],
+<<<<<<< Updated upstream
+=======
+      "images": ["https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&q=80&w=800"],
+      "tags": ["solid-wood"],
+>>>>>>> Stashed changes
       "material": "Solid Walnut Wood",
       "weight": "55 kg",
       "assemblyRequired": true,
@@ -170,7 +202,12 @@
       "description": "Clean-lined work desk perfect for home offices. Features a spacious desktop surface, cable management hole, and a small drawer. Made from engineered wood with steel legs.",
       "shortDescription": "Modern minimalist desk with drawer and cable management.",
       "categorySlug": "desks",
-      "price": 449.99,
+      "priceByProvince": {
+        "ON": 449.99,
+        "QC": 469.99,
+        "BC": 489.99,
+        "AB": 479.99
+      },
       "compareAtPrice": 549.99,
       "currency": "CAD",
       "sizes": [
@@ -211,6 +248,11 @@
       "tags": [
         "new-arrival"
       ],
+<<<<<<< Updated upstream
+=======
+      "images": ["https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&q=80&w=800"],
+      "tags": ["new-arrival"],
+>>>>>>> Stashed changes
       "material": "Engineered Wood, Powder-Coated Steel",
       "weight": "25 kg",
       "assemblyRequired": true,
@@ -226,7 +268,10 @@
       "description": "Stunning round coffee table with a genuine marble top and brushed gold metal base. A statement piece that elevates any living room. Each marble top has unique natural veining.",
       "shortDescription": "Round marble top coffee table with gold base.",
       "categorySlug": "coffee-tables",
-      "price": 699.99,
+      "priceByProvince": {
+        "ON": 699.99,
+        "BC": 749.99
+      },
       "currency": "CAD",
       "sizes": [
         {
@@ -260,6 +305,11 @@
       "tags": [
         "bestseller"
       ],
+<<<<<<< Updated upstream
+=======
+      "images": ["https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&q=80&w=800"],
+      "tags": ["bestseller"],
+>>>>>>> Stashed changes
       "material": "Genuine Marble, Brushed Metal",
       "weight": "32 kg",
       "assemblyRequired": false,
@@ -267,6 +317,134 @@
       "featured": true,
       "inStock": true,
       "createdAt": "2025-05-05"
+    },
+    {
+      "id": "prod-006",
+      "slug": "wide-6-drawer-dresser",
+      "title": "Wide 6-Drawer Dresser",
+      "description": "Maximize your storage space with this elegant wide dresser featuring six spacious drawers with smooth-glide metal runners. Constructed with high-density premium materials, it offers ample room for organizing your clothing, making it a perfect fit for any modern bedroom setup.",
+      "shortDescription": "Spacious bedroom dresser with six soft-close drawers.",
+      "categorySlug": "dressers",
+      "priceByProvince": {
+        "ON": 899.99,
+        "QC": 929.99,
+        "BC": 959.99,
+        "AB": 949.99
+      },
+      "compareAtPrice": 999.99,
+      "currency": "CAD",
+      "sizes": [
+        { "label": "Standard (160cm x 50cm)", "dimensions": "160cm L x 50cm W x 78cm H", "priceAdjustment": 0 },
+        { "label": "Large (180cm x 55cm)", "dimensions": "180cm L x 55cm W x 78cm H", "priceAdjustment": 150 }
+      ],
+      "colours": [
+        { "name": "Matte White", "hex": "#FFFFFF" },
+        { "name": "Oak Finish", "hex": "#D4A574" },
+        { "name": "Charcoal Black", "hex": "#2C2C2C" }
+      ],
+      "images": ["https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=800"],
+      "tags": ["featured", "bedroom", "storage"],
+      "material": "Premium Engineered Board & Metal Hardware",
+      "weight": "48 kg",
+      "assemblyRequired": true,
+      "deliveryEstimate": "5-10 business days",
+      "featured": true,
+      "inStock": true,
+      "createdAt": "2026-05-01"
+    },
+    {
+      "id": "prod-007",
+      "slug": "modern-minimalist-wardrobe",
+      "title": "Modern Minimalist Wardrobe",
+      "description": "A clean-lined clothing wardrobe featuring full-length hanging rail and adjustable wire shelving partitions. Its soft-close doors hide your clothing and storage boxes, maintaining a sleek appearance in your bedroom.",
+      "shortDescription": "Elegant wardrobe with hanging rail and adjustable shelves.",
+      "categorySlug": "dressers",
+      "priceByProvince": {
+        "ON": 1199.99,
+        "QC": 1249.99,
+        "AB": 1279.99
+      },
+      "currency": "CAD",
+      "sizes": [
+        { "label": "Twin Door (100cm)", "dimensions": "100cm L x 60cm W x 200cm H", "priceAdjustment": 0 },
+        { "label": "Triple Door (150cm)", "dimensions": "150cm L x 60cm W x 200cm H", "priceAdjustment": 350 }
+      ],
+      "colours": [
+        { "name": "Matte White", "hex": "#FFFFFF" },
+        { "name": "Natural Oak", "hex": "#D4A574" },
+        { "name": "Charcoal Grey", "hex": "#4A4A4A" }
+      ],
+      "images": ["https://images.unsplash.com/photo-1558882224-cca166733365?auto=format&fit=crop&q=80&w=800"],
+      "tags": ["bedroom", "wardrobe"],
+      "material": "Reinforced Structural Board",
+      "weight": "85 kg",
+      "assemblyRequired": true,
+      "deliveryEstimate": "7-14 business days",
+      "featured": true,
+      "inStock": true,
+      "createdAt": "2026-05-15"
+    },
+    {
+      "id": "prod-008",
+      "slug": "premium-5-drawer-chest",
+      "title": "Premium 5-Drawer Chest",
+      "description": "A tall, space-saving chest of drawers ideal for compact bedrooms or walk-in closets. Features five vertically stacked drawers with integrated handle cutouts.",
+      "shortDescription": "Space-saving vertical chest of drawers.",
+      "categorySlug": "dressers",
+      "priceByProvince": {
+        "ON": 599.99,
+        "BC": 649.99
+      },
+      "currency": "CAD",
+      "sizes": [
+        { "label": "Standard (80cm x 40cm)", "dimensions": "80cm L x 40cm W x 110cm H", "priceAdjustment": 0 }
+      ],
+      "colours": [
+        { "name": "White", "hex": "#FFFFFF" },
+        { "name": "Espresso Brown", "hex": "#3E2723" }
+      ],
+      "images": ["https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=800"],
+      "tags": ["bestseller", "bedroom"],
+      "material": "Durable Wood Composite",
+      "weight": "36 kg",
+      "assemblyRequired": true,
+      "deliveryEstimate": "5-10 business days",
+      "featured": false,
+      "inStock": true,
+      "createdAt": "2026-06-01"
+    },
+    {
+      "id": "prod-009",
+      "slug": "elegant-bedside-drawer",
+      "title": "Elegant Bedside Drawer / Nightstand",
+      "description": "Keep your bedtime essentials close at hand. This modern nightstand features dual soft-close drawers and an open alcove shelf. Paired with tapered solid wood legs, it adds an instant touch of refinement to your bedside area.",
+      "shortDescription": "Sleek bedside nightstand with two drawers.",
+      "categorySlug": "nightstands",
+      "priceByProvince": {
+        "ON": 249.99,
+        "QC": 259.99,
+        "BC": 279.99,
+        "AB": 269.99
+      },
+      "compareAtPrice": 299.99,
+      "currency": "CAD",
+      "sizes": [
+        { "label": "Standard (50cm)", "dimensions": "50cm L x 40cm W x 55cm H", "priceAdjustment": 0 }
+      ],
+      "colours": [
+        { "name": "Oak Veneer", "hex": "#D4A574" },
+        { "name": "Walnut Veneer", "hex": "#5C4033" },
+        { "name": "Solid White", "hex": "#FFFFFF" }
+      ],
+      "images": ["https://images.unsplash.com/photo-1532372320978-9b4d6a3a854c?auto=format&fit=crop&q=80&w=800"],
+      "tags": ["new-arrival", "bedroom"],
+      "material": "Engineered Board, Hardwood Legs",
+      "weight": "12 kg",
+      "assemblyRequired": false,
+      "deliveryEstimate": "3-7 business days",
+      "featured": true,
+      "inStock": true,
+      "createdAt": "2026-06-10"
     }
   ]
 }

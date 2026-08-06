@@ -7,8 +7,8 @@ export interface Province {
   code: string;
   slug: string;
   name: string;
-  taxRate: number;
-  taxLabel: string;
+  taxRate?: number;
+  taxLabel?: string;
   cities: City[];
   deliveryNote: string;
 }

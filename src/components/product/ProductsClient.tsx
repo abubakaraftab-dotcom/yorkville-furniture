@@ -34,11 +34,14 @@ export default function ProductsClient({ products, categories }: ProductsClientP
 
   // Filter and sort products
   const filteredAndSortedProducts = useMemo(() => {
+    const provinceCode = selectedProvince?.code || "ON";
+    const getPrice = (p: Product) => p.priceByProvince[provinceCode as keyof typeof p.priceByProvince] || 0;
+
     // 1. Filter local availability
     let result = products;
     if (selectedProvince) {
       result = result.filter((p) =>
-        p.provinceAvailability.includes(selectedProvince.code)
+        p.priceByProvince[selectedProvince.code as keyof typeof p.priceByProvince] !== undefined
       );
     }
 
@@ -49,7 +52,7 @@ export default function ProductsClient({ products, categories }: ProductsClientP
 
     // 3. Filter Price
     if (maxPrice !== "") {
-      result = result.filter((p) => p.price <= maxPrice);
+      result = result.filter((p) => getPrice(p) <= maxPrice);
     }
 
     // 4. Filter Colours
@@ -71,9 +74,9 @@ export default function ProductsClient({ products, categories }: ProductsClientP
 
     // 6. Sort
     if (sortBy === "price-asc") {
-      result = [...result].sort((a, b) => a.price - b.price);
+      result = [...result].sort((a, b) => getPrice(a) - getPrice(b));
     } else if (sortBy === "price-desc") {
-      result = [...result].sort((a, b) => b.price - a.price);
+      result = [...result].sort((a, b) => getPrice(b) - getPrice(a));
     } else if (sortBy === "name-asc") {
       result = [...result].sort((a, b) => a.title.localeCompare(b.title));
     } else if (sortBy === "newest") {

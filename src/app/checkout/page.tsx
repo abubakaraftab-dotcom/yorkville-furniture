@@ -111,10 +111,16 @@ export default function CheckoutPage() {
 
     try {
       const orderId = `ORD-${Date.now()}`;
+<<<<<<< Updated upstream
       const taxRate = selectedProvince?.taxRate ?? 0;
       const taxAmount = subtotal * taxRate;
       const delivery = deliveryCharge ?? 0;
       const total = subtotal + taxAmount + delivery;
+=======
+      const taxRate = 0;
+      const taxAmount = 0;
+      const total = subtotal;
+>>>>>>> Stashed changes
 
       const order: Order = {
         orderId,
@@ -177,10 +183,7 @@ export default function CheckoutPage() {
     );
   }
 
-  const taxRate = selectedProvince?.taxRate ?? 0;
-  const taxLabel = selectedProvince?.taxLabel ?? "Tax";
-  const taxAmount = subtotal * taxRate;
-  const total = subtotal + taxAmount;
+  const total = subtotal;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -389,13 +392,6 @@ export default function CheckoutPage() {
               <div className="flex justify-between">
                 <span className="text-muted">Subtotal</span>
                 <span className="font-medium text-foreground">{formatPrice(subtotal)}</span>
-              </div>
-
-              <div className="flex justify-between">
-                <span className="text-muted">
-                  Estimated {taxLabel}
-                </span>
-                <span className="font-medium text-foreground">{formatPrice(taxAmount)}</span>
               </div>
 
               <div className="flex justify-between">
