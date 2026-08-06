@@ -1,14 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 interface ImageGalleryProps {
   images: string[];
   title: string;
+  displayImages?: string[];
 }
 
-export default function ImageGallery({ images, title }: ImageGalleryProps) {
+export default function ImageGallery({ images, title, displayImages }: ImageGalleryProps) {
+  const imagesToRender = displayImages || images;
   const [activeIdx, setActiveIdx] = useState(0);
 
   const displayImages = images.length > 0 ? images : ["/images/placeholders/furniture-placeholder.jpg"];

@@ -9,6 +9,12 @@ export interface ProductColour {
   hex: string;
 }
 
+export interface ProductColorOption {
+  name: string;
+  hex: string;
+  image: string;
+}
+
 export interface Product {
   id: string;
   slug: string;
@@ -22,6 +28,7 @@ export interface Product {
   currency: string;
   sizes: ProductSize[];
   colours: ProductColour[];
+  colorOptions?: ProductColorOption[];
   images: string[];
   provinceAvailability: string[];
   tags: string[];
