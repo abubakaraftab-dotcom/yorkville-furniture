@@ -44,7 +44,7 @@ export default function ProductsClient({ products, categories }: ProductsClientP
 
     // 2. Filter Category
     if (selectedCategories.length > 0) {
-      result = result.filter((p) => selectedCategories.includes(p.categorySlug));
+      result = result.filter((p) => selectedCategories.includes(p.categorySlug) || (p.subcategorySlug && selectedCategories.includes(p.subcategorySlug)));
     }
 
     // 3. Filter Price
@@ -121,19 +121,36 @@ export default function ProductsClient({ products, categories }: ProductsClientP
       {/* Category Filter */}
       <div>
         <h3 className="text-sm font-semibold text-foreground mb-3">Categories</h3>
-        <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+        <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
           {categories
             .filter((c) => !c.isCustom)
             .map((cat) => (
-              <label key={cat.slug} className="flex items-center gap-2.5 text-sm text-foreground/80 cursor-pointer hover:text-foreground">
-                <input
-                  type="checkbox"
-                  checked={selectedCategories.includes(cat.slug)}
-                  onChange={() => handleCategoryToggle(cat.slug)}
-                  className="rounded border-border text-primary focus:ring-primary w-4 h-4 cursor-pointer"
-                />
-                <span>{cat.name}</span>
-              </label>
+              <div key={cat.slug} className="space-y-1">
+                <label className="flex items-center gap-2.5 text-sm text-foreground/80 cursor-pointer hover:text-foreground">
+                  <input
+                    type="checkbox"
+                    checked={selectedCategories.includes(cat.slug)}
+                    onChange={() => handleCategoryToggle(cat.slug)}
+                    className="rounded border-border text-primary focus:ring-primary w-4 h-4 cursor-pointer"
+                  />
+                  <span className="font-medium">{cat.name}</span>
+                </label>
+                {cat.subcategories && cat.subcategories.length > 0 && (
+                  <div className="ml-6 space-y-1">
+                    {cat.subcategories.map((sub) => (
+                      <label key={sub.slug} className="flex items-center gap-2.5 text-sm text-foreground/70 cursor-pointer hover:text-foreground">
+                        <input
+                          type="checkbox"
+                          checked={selectedCategories.includes(sub.slug)}
+                          onChange={() => handleCategoryToggle(sub.slug)}
+                          className="rounded border-border text-primary focus:ring-primary w-3.5 h-3.5 cursor-pointer"
+                        />
+                        <span>{sub.name}</span>
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
         </div>
       </div>

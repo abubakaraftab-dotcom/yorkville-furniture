@@ -16,6 +16,7 @@ export interface Product {
   description: string;
   shortDescription: string;
   categorySlug: string;
+  subcategorySlug?: string;
   price: number;
   compareAtPrice?: number;
   currency: string;

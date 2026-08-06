@@ -1,24 +1,212 @@
 {
   "categories": [
-    { "slug": "dining-tables", "name": "Dining Tables", "description": "Beautiful dining tables for every home, from modern to rustic.", "image": "/images/categories/dining-tables.jpg", "parentSlug": null, "order": 1, "featured": true },
-    { "slug": "dining-chairs", "name": "Dining Chairs", "description": "Comfortable and stylish dining chairs to complement your table.", "image": "/images/categories/dining-chairs.jpg", "parentSlug": null, "order": 2, "featured": false },
-    { "slug": "sofas", "name": "Sofas & Couches", "description": "Comfortable sofas and sectionals for your living room.", "image": "/images/categories/sofas.jpg", "parentSlug": null, "order": 3, "featured": true },
-    { "slug": "coffee-tables", "name": "Coffee Tables", "description": "Elegant coffee tables to complete your living space.", "image": "/images/categories/coffee-tables.jpg", "parentSlug": null, "order": 4, "featured": true },
-    { "slug": "tv-stands", "name": "TV Stands & Media Units", "description": "Modern TV stands and entertainment centers.", "image": "/images/categories/tv-stands.jpg", "parentSlug": null, "order": 5, "featured": false },
-    { "slug": "beds", "name": "Beds & Bed Frames", "description": "Quality bed frames for a perfect night's sleep.", "image": "/images/categories/beds.jpg", "parentSlug": null, "order": 6, "featured": true },
-    { "slug": "nightstands", "name": "Nightstands", "description": "Bedside tables with style and storage.", "image": "/images/categories/nightstands.jpg", "parentSlug": null, "order": 7, "featured": false },
-    { "slug": "dressers", "name": "Dressers & Wardrobes", "description": "Spacious dressers and wardrobes for your bedroom.", "image": "/images/categories/dressers.jpg", "parentSlug": null, "order": 8, "featured": false },
-    { "slug": "desks", "name": "Desks & Office Furniture", "description": "Work from home in style with our office furniture.", "image": "/images/categories/desks.jpg", "parentSlug": null, "order": 9, "featured": true },
-    { "slug": "bookshelves", "name": "Bookshelves & Storage", "description": "Organize your space with beautiful shelving units.", "image": "/images/categories/bookshelves.jpg", "parentSlug": null, "order": 10, "featured": false },
-    { "slug": "outdoor", "name": "Outdoor Furniture", "description": "Durable and stylish furniture for your patio and garden.", "image": "/images/categories/outdoor.jpg", "parentSlug": null, "order": 11, "featured": true },
-    { "slug": "kitchen-islands", "name": "Kitchen Islands & Carts", "description": "Add workspace and storage to your kitchen.", "image": "/images/categories/kitchen-islands.jpg", "parentSlug": null, "order": 12, "featured": false },
-    { "slug": "accent-chairs", "name": "Accent Chairs", "description": "Statement pieces to add character to any room.", "image": "/images/categories/accent-chairs.jpg", "parentSlug": null, "order": 13, "featured": true },
-    { "slug": "side-tables", "name": "Side Tables & End Tables", "description": "Perfect companions for your sofa or bed.", "image": "/images/categories/side-tables.jpg", "parentSlug": null, "order": 14, "featured": false },
-    { "slug": "shoe-racks", "name": "Shoe Racks & Entryway", "description": "Keep your entryway organized and welcoming.", "image": "/images/categories/shoe-racks.jpg", "parentSlug": null, "order": 15, "featured": false },
-    { "slug": "bathroom-vanities", "name": "Bathroom Vanities", "description": "Elegant vanities to upgrade your bathroom.", "image": "/images/categories/bathroom-vanities.jpg", "parentSlug": null, "order": 16, "featured": false },
-    { "slug": "kids-furniture", "name": "Kids Furniture", "description": "Safe and fun furniture for children's rooms.", "image": "/images/categories/kids-furniture.jpg", "parentSlug": null, "order": 17, "featured": false },
-    { "slug": "lighting", "name": "Lighting", "description": "Floor lamps, table lamps, and pendant lights.", "image": "/images/categories/lighting.jpg", "parentSlug": null, "order": 18, "featured": false },
-    { "slug": "home-decor", "name": "Home Decor", "description": "Mirrors, wall shelves, and decorative pieces.", "image": "/images/categories/home-decor.jpg", "parentSlug": null, "order": 19, "featured": true },
-    { "slug": "custom-build", "name": "Custom Build", "description": "Design your own furniture. Tell us what you need and we'll build it.", "image": "/images/categories/custom-build.jpg", "parentSlug": null, "order": 20, "featured": true, "isCustom": true }
+    {
+      "slug": "dressers",
+      "name": "Dressers",
+      "description": "Dressers category.",
+      "image": "/images/categories/dressers.jpg",
+      "order": 1,
+      "featured": true,
+      "subcategories": [
+        {
+          "slug": "4-6-7-8-10-12-drawer-dressers",
+          "name": "4/6/7/8/10/12 Drawer Dressers"
+        },
+        {
+          "slug": "customize-dresser",
+          "name": "Customize Dresser"
+        }
+      ]
+    },
+    {
+      "slug": "chest-dressers",
+      "name": "Chest Dressers",
+      "description": "Chest Dressers category.",
+      "image": "/images/categories/chest-dressers.jpg",
+      "order": 2,
+      "featured": true,
+      "subcategories": [
+        {
+          "slug": "3-4-5-6-7-8-9-drawer-chest",
+          "name": "3/4/5/6/7/8/9 Drawer Chest"
+        },
+        {
+          "slug": "customize-chest-dresser",
+          "name": "Customize Chest Dresser"
+        }
+      ]
+    },
+    {
+      "slug": "wardrobes",
+      "name": "Wardrobes",
+      "description": "Wardrobes category.",
+      "image": "/images/categories/wardrobes.jpg",
+      "order": 3,
+      "featured": true,
+      "subcategories": [
+        {
+          "slug": "2-3-4-5-6-7-8-9-10-door-wardrobes",
+          "name": "2/3/4/5/6/7/8/9/10 Door Wardrobes"
+        },
+        {
+          "slug": "customize-wardrobes",
+          "name": "Customize Wardrobes"
+        }
+      ]
+    },
+    {
+      "slug": "sidetables",
+      "name": "Sidetables",
+      "description": "Sidetables category.",
+      "image": "/images/categories/sidetables.jpg",
+      "order": 4,
+      "featured": true,
+      "subcategories": [
+        {
+          "slug": "2-3-4-5-6-drawer-sidetables",
+          "name": "2/3/4/5/6 Drawer Sidetables"
+        },
+        {
+          "slug": "customize-side-tables",
+          "name": "Customize Side Tables"
+        }
+      ]
+    },
+    {
+      "slug": "dresser-mirrors",
+      "name": "Dresser Mirrors",
+      "description": "Dresser Mirrors category.",
+      "image": "/images/categories/dresser-mirrors.jpg",
+      "order": 5,
+      "featured": true,
+      "subcategories": [
+        {
+          "slug": "3-4-5-6-7-8-10-drawer-dresser-mirror",
+          "name": "3/4/5/6/7/8/10 Drawer Dresser Mirror"
+        },
+        {
+          "slug": "customize-dresser-mirror",
+          "name": "Customize Dresser Mirror"
+        }
+      ]
+    },
+    {
+      "slug": "wooden-beds",
+      "name": "Wooden Beds",
+      "description": "Wooden Beds category.",
+      "image": "/images/categories/wooden-beds.jpg",
+      "order": 6,
+      "featured": false,
+      "subcategories": [
+        {
+          "slug": "twin",
+          "name": "Twin"
+        },
+        {
+          "slug": "double",
+          "name": "Double"
+        },
+        {
+          "slug": "queen",
+          "name": "Queen"
+        },
+        {
+          "slug": "king",
+          "name": "King"
+        }
+      ]
+    },
+    {
+      "slug": "mattresses",
+      "name": "Mattresses",
+      "description": "Mattresses category.",
+      "image": "/images/categories/mattresses.jpg",
+      "order": 7,
+      "featured": false,
+      "subcategories": [
+        {
+          "slug": "twin",
+          "name": "Twin"
+        },
+        {
+          "slug": "double",
+          "name": "Double"
+        },
+        {
+          "slug": "queen",
+          "name": "Queen"
+        },
+        {
+          "slug": "king",
+          "name": "King"
+        }
+      ]
+    },
+    {
+      "slug": "bookshelves",
+      "name": "Bookshelves",
+      "description": "Bookshelves category.",
+      "image": "/images/categories/bookshelves.jpg",
+      "order": 8,
+      "featured": false
+    },
+    {
+      "slug": "dresser-set",
+      "name": "Dresser Set",
+      "description": "Dresser Set category.",
+      "image": "/images/categories/dresser-set.jpg",
+      "order": 9,
+      "featured": false
+    },
+    {
+      "slug": "bedroom-set",
+      "name": "Bedroom Set",
+      "description": "Bedroom Set category.",
+      "image": "/images/categories/bedroom-set.jpg",
+      "order": 10,
+      "featured": false
+    },
+    {
+      "slug": "kitchen-cabinets",
+      "name": "Kitchen Cabinets",
+      "description": "Kitchen Cabinets category.",
+      "image": "/images/categories/kitchen-cabinets.jpg",
+      "order": 11,
+      "featured": false
+    },
+    {
+      "slug": "custom-closets",
+      "name": "Custom Closets",
+      "description": "Custom Closets category.",
+      "image": "/images/categories/custom-closets.jpg",
+      "order": 12,
+      "featured": false,
+      "isCustom": true
+    },
+    {
+      "slug": "custom-bedroom-cabinets",
+      "name": "Custom Bedroom Cabinets",
+      "description": "Custom Bedroom Cabinets category.",
+      "image": "/images/categories/custom-bedroom-cabinets.jpg",
+      "order": 13,
+      "featured": false,
+      "isCustom": true
+    },
+    {
+      "slug": "headboards",
+      "name": "Headboards",
+      "description": "Headboards category.",
+      "image": "/images/categories/headboards.jpg",
+      "order": 14,
+      "featured": false
+    },
+    {
+      "slug": "sofas",
+      "name": "Sofas",
+      "description": "Sofas category.",
+      "image": "/images/categories/sofas.jpg",
+      "order": 15,
+      "featured": false
+    }
   ]
 }
