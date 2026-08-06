@@ -27,8 +27,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <span className="text-2xl">🍁</span>
-              <span className="text-xl font-bold">{siteConfig.storeName}</span>
+              <img src="/images/logo.svg" alt="Yorkville Furniture Logo" className="h-8 w-8 object-contain filter invert brightness-0" />
             </Link>
             <p className="text-white/70 text-sm mb-4">{siteConfig.tagline}</p>
             <div className="space-y-2 text-sm text-white/70">
