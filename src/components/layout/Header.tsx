@@ -25,11 +25,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl">🍁</span>
-            <div>
-              <span className="text-lg font-bold text-primary">Maple Furniture</span>
-              <span className="hidden sm:inline text-xs text-muted ml-1">Co.</span>
-            </div>
+            <img src="/images/logo.svg" alt="Yorkville Furniture Logo" className="h-8 w-8 object-contain" />
           </Link>
 
           {/* Desktop Nav */}
