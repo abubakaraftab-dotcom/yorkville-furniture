@@ -11,24 +11,143 @@
       "compareAtPrice": 1499.99,
       "currency": "CAD",
       "sizes": [
-        { "label": "Standard (180cm x 90cm)", "dimensions": "180cm L x 90cm W x 76cm H", "priceAdjustment": 0 },
-        { "label": "Large (220cm x 100cm)", "dimensions": "220cm L x 100cm W x 76cm H", "priceAdjustment": 200 }
+        {
+          "label": "Standard (180cm x 90cm)",
+          "dimensions": "180cm L x 90cm W x 76cm H",
+          "priceAdjustment": 0
+        },
+        {
+          "label": "Large (220cm x 100cm)",
+          "dimensions": "220cm L x 100cm W x 76cm H",
+          "priceAdjustment": 200
+        }
       ],
       "colours": [
-        { "name": "Natural Oak", "hex": "#D4A574" },
-        { "name": "Dark Walnut", "hex": "#5C4033" },
-        { "name": "White Wash", "hex": "#F5F0E8" }
+        {
+          "name": "Natural Oak",
+          "hex": "#D4A574"
+        },
+        {
+          "name": "Dark Walnut",
+          "hex": "#5C4033"
+        },
+        {
+          "name": "White Wash",
+          "hex": "#F5F0E8"
+        }
       ],
-      "images": ["/images/products/oak-dining-table-6-seater/main.jpg"],
-      "provinceAvailability": ["ON", "QC", "BC", "AB"],
-      "tags": ["bestseller", "solid-wood"],
+      "images": [
+        "/images/products/oak-dining-table-6-seater/main.jpg"
+      ],
+      "provinceAvailability": [
+        "ON",
+        "QC",
+        "BC",
+        "AB"
+      ],
+      "tags": [
+        "bestseller",
+        "solid-wood"
+      ],
       "material": "Solid Oak Wood",
       "weight": "45 kg",
       "assemblyRequired": true,
       "deliveryEstimate": "5-10 business days",
       "featured": true,
       "inStock": true,
-      "createdAt": "2025-01-15"
+      "createdAt": "2025-01-15",
+      "colorOptions": [
+        {
+          "name": "Natural Oak",
+          "hex": "#D4A574",
+          "image": "/images/products/oak-dining-table-6-seater/main.jpg"
+        },
+        {
+          "name": "Dark Walnut",
+          "hex": "#5C4033",
+          "image": "/images/products/oak-dining-table-6-seater/main.jpg"
+        },
+        {
+          "name": "White Wash",
+          "hex": "#F5F0E8",
+          "image": "/images/products/oak-dining-table-6-seater/main.jpg"
+        },
+        {
+          "name": "Cloud",
+          "hex": "#E5E7EB",
+          "image": "/images/products/oak-dining-table-6-seater/main.jpg"
+        },
+        {
+          "name": "Blue",
+          "hex": "#1D4ED8",
+          "image": "/images/products/oak-dining-table-6-seater/main.jpg"
+        },
+        {
+          "name": "Smoke Wood",
+          "hex": "#8B5A2B",
+          "image": "/images/products/oak-dining-table-6-seater/main.jpg"
+        },
+        {
+          "name": "Red",
+          "hex": "#B91C1C",
+          "image": "/images/products/oak-dining-table-6-seater/main.jpg"
+        },
+        {
+          "name": "Black",
+          "hex": "#111827",
+          "image": "/images/products/oak-dining-table-6-seater/main.jpg"
+        },
+        {
+          "name": "Silver",
+          "hex": "#D1D5DB",
+          "image": "/images/products/oak-dining-table-6-seater/main.jpg"
+        },
+        {
+          "name": "Dhwani",
+          "hex": "#4B5563",
+          "image": "/images/products/oak-dining-table-6-seater/main.jpg"
+        },
+        {
+          "name": "Shadow Oak",
+          "hex": "#374151",
+          "image": "/images/products/oak-dining-table-6-seater/main.jpg"
+        },
+        {
+          "name": "Oak",
+          "hex": "#D4A373",
+          "image": "/images/products/oak-dining-table-6-seater/main.jpg"
+        },
+        {
+          "name": "Auburn",
+          "hex": "#9A3412",
+          "image": "/images/products/oak-dining-table-6-seater/main.jpg"
+        },
+        {
+          "name": "Oakwood",
+          "hex": "#A68A64",
+          "image": "/images/products/oak-dining-table-6-seater/main.jpg"
+        },
+        {
+          "name": "Pine",
+          "hex": "#D97706",
+          "image": "/images/products/oak-dining-table-6-seater/main.jpg"
+        },
+        {
+          "name": "Pink",
+          "hex": "#FBCFE8",
+          "image": "/images/products/oak-dining-table-6-seater/main.jpg"
+        },
+        {
+          "name": "Chocolate",
+          "hex": "#451A03",
+          "image": "/images/products/oak-dining-table-6-seater/main.jpg"
+        },
+        {
+          "name": "White",
+          "hex": "#FFFFFF",
+          "image": "/images/products/oak-dining-table-6-seater/main.jpg"
+        }
+      ]
     },
     {
       "id": "prod-002",
@@ -41,17 +160,43 @@
       "compareAtPrice": 2299.99,
       "currency": "CAD",
       "sizes": [
-        { "label": "Standard (280cm x 180cm)", "dimensions": "280cm L x 180cm W x 85cm H", "priceAdjustment": 0 },
-        { "label": "Compact (240cm x 160cm)", "dimensions": "240cm L x 160cm W x 85cm H", "priceAdjustment": -200 }
+        {
+          "label": "Standard (280cm x 180cm)",
+          "dimensions": "280cm L x 180cm W x 85cm H",
+          "priceAdjustment": 0
+        },
+        {
+          "label": "Compact (240cm x 160cm)",
+          "dimensions": "240cm L x 160cm W x 85cm H",
+          "priceAdjustment": -200
+        }
       ],
       "colours": [
-        { "name": "Charcoal Grey", "hex": "#4A4A4A" },
-        { "name": "Light Grey", "hex": "#B0B0B0" },
-        { "name": "Navy Blue", "hex": "#1B2A4A" }
+        {
+          "name": "Charcoal Grey",
+          "hex": "#4A4A4A"
+        },
+        {
+          "name": "Light Grey",
+          "hex": "#B0B0B0"
+        },
+        {
+          "name": "Navy Blue",
+          "hex": "#1B2A4A"
+        }
       ],
-      "images": ["/images/products/modern-grey-sectional-sofa/main.jpg"],
-      "provinceAvailability": ["ON", "BC", "AB"],
-      "tags": ["bestseller", "new-arrival"],
+      "images": [
+        "/images/products/modern-grey-sectional-sofa/main.jpg"
+      ],
+      "provinceAvailability": [
+        "ON",
+        "BC",
+        "AB"
+      ],
+      "tags": [
+        "bestseller",
+        "new-arrival"
+      ],
       "material": "Premium Fabric, Solid Wood Frame",
       "weight": "78 kg",
       "assemblyRequired": false,
@@ -70,23 +215,131 @@
       "price": 999.99,
       "currency": "CAD",
       "sizes": [
-        { "label": "Queen", "dimensions": "213cm L x 162cm W x 120cm H", "priceAdjustment": 0 },
-        { "label": "King", "dimensions": "213cm L x 193cm W x 120cm H", "priceAdjustment": 300 }
+        {
+          "label": "Queen",
+          "dimensions": "213cm L x 162cm W x 120cm H",
+          "priceAdjustment": 0
+        },
+        {
+          "label": "King",
+          "dimensions": "213cm L x 193cm W x 120cm H",
+          "priceAdjustment": 300
+        }
       ],
       "colours": [
-        { "name": "Dark Walnut", "hex": "#5C4033" },
-        { "name": "Natural Walnut", "hex": "#8B7355" }
+        {
+          "name": "Dark Walnut",
+          "hex": "#5C4033"
+        },
+        {
+          "name": "Natural Walnut",
+          "hex": "#8B7355"
+        }
       ],
-      "images": ["/images/products/walnut-queen-bed-frame/main.jpg"],
-      "provinceAvailability": ["ON", "QC"],
-      "tags": ["solid-wood"],
+      "images": [
+        "/images/products/walnut-queen-bed-frame/main.jpg"
+      ],
+      "provinceAvailability": [
+        "ON",
+        "QC"
+      ],
+      "tags": [
+        "solid-wood"
+      ],
       "material": "Solid Walnut Wood",
       "weight": "55 kg",
       "assemblyRequired": true,
       "deliveryEstimate": "7-14 business days",
       "featured": true,
       "inStock": true,
-      "createdAt": "2025-03-01"
+      "createdAt": "2025-03-01",
+      "colorOptions": [
+        {
+          "name": "Dark Walnut",
+          "hex": "#5C4033",
+          "image": "/images/products/walnut-queen-bed-frame/main.jpg"
+        },
+        {
+          "name": "Natural Walnut",
+          "hex": "#8B7355",
+          "image": "/images/products/walnut-queen-bed-frame/main.jpg"
+        },
+        {
+          "name": "Cloud",
+          "hex": "#E5E7EB",
+          "image": "/images/products/walnut-queen-bed-frame/main.jpg"
+        },
+        {
+          "name": "Blue",
+          "hex": "#1D4ED8",
+          "image": "/images/products/walnut-queen-bed-frame/main.jpg"
+        },
+        {
+          "name": "Smoke Wood",
+          "hex": "#8B5A2B",
+          "image": "/images/products/walnut-queen-bed-frame/main.jpg"
+        },
+        {
+          "name": "Red",
+          "hex": "#B91C1C",
+          "image": "/images/products/walnut-queen-bed-frame/main.jpg"
+        },
+        {
+          "name": "Black",
+          "hex": "#111827",
+          "image": "/images/products/walnut-queen-bed-frame/main.jpg"
+        },
+        {
+          "name": "Silver",
+          "hex": "#D1D5DB",
+          "image": "/images/products/walnut-queen-bed-frame/main.jpg"
+        },
+        {
+          "name": "Dhwani",
+          "hex": "#4B5563",
+          "image": "/images/products/walnut-queen-bed-frame/main.jpg"
+        },
+        {
+          "name": "Shadow Oak",
+          "hex": "#374151",
+          "image": "/images/products/walnut-queen-bed-frame/main.jpg"
+        },
+        {
+          "name": "Oak",
+          "hex": "#D4A373",
+          "image": "/images/products/walnut-queen-bed-frame/main.jpg"
+        },
+        {
+          "name": "Auburn",
+          "hex": "#9A3412",
+          "image": "/images/products/walnut-queen-bed-frame/main.jpg"
+        },
+        {
+          "name": "Oakwood",
+          "hex": "#A68A64",
+          "image": "/images/products/walnut-queen-bed-frame/main.jpg"
+        },
+        {
+          "name": "Pine",
+          "hex": "#D97706",
+          "image": "/images/products/walnut-queen-bed-frame/main.jpg"
+        },
+        {
+          "name": "Pink",
+          "hex": "#FBCFE8",
+          "image": "/images/products/walnut-queen-bed-frame/main.jpg"
+        },
+        {
+          "name": "Chocolate",
+          "hex": "#451A03",
+          "image": "/images/products/walnut-queen-bed-frame/main.jpg"
+        },
+        {
+          "name": "White",
+          "hex": "#FFFFFF",
+          "image": "/images/products/walnut-queen-bed-frame/main.jpg"
+        }
+      ]
     },
     {
       "id": "prod-004",
@@ -99,24 +352,137 @@
       "compareAtPrice": 549.99,
       "currency": "CAD",
       "sizes": [
-        { "label": "Standard (120cm x 60cm)", "dimensions": "120cm L x 60cm W x 75cm H", "priceAdjustment": 0 },
-        { "label": "Wide (150cm x 70cm)", "dimensions": "150cm L x 70cm W x 75cm H", "priceAdjustment": 100 }
+        {
+          "label": "Standard (120cm x 60cm)",
+          "dimensions": "120cm L x 60cm W x 75cm H",
+          "priceAdjustment": 0
+        },
+        {
+          "label": "Wide (150cm x 70cm)",
+          "dimensions": "150cm L x 70cm W x 75cm H",
+          "priceAdjustment": 100
+        }
       ],
       "colours": [
-        { "name": "White", "hex": "#FFFFFF" },
-        { "name": "Natural Wood", "hex": "#C9A96E" },
-        { "name": "Matte Black", "hex": "#2C2C2C" }
+        {
+          "name": "White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Natural Wood",
+          "hex": "#C9A96E"
+        },
+        {
+          "name": "Matte Black",
+          "hex": "#2C2C2C"
+        }
       ],
-      "images": ["/images/products/minimalist-work-desk/main.jpg"],
-      "provinceAvailability": ["ON", "QC", "BC", "AB"],
-      "tags": ["new-arrival"],
+      "images": [
+        "/images/products/minimalist-work-desk/main.jpg"
+      ],
+      "provinceAvailability": [
+        "ON",
+        "QC",
+        "BC",
+        "AB"
+      ],
+      "tags": [
+        "new-arrival"
+      ],
       "material": "Engineered Wood, Powder-Coated Steel",
       "weight": "25 kg",
       "assemblyRequired": true,
       "deliveryEstimate": "3-7 business days",
       "featured": true,
       "inStock": true,
-      "createdAt": "2025-04-20"
+      "createdAt": "2025-04-20",
+      "colorOptions": [
+        {
+          "name": "White",
+          "hex": "#FFFFFF",
+          "image": "/images/products/minimalist-work-desk/main.jpg"
+        },
+        {
+          "name": "Natural Wood",
+          "hex": "#C9A96E",
+          "image": "/images/products/minimalist-work-desk/main.jpg"
+        },
+        {
+          "name": "Matte Black",
+          "hex": "#2C2C2C",
+          "image": "/images/products/minimalist-work-desk/main.jpg"
+        },
+        {
+          "name": "Cloud",
+          "hex": "#E5E7EB",
+          "image": "/images/products/minimalist-work-desk/main.jpg"
+        },
+        {
+          "name": "Blue",
+          "hex": "#1D4ED8",
+          "image": "/images/products/minimalist-work-desk/main.jpg"
+        },
+        {
+          "name": "Smoke Wood",
+          "hex": "#8B5A2B",
+          "image": "/images/products/minimalist-work-desk/main.jpg"
+        },
+        {
+          "name": "Red",
+          "hex": "#B91C1C",
+          "image": "/images/products/minimalist-work-desk/main.jpg"
+        },
+        {
+          "name": "Black",
+          "hex": "#111827",
+          "image": "/images/products/minimalist-work-desk/main.jpg"
+        },
+        {
+          "name": "Silver",
+          "hex": "#D1D5DB",
+          "image": "/images/products/minimalist-work-desk/main.jpg"
+        },
+        {
+          "name": "Dhwani",
+          "hex": "#4B5563",
+          "image": "/images/products/minimalist-work-desk/main.jpg"
+        },
+        {
+          "name": "Shadow Oak",
+          "hex": "#374151",
+          "image": "/images/products/minimalist-work-desk/main.jpg"
+        },
+        {
+          "name": "Oak",
+          "hex": "#D4A373",
+          "image": "/images/products/minimalist-work-desk/main.jpg"
+        },
+        {
+          "name": "Auburn",
+          "hex": "#9A3412",
+          "image": "/images/products/minimalist-work-desk/main.jpg"
+        },
+        {
+          "name": "Oakwood",
+          "hex": "#A68A64",
+          "image": "/images/products/minimalist-work-desk/main.jpg"
+        },
+        {
+          "name": "Pine",
+          "hex": "#D97706",
+          "image": "/images/products/minimalist-work-desk/main.jpg"
+        },
+        {
+          "name": "Pink",
+          "hex": "#FBCFE8",
+          "image": "/images/products/minimalist-work-desk/main.jpg"
+        },
+        {
+          "name": "Chocolate",
+          "hex": "#451A03",
+          "image": "/images/products/minimalist-work-desk/main.jpg"
+        }
+      ]
     },
     {
       "id": "prod-005",
@@ -128,23 +494,131 @@
       "price": 699.99,
       "currency": "CAD",
       "sizes": [
-        { "label": "Small (80cm diameter)", "dimensions": "80cm D x 45cm H", "priceAdjustment": 0 },
-        { "label": "Medium (100cm diameter)", "dimensions": "100cm D x 45cm H", "priceAdjustment": 150 }
+        {
+          "label": "Small (80cm diameter)",
+          "dimensions": "80cm D x 45cm H",
+          "priceAdjustment": 0
+        },
+        {
+          "label": "Medium (100cm diameter)",
+          "dimensions": "100cm D x 45cm H",
+          "priceAdjustment": 150
+        }
       ],
       "colours": [
-        { "name": "White Marble / Gold", "hex": "#F0EAE0" },
-        { "name": "Black Marble / Black", "hex": "#1C1C1C" }
+        {
+          "name": "White Marble / Gold",
+          "hex": "#F0EAE0"
+        },
+        {
+          "name": "Black Marble / Black",
+          "hex": "#1C1C1C"
+        }
       ],
-      "images": ["/images/products/round-marble-coffee-table/main.jpg"],
-      "provinceAvailability": ["ON", "BC"],
-      "tags": ["bestseller"],
+      "images": [
+        "/images/products/round-marble-coffee-table/main.jpg"
+      ],
+      "provinceAvailability": [
+        "ON",
+        "BC"
+      ],
+      "tags": [
+        "bestseller"
+      ],
       "material": "Genuine Marble, Brushed Metal",
       "weight": "32 kg",
       "assemblyRequired": false,
       "deliveryEstimate": "5-10 business days",
       "featured": true,
       "inStock": true,
-      "createdAt": "2025-05-05"
+      "createdAt": "2025-05-05",
+      "colorOptions": [
+        {
+          "name": "White Marble / Gold",
+          "hex": "#F0EAE0",
+          "image": "/images/products/round-marble-coffee-table/main.jpg"
+        },
+        {
+          "name": "Black Marble / Black",
+          "hex": "#1C1C1C",
+          "image": "/images/products/round-marble-coffee-table/main.jpg"
+        },
+        {
+          "name": "Cloud",
+          "hex": "#E5E7EB",
+          "image": "/images/products/round-marble-coffee-table/main.jpg"
+        },
+        {
+          "name": "Blue",
+          "hex": "#1D4ED8",
+          "image": "/images/products/round-marble-coffee-table/main.jpg"
+        },
+        {
+          "name": "Smoke Wood",
+          "hex": "#8B5A2B",
+          "image": "/images/products/round-marble-coffee-table/main.jpg"
+        },
+        {
+          "name": "Red",
+          "hex": "#B91C1C",
+          "image": "/images/products/round-marble-coffee-table/main.jpg"
+        },
+        {
+          "name": "Black",
+          "hex": "#111827",
+          "image": "/images/products/round-marble-coffee-table/main.jpg"
+        },
+        {
+          "name": "Silver",
+          "hex": "#D1D5DB",
+          "image": "/images/products/round-marble-coffee-table/main.jpg"
+        },
+        {
+          "name": "Dhwani",
+          "hex": "#4B5563",
+          "image": "/images/products/round-marble-coffee-table/main.jpg"
+        },
+        {
+          "name": "Shadow Oak",
+          "hex": "#374151",
+          "image": "/images/products/round-marble-coffee-table/main.jpg"
+        },
+        {
+          "name": "Oak",
+          "hex": "#D4A373",
+          "image": "/images/products/round-marble-coffee-table/main.jpg"
+        },
+        {
+          "name": "Auburn",
+          "hex": "#9A3412",
+          "image": "/images/products/round-marble-coffee-table/main.jpg"
+        },
+        {
+          "name": "Oakwood",
+          "hex": "#A68A64",
+          "image": "/images/products/round-marble-coffee-table/main.jpg"
+        },
+        {
+          "name": "Pine",
+          "hex": "#D97706",
+          "image": "/images/products/round-marble-coffee-table/main.jpg"
+        },
+        {
+          "name": "Pink",
+          "hex": "#FBCFE8",
+          "image": "/images/products/round-marble-coffee-table/main.jpg"
+        },
+        {
+          "name": "Chocolate",
+          "hex": "#451A03",
+          "image": "/images/products/round-marble-coffee-table/main.jpg"
+        },
+        {
+          "name": "White",
+          "hex": "#FFFFFF",
+          "image": "/images/products/round-marble-coffee-table/main.jpg"
+        }
+      ]
     }
   ]
 }

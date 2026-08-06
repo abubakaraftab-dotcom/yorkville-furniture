@@ -1,16 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 interface ImageGalleryProps {
   images: string[];
   title: string;
+  displayImages?: string[];
 }
 
-export default function ImageGallery({ images, title }: ImageGalleryProps) {
+export default function ImageGallery({ images, title, displayImages }: ImageGalleryProps) {
+  const imagesToRender = displayImages || images;
   const [activeIdx, setActiveIdx] = useState(0);
 
+  const firstImage = imagesToRender[0];
+  useEffect(() => {
+    setActiveIdx(0);
+  }, [firstImage]);
   if (images.length === 0) {
     return (
       <div className="relative aspect-[4/3] bg-muted-light rounded-xl flex items-center justify-center text-muted">
@@ -26,7 +32,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
       {/* Main Image */}
       <div className="relative aspect-[4/3] bg-muted-light rounded-xl overflow-hidden border border-border">
         <Image
-          src={images[activeIdx]}
+          src={imagesToRender[activeIdx]}
           alt={`${title} - image ${activeIdx + 1}`}
           fill
           className="object-cover"
@@ -36,7 +42,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
       </div>
 
       {/* Thumbnail strip */}
-      {images.length > 1 && (
+      {imagesToRender.length > 1 && (
         <div className="flex gap-2 overflow-x-auto pb-1">
           {images.map((img, i) => (
             <button

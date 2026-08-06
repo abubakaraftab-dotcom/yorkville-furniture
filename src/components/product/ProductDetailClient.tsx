@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { Product } from "@/types/product";
+import type { Product, ProductColorOption } from "@/types/product";
 import ImageGallery from "@/components/ui/ImageGallery";
 import PriceDisplay from "@/components/ui/PriceDisplay";
 import Badge from "@/components/ui/Badge";
@@ -20,7 +20,8 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   const { selectedProvince } = useProvince();
   const { addToCart } = useCart();
   const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
-  const [selectedColour, setSelectedColour] = useState(product.colours[0]);
+  const defaultColor = product.colorOptions?.length ? product.colorOptions[0] : product.colours[0];
+  const [selectedColour, setSelectedColour] = useState<ProductColorOption | ProductColour>(defaultColor);
   const [quantity, setQuantity] = useState(1);
   const [customRequestOpen, setCustomRequestOpen] = useState(false);
   const [customMsg, setCustomMsg] = useState("");
@@ -64,7 +65,11 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
       {/* Visuals */}
-      <ImageGallery images={product.images} title={product.title} />
+      <ImageGallery images={product.images} title={product.title} displayImages={
+        product.categorySlug !== "sofas" && product.colorOptions && selectedColour.image
+          ? [selectedColour.image, ...product.images.filter(img => img !== selectedColour.image)]
+          : product.images
+      } />
 
       {/* Details */}
       <div className="flex flex-col gap-6">
@@ -112,11 +117,11 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         )}
 
         {/* Colour Selection */}
-        {product.colours.length > 0 && (
+        {product.categorySlug !== "sofas" && (product.colorOptions?.length || product.colours.length) > 0 && (
           <div>
             <h3 className="text-sm font-semibold text-foreground mb-2">Colour</h3>
             <div className="flex flex-wrap gap-3">
-              {product.colours.map((colour) => (
+              {(product.colorOptions || product.colours).map((colour) => (
                 <button
                   key={colour.name}
                   onClick={() => setSelectedColour(colour)}
