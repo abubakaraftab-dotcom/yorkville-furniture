@@ -1,16 +1,11 @@
 {
   "storeName": "Yorkville Furniture Canada",
-<<<<<<< Updated upstream
+
   "tagline": "Handcrafted Premium Canadian Furniture",
   "phone": "+1 438 700 6095",
   "whatsappNumber": "14387006095",
   "email": "yorkvillefurniture@gmail.com",
-=======
-  "tagline": "Premium Quality Furniture at Direct Warehouse Values",
-  "phone": "+14161234567",
-  "whatsappNumber": "14161234567",
-  "email": "orders@yorkvillefurniture.ca",
->>>>>>> Stashed changes
+
   "address": {
     "street": "Yorkville Avenue",
     "city": "Toronto",

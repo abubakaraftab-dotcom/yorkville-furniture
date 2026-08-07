@@ -14,7 +14,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
   const displayImages = images.length > 0 ? images : ["/images/placeholders/furniture-placeholder.jpg"];
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className={"flex flex-col gap-3"}>
       {/* Main Image */}
       <div className="relative aspect-[4/3] bg-muted-light rounded-xl overflow-hidden border border-border">
         <Image

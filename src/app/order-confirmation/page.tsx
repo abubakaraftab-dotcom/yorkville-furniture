@@ -16,6 +16,7 @@ export default function OrderConfirmationPage() {
 
     if (savedOrder) {
       try {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setOrder(JSON.parse(savedOrder));
       } catch (e) {
         console.error("Failed to recover order confirmation payload", e);
@@ -137,7 +138,7 @@ export default function OrderConfirmationPage() {
             <span>{formatPrice(order.subtotal)}</span>
           </div>
 
-<<<<<<< Updated upstream
+
           <div className="flex justify-between text-xs text-muted">
             <span>Delivery</span>
             <span>{order.deliveryCharge !== null ? formatPrice(order.deliveryCharge) : 'Quote Requested'}</span>
@@ -148,8 +149,7 @@ export default function OrderConfirmationPage() {
             <span>{formatPrice(order.taxAmount)}</span>
           </div>
 
-=======
->>>>>>> Stashed changes
+
           <div className="flex justify-between font-bold text-foreground text-sm pt-1">
             <span>Total</span>
             <span>{formatPrice(order.total)}</span>

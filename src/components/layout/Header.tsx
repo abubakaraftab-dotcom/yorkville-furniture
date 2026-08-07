@@ -43,20 +43,10 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-<<<<<<< Updated upstream
+
           <Link href="/" className="flex items-center gap-2">
             <img src="/images/logo.svg" alt="Yorkville Furniture Logo" className="h-8 w-8 object-contain" />
-=======
-          <Link href="/" className="flex items-center gap-3">
-            <LogoIcon className="w-9 h-9" />
-            <div className="flex flex-col">
-              <div className="flex items-baseline gap-0.5 leading-none">
-                <span className="text-lg font-bold font-serif tracking-tight text-primary">Yorkville</span>
-                <span className="text-lg font-medium font-sans text-foreground">Furniture</span>
-              </div>
-              <span className="text-[9px] font-bold text-muted uppercase tracking-widest leading-none mt-0.5">Canada</span>
-            </div>
->>>>>>> Stashed changes
+
           </Link>
 
           {/* Desktop Nav */}

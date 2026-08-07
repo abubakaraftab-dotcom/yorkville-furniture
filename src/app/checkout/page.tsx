@@ -54,6 +54,7 @@ export default function CheckoutPage() {
   // Sync province dropdown with global selected province on mount
   useEffect(() => {
     if (selectedProvince) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setFormData((prev) => ({ ...prev, province: selectedProvince.code }));
     }
   }, [selectedProvince]);
@@ -111,16 +112,12 @@ export default function CheckoutPage() {
 
     try {
       const orderId = `ORD-${Date.now()}`;
-<<<<<<< Updated upstream
+
       const taxRate = selectedProvince?.taxRate ?? 0;
       const taxAmount = subtotal * taxRate;
       const delivery = deliveryCharge ?? 0;
       const total = subtotal + taxAmount + delivery;
-=======
-      const taxRate = 0;
-      const taxAmount = 0;
-      const total = subtotal;
->>>>>>> Stashed changes
+
 
       const order: Order = {
         orderId,
@@ -157,7 +154,7 @@ export default function CheckoutPage() {
 
       // 4. Redirect to thank-you confirmation page
       router.push("/order-confirmation");
-    } catch (e: any) {
+    } catch (e: unknown) {
       console.error("Checkout order placement failed", e);
       setErrorMsg("An error occurred while placing your order. Please try again.");
       setIsSubmitting(false);
