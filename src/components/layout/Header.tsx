@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import MobileMenu from "./MobileMenu";
+import HeaderCategoriesDropdown from "./HeaderCategoriesDropdown";
+import { getAllCategories } from "@/lib/categories";
 import ProvinceSelector from "./ProvinceSelector";
 import CartIcon from "@/components/cart/CartIcon";
 
@@ -16,26 +18,8 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
-const LogoIcon = ({ className = "w-8 h-8" }: { className?: string }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 100 100"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="6"
-    className={`${className} text-primary`}
-  >
-    <path
-      d="M50 12 C30 15 22 25 22 48 C22 72 50 88 50 88 C50 88 78 72 78 48 C78 25 70 15 50 12 Z"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path d="M38 34 L45 46 M52 34 L45 46 M45 46 V64" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M56 36 H66 M56 46 H64 M56 36 V64" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
 export default function Header() {
+  const categories = getAllCategories();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -51,15 +35,20 @@ export default function Header() {
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              if (link.label === "Categories") {
+                return <HeaderCategoriesDropdown key={link.href} categories={categories} />;
+              }
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Right side: Province + Cart + Mobile Toggle */}
@@ -105,6 +94,7 @@ export default function Header() {
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
         navLinks={navLinks}
+        categories={categories}
       />
     </header>
   );
