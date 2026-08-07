@@ -45,7 +45,7 @@ export default function Header() {
           {/* Logo */}
 
           <Link href="/" className="flex items-center gap-2">
-            <img src="/images/logo.svg" alt="Yorkville Furniture Logo" className="h-8 w-8 object-contain" />
+            <img src="/images/logo.png" alt="Yorkville Furniture Logo" className="h-8 w-8 object-contain" />
 
           </Link>
 
