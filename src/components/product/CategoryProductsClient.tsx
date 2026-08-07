@@ -19,13 +19,13 @@ export default function CategoryProductsClient({
   const { selectedProvince } = useProvince();
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
 
-<<<<<<< Updated upstream
+
   // Filter products by selected province availability and subcategory
   const filteredProducts = useMemo(() => {
     let result = initialProducts;
 
     if (selectedProvince) {
-      result = result.filter((p) => p.provinceAvailability.includes(selectedProvince.code));
+      result = result.filter((p) => p.priceByProvince[selectedProvince.code as keyof typeof p.priceByProvince] !== undefined);
     }
 
     if (selectedSubcategory) {
@@ -34,12 +34,7 @@ export default function CategoryProductsClient({
 
     return result;
   }, [initialProducts, selectedProvince, selectedSubcategory]);
-=======
-  // Filter products by selected province availability
-  const filteredProducts = selectedProvince
-    ? initialProducts.filter((p) => p.priceByProvince[selectedProvince.code as keyof typeof p.priceByProvince] !== undefined)
-    : initialProducts;
->>>>>>> Stashed changes
+
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">

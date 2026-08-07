@@ -27,6 +27,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
     const saved = localStorage.getItem("yorkville-furniture-cart");
     if (saved) {
       try {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setCart(JSON.parse(saved));
       } catch (e) {
         console.error("Failed to parse cart data", e);

@@ -25,9 +25,11 @@ export function ProvinceProvider({ children }: { children: React.ReactNode }) {
     if (saved) {
       const province = availableProvinces.find((p) => p.code === saved);
       if (province) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setSelectedProvince(province);
       } else {
         // Default to Ontario
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setSelectedProvince(availableProvinces[0]);
       }
     } else {

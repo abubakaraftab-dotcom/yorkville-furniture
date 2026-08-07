@@ -26,15 +26,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     >
       {/* Image */}
       <div className="relative aspect-[4/3] bg-muted-light overflow-hidden">
-<<<<<<< Updated upstream
-        <Image
-          src={product.images[0] || "/images/placeholders/furniture-placeholder.jpg"}
-          alt={product.title}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-        />
-=======
+
         {product.images[0] ? (
           <Image
             src={product.images[0]}
@@ -50,7 +42,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             </svg>
           </div>
         )}
->>>>>>> Stashed changes
+
 
         {/* Unavailable overlay */}
         {!isAvailable && (

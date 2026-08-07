@@ -107,8 +107,56 @@ export default function ProductsClient({ products, categories }: ProductsClientP
     setSearchQuery("");
   };
 
-  const FilterSidebar = () => (
-    <div className="flex flex-col gap-6">
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <Breadcrumbs items={[{ label: "Products" }]} />
+
+      <div className="flex items-baseline justify-between border-b border-border pb-6 mb-8">
+        <div>
+          <h1 className="text-3xl font-bold font-serif text-foreground">
+            All Products
+          </h1>
+          <p className="text-sm text-muted mt-1">
+            {selectedProvince
+              ? `Showing items available for delivery in ${selectedProvince.name}`
+              : "Showing all items"}
+          </p>
+        </div>
+
+        {/* Sort and mobile toggle */}
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 text-sm">
+            <span className="text-muted hidden sm:inline">Sort:</span>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="bg-transparent border border-border rounded-lg px-3 py-1.5 font-medium focus:ring-1 focus:ring-primary focus:border-primary text-sm cursor-pointer"
+            >
+              <option value="recommended">Recommended</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="name-asc">Name: A to Z</option>
+              <option value="newest">Newest Arrivals</option>
+            </select>
+          </div>
+
+          <button
+            onClick={() => setShowMobileFilters(true)}
+            className="lg:hidden bg-muted-light border border-border p-2 rounded-lg text-foreground hover:bg-border transition-colors cursor-pointer"
+            aria-label="Filter products"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096C6.543 3.232 9.245 3 12 3Z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div className="flex gap-8 items-start">
+        {/* Desktop Sidebar */}
+        <aside className="hidden lg:block w-64 shrink-0 border border-border p-5 rounded-xl bg-white static">
+          <h2 className="text-lg font-bold text-foreground mb-4">Filters</h2>
+          <div className="flex flex-col gap-6">
       {/* Search */}
       <div>
         <h3 className="text-sm font-semibold text-foreground mb-2">Search</h3>
@@ -216,58 +264,6 @@ export default function ProductsClient({ products, categories }: ProductsClientP
         </button>
       )}
     </div>
-  );
-
-  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <Breadcrumbs items={[{ label: "Products" }]} />
-
-      <div className="flex items-baseline justify-between border-b border-border pb-6 mb-8">
-        <div>
-          <h1 className="text-3xl font-bold font-serif text-foreground">
-            All Products
-          </h1>
-          <p className="text-sm text-muted mt-1">
-            {selectedProvince
-              ? `Showing items available for delivery in ${selectedProvince.name}`
-              : "Showing all items"}
-          </p>
-        </div>
-
-        {/* Sort and mobile toggle */}
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 text-sm">
-            <span className="text-muted hidden sm:inline">Sort:</span>
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="bg-transparent border border-border rounded-lg px-3 py-1.5 font-medium focus:ring-1 focus:ring-primary focus:border-primary text-sm cursor-pointer"
-            >
-              <option value="recommended">Recommended</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
-              <option value="name-asc">Name: A to Z</option>
-              <option value="newest">Newest Arrivals</option>
-            </select>
-          </div>
-
-          <button
-            onClick={() => setShowMobileFilters(true)}
-            className="lg:hidden bg-muted-light border border-border p-2 rounded-lg text-foreground hover:bg-border transition-colors cursor-pointer"
-            aria-label="Filter products"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096C6.543 3.232 9.245 3 12 3Z" />
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <div className="flex gap-8 items-start">
-        {/* Desktop Sidebar */}
-        <aside className="hidden lg:block w-64 shrink-0 border border-border p-5 rounded-xl bg-white static">
-          <h2 className="text-lg font-bold text-foreground mb-4">Filters</h2>
-          <FilterSidebar />
         </aside>
 
         {/* Product Grid Area */}
@@ -299,7 +295,114 @@ export default function ProductsClient({ products, categories }: ProductsClientP
                 </svg>
               </button>
             </div>
-            <FilterSidebar />
+            <div className="flex flex-col gap-6">
+      {/* Search */}
+      <div>
+        <h3 className="text-sm font-semibold text-foreground mb-2">Search</h3>
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search products..."
+          className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+        />
+      </div>
+
+      {/* Category Filter */}
+      <div>
+        <h3 className="text-sm font-semibold text-foreground mb-3">Categories</h3>
+        <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
+          {categories
+            .filter((c) => !c.isCustom)
+            .map((cat) => (
+              <div key={cat.slug} className="space-y-1">
+                <label className="flex items-center gap-2.5 text-sm text-foreground/80 cursor-pointer hover:text-foreground">
+                  <input
+                    type="checkbox"
+                    checked={selectedCategories.includes(cat.slug)}
+                    onChange={() => handleCategoryToggle(cat.slug)}
+                    className="rounded border-border text-primary focus:ring-primary w-4 h-4 cursor-pointer"
+                  />
+                  <span className="font-medium">{cat.name}</span>
+                </label>
+                {cat.subcategories && cat.subcategories.length > 0 && (
+                  <div className="ml-6 space-y-1">
+                    {cat.subcategories.map((sub) => (
+                      <label key={sub.slug} className="flex items-center gap-2.5 text-sm text-foreground/70 cursor-pointer hover:text-foreground">
+                        <input
+                          type="checkbox"
+                          checked={selectedCategories.includes(sub.slug)}
+                          onChange={() => handleCategoryToggle(sub.slug)}
+                          className="rounded border-border text-primary focus:ring-primary w-3.5 h-3.5 cursor-pointer"
+                        />
+                        <span>{sub.name}</span>
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+        </div>
+      </div>
+
+      {/* Price Filter */}
+      <div>
+        <h3 className="text-sm font-semibold text-foreground mb-3">Max Price (CAD)</h3>
+        <div className="flex items-center gap-2">
+          <input
+            type="number"
+            min="0"
+            value={maxPrice}
+            onChange={(e) =>
+              setMaxPrice(e.target.value === "" ? "" : Number(e.target.value))
+            }
+            placeholder="No Limit"
+            className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+          />
+          {maxPrice !== "" && (
+            <button
+              onClick={() => setMaxPrice("")}
+              className="text-xs text-muted hover:text-foreground underline cursor-pointer"
+            >
+              Clear
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Colour Filter */}
+      {uniqueColours.length > 0 && (
+        <div>
+          <h3 className="text-sm font-semibold text-foreground mb-3">Colour</h3>
+          <div className="space-y-2">
+            {uniqueColours.map((colour) => (
+              <label key={colour} className="flex items-center gap-2.5 text-sm text-foreground/80 cursor-pointer hover:text-foreground">
+                <input
+                  type="checkbox"
+                  checked={selectedColours.includes(colour)}
+                  onChange={() => handleColourToggle(colour)}
+                  className="rounded border-border text-primary focus:ring-primary w-4 h-4 cursor-pointer"
+                />
+                <span>{colour}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Clear Button */}
+      {(selectedCategories.length > 0 ||
+        maxPrice !== "" ||
+        selectedColours.length > 0 ||
+        searchQuery !== "") && (
+        <button
+          onClick={clearAllFilters}
+          className="mt-2 text-sm font-semibold text-primary hover:text-primary-dark underline cursor-pointer self-start"
+        >
+          Reset All Filters
+        </button>
+      )}
+    </div>
           </div>
         </div>
       )}

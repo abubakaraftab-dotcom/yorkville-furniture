@@ -45,14 +45,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
-<<<<<<< Updated upstream
+
             <Link href="/" className="flex items-center gap-2 mb-4">
               <img src="/images/logo.svg" alt="Yorkville Furniture Logo" className="h-8 w-8 object-contain filter invert brightness-0" />
-=======
-            <Link href="/" className="flex items-center gap-3 mb-4">
-              <LogoIcon className="w-8 h-8" />
-              <span className="text-xl font-bold font-serif">{siteConfig.storeName}</span>
->>>>>>> Stashed changes
+
             </Link>
             <p className="text-white/70 text-sm mb-4">{siteConfig.tagline}</p>
             <div className="space-y-2 text-sm text-white/70">

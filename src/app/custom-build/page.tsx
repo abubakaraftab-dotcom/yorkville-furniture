@@ -99,7 +99,7 @@ export default function CustomBuildPage() {
           Custom Furniture Request / Inquiry
         </h1>
         <p className="text-muted mt-2">
-          Can't find the exact size or specifications you need? Send us your requirements and we will search our warehouses to fetch a custom quote for you.
+          Can&apos;t find the exact size or specifications you need? Send us your requirements and we will search our warehouses to fetch a custom quote for you.
         </p>
       </div>
 
@@ -112,7 +112,7 @@ export default function CustomBuildPage() {
           </div>
           <h2 className="text-2xl font-bold font-serif text-foreground">Request Received!</h2>
           <p className="text-sm text-muted">
-            We will get back to you by email shortly. If WhatsApp hasn't opened, feel free to use the button below to text us directly.
+            We will get back to you by email shortly. If WhatsApp hasn&apos;t opened, feel free to use the button below to text us directly.
           </p>
           <div className="flex flex-col sm:flex-row gap-2 justify-center pt-4">
             <Button href="/products" variant="outline">Browse products</Button>
