@@ -117,7 +117,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         {product.colours.length > 0 && (
           <div>
             <h3 className="text-sm font-semibold text-foreground mb-2">Colour</h3>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap md:flex-nowrap gap-3">
               {product.colours.map((colour) => (
                 <button
                   key={colour.name}

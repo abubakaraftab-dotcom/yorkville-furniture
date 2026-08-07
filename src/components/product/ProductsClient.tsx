@@ -25,11 +25,15 @@ export default function ProductsClient({ products, categories }: ProductsClientP
 
   // Extract unique colours from products
   const uniqueColours = useMemo(() => {
-    const coloursSet = new Set<string>();
+    const coloursMap = new Map<string, { name: string; hex: string }>();
     products.forEach((p) => {
-      p.colours.forEach((c) => coloursSet.add(c.name));
+      p.colours.forEach((c) => {
+        if (!coloursMap.has(c.name)) {
+          coloursMap.set(c.name, c);
+        }
+      });
     });
-    return Array.from(coloursSet);
+    return Array.from(coloursMap.values());
   }, [products]);
 
   // Filter and sort products
@@ -235,17 +239,23 @@ export default function ProductsClient({ products, categories }: ProductsClientP
       {uniqueColours.length > 0 && (
         <div>
           <h3 className="text-sm font-semibold text-foreground mb-3">Colour</h3>
-          <div className="space-y-2">
+          <div className="flex flex-wrap md:flex-nowrap gap-2">
             {uniqueColours.map((colour) => (
-              <label key={colour} className="flex items-center gap-2.5 text-sm text-foreground/80 cursor-pointer hover:text-foreground">
-                <input
-                  type="checkbox"
-                  checked={selectedColours.includes(colour)}
-                  onChange={() => handleColourToggle(colour)}
-                  className="rounded border-border text-primary focus:ring-primary w-4 h-4 cursor-pointer"
+              <button
+                key={colour.name}
+                onClick={() => handleColourToggle(colour.name)}
+                className={`group relative flex items-center gap-1.5 p-1 border rounded-full transition-all cursor-pointer ${
+                  selectedColours.includes(colour.name)
+                    ? "border-primary ring-2 ring-primary/20"
+                    : "border-transparent hover:border-border"
+                }`}
+                title={colour.name}
+              >
+                <span
+                  className="w-8 h-8 rounded-full border border-black/10 inline-block"
+                  style={{ backgroundColor: colour.hex }}
                 />
-                <span>{colour}</span>
-              </label>
+              </button>
             ))}
           </div>
         </div>
@@ -374,17 +384,23 @@ export default function ProductsClient({ products, categories }: ProductsClientP
       {uniqueColours.length > 0 && (
         <div>
           <h3 className="text-sm font-semibold text-foreground mb-3">Colour</h3>
-          <div className="space-y-2">
+          <div className="flex flex-wrap md:flex-nowrap gap-2">
             {uniqueColours.map((colour) => (
-              <label key={colour} className="flex items-center gap-2.5 text-sm text-foreground/80 cursor-pointer hover:text-foreground">
-                <input
-                  type="checkbox"
-                  checked={selectedColours.includes(colour)}
-                  onChange={() => handleColourToggle(colour)}
-                  className="rounded border-border text-primary focus:ring-primary w-4 h-4 cursor-pointer"
+              <button
+                key={colour.name}
+                onClick={() => handleColourToggle(colour.name)}
+                className={`group relative flex items-center gap-1.5 p-1 border rounded-full transition-all cursor-pointer ${
+                  selectedColours.includes(colour.name)
+                    ? "border-primary ring-2 ring-primary/20"
+                    : "border-transparent hover:border-border"
+                }`}
+                title={colour.name}
+              >
+                <span
+                  className="w-8 h-8 rounded-full border border-black/10 inline-block"
+                  style={{ backgroundColor: colour.hex }}
                 />
-                <span>{colour}</span>
-              </label>
+              </button>
             ))}
           </div>
         </div>
