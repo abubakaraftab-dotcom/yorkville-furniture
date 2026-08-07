@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useProvince } from "@/context/ProvinceContext";
 import type { Product } from "@/types/product";
 import type { Category } from "@/types/category";
@@ -12,13 +13,34 @@ interface CategoryProductsClientProps {
   initialProducts: Product[];
 }
 
-export default function CategoryProductsClient({
+function CategoryProductsContent({
   category,
   initialProducts,
 }: CategoryProductsClientProps) {
   const { selectedProvince } = useProvince();
-  const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const subParam = searchParams.get("sub");
 
+  const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(subParam);
+
+  useEffect(() => {
+    if (subParam !== selectedSubcategory) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setSelectedSubcategory(subParam);
+    }
+  }, [subParam, selectedSubcategory]);
+
+  const handleSubcategoryClick = (slug: string | null) => {
+    setSelectedSubcategory(slug);
+    const params = new URLSearchParams(searchParams.toString());
+    if (slug) {
+      params.set("sub", slug);
+    } else {
+      params.delete("sub");
+    }
+    router.replace(`?${params.toString()}`, { scroll: false });
+  };
 
   // Filter products by selected province availability and subcategory
   const filteredProducts = useMemo(() => {
@@ -57,7 +79,7 @@ export default function CategoryProductsClient({
         {category.subcategories && category.subcategories.length > 0 && (
           <div className="mt-6 flex flex-wrap gap-2">
             <button
-              onClick={() => setSelectedSubcategory(null)}
+              onClick={() => handleSubcategoryClick(null)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                 selectedSubcategory === null
                   ? "bg-primary text-white"
@@ -69,7 +91,7 @@ export default function CategoryProductsClient({
             {category.subcategories.map((sub) => (
               <button
                 key={sub.slug}
-                onClick={() => setSelectedSubcategory(sub.slug)}
+                onClick={() => handleSubcategoryClick(sub.slug)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                   selectedSubcategory === sub.slug
                     ? "bg-primary text-white"
@@ -90,5 +112,13 @@ export default function CategoryProductsClient({
         }. Try changing your delivery location in the header.`}
       />
     </div>
+  );
+}
+
+export default function CategoryProductsClient(props: CategoryProductsClientProps) {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CategoryProductsContent {...props} />
+    </Suspense>
   );
 }

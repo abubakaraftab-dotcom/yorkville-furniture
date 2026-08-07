@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import MobileMenu from "./MobileMenu";
+import HeaderCategoriesDropdown from "./HeaderCategoriesDropdown";
+import { getAllCategories } from "@/lib/categories";
 import ProvinceSelector from "./ProvinceSelector";
 import CartIcon from "@/components/cart/CartIcon";
 
@@ -17,6 +19,7 @@ const navLinks = [
 ];
 
 export default function Header() {
+  const categories = getAllCategories();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -31,15 +34,20 @@ export default function Header() {
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              if (link.label === "Categories") {
+                return <HeaderCategoriesDropdown key={link.href} categories={categories} />;
+              }
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Right side: Province + Cart + Mobile Toggle */}
@@ -85,6 +93,7 @@ export default function Header() {
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
         navLinks={navLinks}
+        categories={categories}
       />
     </header>
   );
