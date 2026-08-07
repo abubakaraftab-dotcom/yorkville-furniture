@@ -16,25 +16,6 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
-const LogoIcon = ({ className = "w-8 h-8" }: { className?: string }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 100 100"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="6"
-    className={`${className} text-primary`}
-  >
-    <path
-      d="M50 12 C30 15 22 25 22 48 C22 72 50 88 50 88 C50 88 78 72 78 48 C78 25 70 15 50 12 Z"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path d="M38 34 L45 46 M52 34 L45 46 M45 46 V64" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M56 36 H66 M56 46 H64 M56 36 V64" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -45,8 +26,7 @@ export default function Header() {
           {/* Logo */}
 
           <Link href="/" className="flex items-center gap-2">
-            <img src="/images/logo.svg" alt="Yorkville Furniture Logo" className="h-8 w-8 object-contain" />
-
+            <img src="/images/logo.png" alt="Yorkville Furniture Logo" className="h-10 w-auto object-contain" />
           </Link>
 
           {/* Desktop Nav */}

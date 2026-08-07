@@ -7,7 +7,7 @@ export default function HeroBanner() {
       {/* Background image with hover zoom effect */}
       <div className="absolute inset-0 w-full h-full">
         <Image
-          src="/images/Hero/hero-furniture.jpg"
+          src="/images/hero-banner.jpg"
           alt="Handcrafted Furniture"
           fill
           priority
