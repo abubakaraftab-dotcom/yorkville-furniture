@@ -51,17 +51,13 @@ export default function CartPage() {
             >
               {/* Product Thumbnail */}
               <div className="relative w-24 h-24 sm:w-32 sm:h-32 shrink-0 bg-muted-light rounded-lg overflow-hidden border border-border">
-                {item.image ? (
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 640px) 96px, 128px"
-                  />
-                ) : (
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10" />
-                )}
+                <Image
+                  src={item.image || "/images/placeholders/furniture-placeholder.jpg"}
+                  alt={item.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 96px, 128px"
+                />
               </div>
 
               {/* Product Info & Actions */}
