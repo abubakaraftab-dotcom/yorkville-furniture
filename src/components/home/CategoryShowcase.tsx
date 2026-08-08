@@ -3,7 +3,7 @@ import Image from "next/image";
 import { getAllCategories } from "@/lib/categories";
 
 export default function CategoryShowcase() {
-  const categories = getAllCategories();
+  const categories = getAllCategories().slice(0, 8);
 
   return (
     <section className="py-16 bg-muted-light">
