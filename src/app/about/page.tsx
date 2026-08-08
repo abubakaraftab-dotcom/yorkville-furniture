@@ -21,12 +21,12 @@ export default function AboutPage() {
         </p>
       </div>
 
-      <div className="w-full bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl flex items-center justify-center border border-border/40 py-12 sm:py-20 px-6">
+      <div className="w-full flex items-center justify-center py-8 sm:py-12">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/images/brand/brand-logo-full.png"
           alt="Yorkville Furniture Logo"
-          className="w-auto h-16 sm:h-24 max-w-[80%] object-contain dark:invert dark:mix-blend-screen"
+          className="w-full max-w-xs sm:max-w-md object-contain mix-blend-multiply dark:invert dark:mix-blend-screen"
         />
       </div>
 
