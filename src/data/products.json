@@ -84,7 +84,8 @@
       "priceByProvince": {
         "ON": 1899.99,
         "BC": 1999.99,
-        "AB": 1949.99
+        "AB": 1949.99,
+        "QC": 1949.99
       },
       "compareAtPrice": 2299.99,
       "currency": "CAD",
@@ -106,6 +107,7 @@
       ],
       "provinceAvailability": [
         "ON",
+        "QC",
         "BC",
         "AB"
       ],
@@ -130,7 +132,9 @@
       "categorySlug": "beds",
       "priceByProvince": {
         "ON": 999.99,
-        "QC": 1049.99
+        "QC": 1049.99,
+        "BC": 1099.99,
+        "AB": 1074.99
       },
       "currency": "CAD",
       "sizes": [
@@ -176,7 +180,9 @@
       ],
       "provinceAvailability": [
         "ON",
-        "QC"
+        "QC",
+        "BC",
+        "AB"
       ],
       "tags": [
         "solid-wood"
@@ -272,7 +278,9 @@
       "categorySlug": "coffee-tables",
       "priceByProvince": {
         "ON": 699.99,
-        "BC": 749.99
+        "BC": 749.99,
+        "QC": 749.99,
+        "AB": 774.99
       },
       "currency": "CAD",
       "sizes": [
@@ -314,7 +322,9 @@
       ],
       "provinceAvailability": [
         "ON",
-        "BC"
+        "QC",
+        "BC",
+        "AB"
       ],
       "tags": [
         "bestseller"
@@ -395,7 +405,13 @@
       "featured": true,
       "inStock": true,
       "createdAt": "2026-05-01",
-      "subcategorySlug": "6-drawer-dressers"
+      "subcategorySlug": "6-drawer-dressers",
+      "provinceAvailability": [
+        "ON",
+        "QC",
+        "BC",
+        "AB"
+      ]
     },
     {
       "id": "prod-007",
@@ -407,7 +423,8 @@
       "priceByProvince": {
         "ON": 1199.99,
         "QC": 1249.99,
-        "AB": 1279.99
+        "AB": 1279.99,
+        "BC": 1299.99
       },
       "currency": "CAD",
       "sizes": [
@@ -462,7 +479,13 @@
       "featured": true,
       "inStock": true,
       "createdAt": "2026-05-15",
-      "subcategorySlug": "2-door-wardrobes"
+      "subcategorySlug": "2-door-wardrobes",
+      "provinceAvailability": [
+        "ON",
+        "QC",
+        "BC",
+        "AB"
+      ]
     },
     {
       "id": "prod-008",
@@ -473,7 +496,9 @@
       "categorySlug": "chest-dressers",
       "priceByProvince": {
         "ON": 599.99,
-        "BC": 649.99
+        "BC": 649.99,
+        "QC": 629.99,
+        "AB": 624.99
       },
       "currency": "CAD",
       "sizes": [
@@ -586,7 +611,13 @@
       "deliveryEstimate": "3-7 business days",
       "featured": true,
       "inStock": true,
-      "createdAt": "2026-06-10"
+      "createdAt": "2026-06-10",
+      "provinceAvailability": [
+        "ON",
+        "QC",
+        "BC",
+        "AB"
+      ]
     }
   ]
 }
