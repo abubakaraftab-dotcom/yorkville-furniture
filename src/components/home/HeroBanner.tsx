@@ -3,12 +3,12 @@ import Image from "next/image";
 
 export default function HeroBanner() {
   return (
-    <section className="relative bg-primary overflow-hidden group">
+    <section className="relative overflow-hidden group">
       {/* Background image with hover zoom effect */}
       <div className="absolute inset-0 w-full h-full">
         <Image
-          src="/images/Hero/hero-furniture.jpg"
-          alt="Handcrafted Furniture"
+          src="/images/hero-banner.jpg"
+          alt="Hero Banner"
           fill
           priority
           className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
