@@ -2,18 +2,16 @@
 > yorkville-furniture@0.1.0 dev
 > next dev
 
-⚠ Port 3000 is in use by an unknown process, using available port 3001 instead.
 ▲ Next.js 16.3.0 (Turbopack)
 - Local:         http://localhost:3000
 - Network:       http://192.168.0.2:3000
-✓ Ready in 593ms
-✓ Running next.config.ts took 47ms
+✓ Ready in 840ms
+✓ Running next.config.ts took 92ms
 
 ○ Compiling / ...
- GET / 200 in 5.2s (next.js: 4.4s, application-code: 789ms)
-⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
- GET /products/round-marble-coffee-table 200 in 2.0s (next.js: 922ms, generate-params: 1048ms, application-code: 76ms)
-[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
- GET /cart 200 in 407ms (next.js: 298ms, application-code: 109ms)
-[browser] Image with src "/images/products/round-marble-coffee-table-main.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+ GET / 200 in 6.6s (next.js: 5.9s, application-code: 707ms)
+ GET / 200 in 136ms (next.js: 11ms, application-code: 125ms)
+ GET / 200 in 115ms (next.js: 5ms, application-code: 110ms)
+ GET / 200 in 118ms (next.js: 4ms, application-code: 114ms)
+ GET / 200 in 116ms (next.js: 4ms, application-code: 112ms)
+ GET / 200 in 116ms (next.js: 4ms, application-code: 112ms)
