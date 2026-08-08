@@ -29,6 +29,10 @@
       ],
       "colours": [
         {
+          "name": "Oak",
+          "hex": "#C19A6B"
+        },
+        {
           "name": "Oakwood",
           "hex": "#B08B57"
         },
@@ -39,6 +43,14 @@
         {
           "name": "White",
           "hex": "#FFFFFF"
+        },
+        {
+          "name": "Cherry",
+          "hex": "#7B3F3F"
+        },
+        {
+          "name": "Auburn",
+          "hex": "#8B4513"
         }
       ],
       "images": [
@@ -141,6 +153,22 @@
         {
           "name": "Auburn",
           "hex": "#8B4513"
+        },
+        {
+          "name": "White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Loft",
+          "hex": "#D8D2C4"
+        },
+        {
+          "name": "Black Oak",
+          "hex": "#22201F"
+        },
+        {
+          "name": "Cherry",
+          "hex": "#7B3F3F"
         }
       ],
       "images": [
@@ -201,6 +229,18 @@
         {
           "name": "Black",
           "hex": "#1A1A1A"
+        },
+        {
+          "name": "Silver",
+          "hex": "#C0C0C0"
+        },
+        {
+          "name": "Red",
+          "hex": "#C41E3A"
+        },
+        {
+          "name": "Pink",
+          "hex": "#FF69B4"
         }
       ],
       "images": [
@@ -255,6 +295,18 @@
         {
           "name": "Black",
           "hex": "#1A1A1A"
+        },
+        {
+          "name": "Silver",
+          "hex": "#C0C0C0"
+        },
+        {
+          "name": "White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Loft",
+          "hex": "#D8D2C4"
         }
       ],
       "images": [
@@ -314,6 +366,18 @@
         {
           "name": "Black",
           "hex": "#1A1A1A"
+        },
+        {
+          "name": "Shadow Oak",
+          "hex": "#5C4A3D"
+        },
+        {
+          "name": "Smoke Wood",
+          "hex": "#6E6259"
+        },
+        {
+          "name": "Maple",
+          "hex": "#E8C39E"
         }
       ],
       "images": [
@@ -370,6 +434,18 @@
         {
           "name": "Smoke Wood",
           "hex": "#6E6259"
+        },
+        {
+          "name": "Black Oak",
+          "hex": "#22201F"
+        },
+        {
+          "name": "Almond",
+          "hex": "#EAD9C4"
+        },
+        {
+          "name": "Cherry",
+          "hex": "#7B3F3F"
         }
       ],
       "images": [
@@ -415,6 +491,22 @@
         {
           "name": "Chocolate",
           "hex": "#4B2E1E"
+        },
+        {
+          "name": "Auburn",
+          "hex": "#8B4513"
+        },
+        {
+          "name": "Oak",
+          "hex": "#C19A6B"
+        },
+        {
+          "name": "Maple",
+          "hex": "#E8C39E"
+        },
+        {
+          "name": "Black Oak",
+          "hex": "#22201F"
         }
       ],
       "images": [
@@ -467,6 +559,18 @@
         {
           "name": "White",
           "hex": "#FFFFFF"
+        },
+        {
+          "name": "Loft",
+          "hex": "#D8D2C4"
+        },
+        {
+          "name": "Shadow Oak",
+          "hex": "#5C4A3D"
+        },
+        {
+          "name": "Smoke Wood",
+          "hex": "#6E6259"
         }
       ],
       "images": [
