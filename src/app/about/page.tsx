@@ -21,10 +21,13 @@ export default function AboutPage() {
         </p>
       </div>
 
-      <div className="aspect-[16/9] w-full bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl flex items-center justify-center border border-border/40 select-none space-x-6 sm:space-x-12">
-        <span className="text-6xl sm:text-7xl">🛋️</span>
-        <span className="text-6xl sm:text-7xl">📦</span>
-        <span className="text-6xl sm:text-7xl">🏢</span>
+      <div className="w-full flex items-center justify-center py-8 sm:py-12">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/brand/brand-logo-full.png"
+          alt="Yorkville Furniture Logo"
+          className="w-full max-w-xs sm:max-w-md object-contain mix-blend-multiply dark:invert dark:mix-blend-screen"
+        />
       </div>
 
       <div className="space-y-6 text-foreground/80 leading-relaxed font-sans text-sm sm:text-base">
@@ -42,6 +45,23 @@ export default function AboutPage() {
         <p>
           We believe building furniture is a personal relationship. To make it completely stress-free, we deliver using our own local vans across Ontario, Quebec, British Columbia, and Alberta. You review the build at your door when it arrives, and only pay (via cash, credit, or debit) once you are 100% satisfied.
         </p>
+      </div>
+
+      <div className="bg-secondary/10 rounded-2xl p-8 sm:p-10 border border-border/50 my-10">
+        <h2 className="text-2xl font-bold font-serif text-foreground mb-6">Message from Leadership</h2>
+        <blockquote className="text-lg sm:text-xl text-foreground/90 italic font-serif leading-relaxed mb-8 border-l-4 border-primary/40 pl-6">
+          &quot;At Yorkville Furniture, our mission is to bring exceptional, direct-to-warehouse quality furniture into Canadian homes without the traditional retail markups. We know that furnishing your home is a significant decision, which is why we&apos;ve built our entire business around customer trust and complete transparency. Through our risk-free cash-on-delivery service, we ensure you can inspect and fall in love with your new pieces before making any payment. We are committed to making your experience as comfortable as the furniture we deliver.&quot;
+        </blockquote>
+        <div className="flex flex-col sm:flex-row gap-6 sm:gap-12">
+          <div>
+            <p className="font-bold text-foreground text-base">Kainat Sheikh</p>
+            <p className="text-muted text-sm uppercase tracking-wider font-semibold mt-1">Chief Executive Officer</p>
+          </div>
+          <div>
+            <p className="font-bold text-foreground text-base">Farwa Sheikh</p>
+            <p className="text-muted text-sm uppercase tracking-wider font-semibold mt-1">Chief Operating Officer</p>
+          </div>
+        </div>
       </div>
 
       <div className="border-t border-border pt-8 text-center">

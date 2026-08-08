@@ -1,9 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
-import { getFeaturedCategories } from "@/lib/categories";
+import { getAllCategories } from "@/lib/categories";
 
 export default function CategoryShowcase() {
-  const categories = getFeaturedCategories().slice(0, 8);
+  const categories = getAllCategories().slice(0, 8);
 
   return (
     <section className="py-16 bg-muted-light">
@@ -13,7 +13,7 @@ export default function CategoryShowcase() {
           <p className="text-muted mt-2">Find the perfect piece for every room</p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
           {categories.map((category) => (
             <Link
               key={category.slug}
