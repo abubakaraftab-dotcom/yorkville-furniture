@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Category } from "@/types/category";
+import { Province } from "@/types/province";
 import { useRouter } from "next/navigation";
 
 interface MobileMenuProps {
@@ -10,11 +11,13 @@ interface MobileMenuProps {
   onClose: () => void;
   navLinks: { href: string; label: string }[];
   categories?: Category[];
+  provinces?: Province[];
 }
 
-export default function MobileMenu({ isOpen, onClose, navLinks, categories = [] }: MobileMenuProps) {
+export default function MobileMenu({ isOpen, onClose, navLinks, categories = [], provinces = [] }: MobileMenuProps) {
   const router = useRouter();
   const [categoriesExpanded, setCategoriesExpanded] = useState(false);
+  const [provincesExpanded, setProvincesExpanded] = useState(false);
   const [expandedCategorySlug, setExpandedCategorySlug] = useState<string | null>(null);
 
   useEffect(() => {
@@ -25,6 +28,8 @@ export default function MobileMenu({ isOpen, onClose, navLinks, categories = [] 
       // Reset expansions when closed
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setCategoriesExpanded(false);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setProvincesExpanded(false);
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setExpandedCategorySlug(null);
     }
@@ -154,6 +159,56 @@ export default function MobileMenu({ isOpen, onClose, navLinks, categories = [] 
                                   </div>
                                 )}
                               </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </li>
+                  );
+                }
+
+                if (link.label === "Provinces" && provinces.length > 0) {
+                  return (
+                    <li key="provinces-accordion">
+                      <button
+                        onClick={() => setProvincesExpanded(!provincesExpanded)}
+                        className="w-full flex items-center justify-between px-4 py-3 text-foreground hover:bg-muted-light/50 rounded-lg transition-colors font-medium text-left"
+                      >
+                        Provinces
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className={`w-5 h-5 transition-transform duration-200 text-muted ${provincesExpanded ? "rotate-180" : ""}`}
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
+                      </button>
+
+                      {provincesExpanded && (
+                        <div className="mt-1 ml-2 border-l-2 border-border pl-2 space-y-1 flex flex-col">
+                          <Link
+                            href="/provinces"
+                            onClick={onClose}
+                            className="block px-4 py-2 text-sm font-semibold text-primary hover:bg-muted-light/50 rounded-md transition-colors"
+                          >
+                            All Provinces
+                          </Link>
+                          {provinces.map((prov) => {
+                            const provLink = `/provinces/${prov.slug}`;
+                            return (
+                              <button
+                                key={prov.slug}
+                                onClick={() => {
+                                  onClose();
+                                  router.push(provLink);
+                                }}
+                                className="w-full flex items-center justify-between px-4 py-2 text-sm text-foreground hover:bg-muted-light/50 rounded-md transition-colors text-left"
+                              >
+                                {prov.name}
+                              </button>
                             );
                           })}
                         </div>
