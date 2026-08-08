@@ -343,7 +343,8 @@
       "deliveryEstimate": "5-10 business days",
       "featured": true,
       "inStock": true,
-      "createdAt": "2026-05-01"
+      "createdAt": "2026-05-01",
+      "subcategorySlug": "6-drawer-dressers"
     },
     {
       "id": "prod-007",
@@ -351,7 +352,7 @@
       "title": "Modern Minimalist Wardrobe",
       "description": "A clean-lined clothing wardrobe featuring full-length hanging rail and adjustable wire shelving partitions. Its soft-close doors hide your clothing and storage boxes, maintaining a sleek appearance in your bedroom.",
       "shortDescription": "Elegant wardrobe with hanging rail and adjustable shelves.",
-      "categorySlug": "dressers",
+      "categorySlug": "wardrobes",
       "priceByProvince": {
         "ON": 1199.99,
         "QC": 1249.99,
@@ -397,7 +398,8 @@
       "deliveryEstimate": "7-14 business days",
       "featured": true,
       "inStock": true,
-      "createdAt": "2026-05-15"
+      "createdAt": "2026-05-15",
+      "subcategorySlug": "2-door-wardrobes"
     },
     {
       "id": "prod-008",
@@ -405,7 +407,7 @@
       "title": "Premium 5-Drawer Chest",
       "description": "A tall, space-saving chest of drawers ideal for compact bedrooms or walk-in closets. Features five vertically stacked drawers with integrated handle cutouts.",
       "shortDescription": "Space-saving vertical chest of drawers.",
-      "categorySlug": "dressers",
+      "categorySlug": "chest-dressers",
       "priceByProvince": {
         "ON": 599.99,
         "BC": 649.99
@@ -441,7 +443,8 @@
       "deliveryEstimate": "5-10 business days",
       "featured": false,
       "inStock": true,
-      "createdAt": "2026-06-01"
+      "createdAt": "2026-06-01",
+      "subcategorySlug": "5-drawer-chest"
     },
     {
       "id": "prod-009",

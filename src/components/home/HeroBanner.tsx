@@ -7,14 +7,12 @@ export default function HeroBanner() {
       {/* Background image with hover zoom effect */}
       <div className="absolute inset-0 w-full h-full">
         <Image
-          src="/images/hero-banner.jpg"
+          src="/images/Hero/hero-furniture.jpg"
           alt="Handcrafted Furniture"
           fill
           priority
           className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
         />
-        {/* Dark overlay for text readability */}
-        <div className="absolute inset-0 bg-primary/80" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 relative z-10">
@@ -40,7 +38,7 @@ export default function HeroBanner() {
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-accent">
                 <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clipRule="evenodd" />
               </svg>
-              Free Delivery $500+
+              Direct Factory Prices
             </span>
             <span className="flex items-center gap-1.5">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-accent">
@@ -53,6 +51,12 @@ export default function HeroBanner() {
                 <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clipRule="evenodd" />
               </svg>
               Quality Guaranteed
+            </span>
+            <span className="flex items-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-accent">
+                <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clipRule="evenodd" />
+              </svg>
+              No Taxes
             </span>
           </div>
         </div>
