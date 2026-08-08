@@ -5,11 +5,14 @@
 ▲ Next.js 16.3.0 (Turbopack)
 - Local:         http://localhost:3000
 - Network:       http://192.168.0.2:3000
-✓ Ready in 584ms
-✓ Running next.config.ts took 49ms
+✓ Ready in 593ms
+✓ Running next.config.ts took 47ms
 
- GET /products 200 in 3.7s (next.js: 3.3s, application-code: 429ms)
-[browser] Image with src "https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&q=80&w=800" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
- GET /products/oak-dining-table-6-seater 200 in 2.2s (next.js: 978ms, generate-params: 1186ms, application-code: 66ms)
+○ Compiling / ...
+ GET / 200 in 5.2s (next.js: 4.4s, application-code: 789ms)
+⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ GET /products/round-marble-coffee-table 200 in 2.0s (next.js: 922ms, generate-params: 1048ms, application-code: 76ms)
 [browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /cart 200 in 407ms (next.js: 298ms, application-code: 109ms)
+[browser] Image with src "/images/products/round-marble-coffee-table-main.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
