@@ -1,0 +1,13 @@
+--- src/components/layout/HeaderCategoriesDropdown.tsx
++++ src/components/layout/HeaderCategoriesDropdown.tsx
+@@ -47,8 +47,8 @@
+       </button>
+
+       {isOpen && (
+-        <div className="absolute top-full left-0 pt-4 w-[400px] z-50">
+-          <div className="max-h-[70vh] overflow-y-auto bg-white border border-border rounded-xl shadow-xl pointer-events-auto">
++        <div className="absolute top-full left-0 pt-4 w-[400px] z-50" style={{ pointerEvents: 'auto' }}>
++          <div className="max-h-[70vh] overflow-y-auto bg-white border border-border rounded-xl shadow-xl">
+           <div className="p-2 border-b border-border flex justify-between items-center bg-muted-light/30 sticky top-0 z-10 backdrop-blur-sm">
+              <span className="font-semibold px-2">All Categories</span>
+              <Link
