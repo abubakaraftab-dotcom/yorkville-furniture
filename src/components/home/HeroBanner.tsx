@@ -22,8 +22,8 @@ export default function HeroBanner() {
             <span className="text-accent">Canadian Homes</span>
           </h1>
 
-          <div className="mt-6 p-6 rounded-xl bg-white/80 backdrop-blur-sm shadow-lg max-w-2xl">
-            <p className="text-lg text-gray-900 font-medium">
+          <div className="mt-6 max-w-2xl">
+            <p className="text-lg text-black font-medium [text-shadow:0_1px_3px_rgba(0,0,0,0.4)]">
               Quality furniture delivered to your door. Cash on delivery available
               across Ontario, Quebec, British Columbia, and Alberta.
             </p>
@@ -35,7 +35,7 @@ export default function HeroBanner() {
                 Custom Sizes
               </Button>
             </div>
-            <div className="flex flex-wrap items-center gap-6 mt-6 text-sm text-gray-800 font-medium">
+            <div className="flex flex-wrap items-center gap-6 mt-6 text-sm text-black font-medium [text-shadow:0_1px_3px_rgba(0,0,0,0.4)]">
               <span className="flex items-center gap-1.5">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-accent">
                 <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clipRule="evenodd" />
