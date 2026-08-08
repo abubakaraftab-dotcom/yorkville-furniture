@@ -21,10 +21,13 @@ export default function AboutPage() {
         </p>
       </div>
 
-      <div className="aspect-[16/9] w-full bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl flex items-center justify-center border border-border/40 select-none space-x-6 sm:space-x-12">
-        <span className="text-6xl sm:text-7xl">🛋️</span>
-        <span className="text-6xl sm:text-7xl">📦</span>
-        <span className="text-6xl sm:text-7xl">🏢</span>
+      <div className="w-full bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl flex items-center justify-center border border-border/40 py-12 sm:py-20 px-6">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/brand/brand-logo-full.png"
+          alt="Yorkville Furniture Logo"
+          className="w-auto h-16 sm:h-24 max-w-[80%] object-contain dark:invert dark:mix-blend-screen"
+        />
       </div>
 
       <div className="space-y-6 text-foreground/80 leading-relaxed font-sans text-sm sm:text-base">
