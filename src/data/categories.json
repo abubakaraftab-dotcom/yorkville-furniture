@@ -9,8 +9,28 @@
       "featured": true,
       "subcategories": [
         {
-          "slug": "4-6-7-8-10-12-drawer-dressers",
-          "name": "4/6/7/8/10/12 Drawer Dressers"
+          "slug": "4-drawer-dressers",
+          "name": "4 Drawer Dressers"
+        },
+        {
+          "slug": "6-drawer-dressers",
+          "name": "6 Drawer Dressers"
+        },
+        {
+          "slug": "7-drawer-dressers",
+          "name": "7 Drawer Dressers"
+        },
+        {
+          "slug": "8-drawer-dressers",
+          "name": "8 Drawer Dressers"
+        },
+        {
+          "slug": "10-drawer-dressers",
+          "name": "10 Drawer Dressers"
+        },
+        {
+          "slug": "12-drawer-dressers",
+          "name": "12 Drawer Dressers"
         },
         {
           "slug": "customize-dresser",
@@ -27,8 +47,32 @@
       "featured": true,
       "subcategories": [
         {
-          "slug": "3-4-5-6-7-8-9-drawer-chest",
-          "name": "3/4/5/6/7/8/9 Drawer Chest"
+          "slug": "3-drawer-chest",
+          "name": "3 Drawer Chest"
+        },
+        {
+          "slug": "4-drawer-chest",
+          "name": "4 Drawer Chest"
+        },
+        {
+          "slug": "5-drawer-chest",
+          "name": "5 Drawer Chest"
+        },
+        {
+          "slug": "6-drawer-chest",
+          "name": "6 Drawer Chest"
+        },
+        {
+          "slug": "7-drawer-chest",
+          "name": "7 Drawer Chest"
+        },
+        {
+          "slug": "8-drawer-chest",
+          "name": "8 Drawer Chest"
+        },
+        {
+          "slug": "9-drawer-chest",
+          "name": "9 Drawer Chest"
         },
         {
           "slug": "customize-chest-dresser",
@@ -45,8 +89,40 @@
       "featured": true,
       "subcategories": [
         {
-          "slug": "2-3-4-5-6-7-8-9-10-door-wardrobes",
-          "name": "2/3/4/5/6/7/8/9/10 Door Wardrobes"
+          "slug": "2-door-wardrobes",
+          "name": "2 Door Wardrobes"
+        },
+        {
+          "slug": "3-door-wardrobes",
+          "name": "3 Door Wardrobes"
+        },
+        {
+          "slug": "4-door-wardrobes",
+          "name": "4 Door Wardrobes"
+        },
+        {
+          "slug": "5-door-wardrobes",
+          "name": "5 Door Wardrobes"
+        },
+        {
+          "slug": "6-door-wardrobes",
+          "name": "6 Door Wardrobes"
+        },
+        {
+          "slug": "7-door-wardrobes",
+          "name": "7 Door Wardrobes"
+        },
+        {
+          "slug": "8-door-wardrobes",
+          "name": "8 Door Wardrobes"
+        },
+        {
+          "slug": "9-door-wardrobes",
+          "name": "9 Door Wardrobes"
+        },
+        {
+          "slug": "10-door-wardrobes",
+          "name": "10 Door Wardrobes"
         },
         {
           "slug": "customize-wardrobes",
@@ -63,8 +139,24 @@
       "featured": true,
       "subcategories": [
         {
-          "slug": "2-3-4-5-6-drawer-sidetables",
-          "name": "2/3/4/5/6 Drawer Sidetables"
+          "slug": "2-drawer-sidetables",
+          "name": "2 Drawer Sidetables"
+        },
+        {
+          "slug": "3-drawer-sidetables",
+          "name": "3 Drawer Sidetables"
+        },
+        {
+          "slug": "4-drawer-sidetables",
+          "name": "4 Drawer Sidetables"
+        },
+        {
+          "slug": "5-drawer-sidetables",
+          "name": "5 Drawer Sidetables"
+        },
+        {
+          "slug": "6-drawer-sidetables",
+          "name": "6 Drawer Sidetables"
         },
         {
           "slug": "customize-side-tables",
@@ -81,8 +173,32 @@
       "featured": true,
       "subcategories": [
         {
-          "slug": "3-4-5-6-7-8-10-drawer-dresser-mirror",
-          "name": "3/4/5/6/7/8/10 Drawer Dresser Mirror"
+          "slug": "3-drawer-dresser-mirror",
+          "name": "3 Drawer Dresser Mirror"
+        },
+        {
+          "slug": "4-drawer-dresser-mirror",
+          "name": "4 Drawer Dresser Mirror"
+        },
+        {
+          "slug": "5-drawer-dresser-mirror",
+          "name": "5 Drawer Dresser Mirror"
+        },
+        {
+          "slug": "6-drawer-dresser-mirror",
+          "name": "6 Drawer Dresser Mirror"
+        },
+        {
+          "slug": "7-drawer-dresser-mirror",
+          "name": "7 Drawer Dresser Mirror"
+        },
+        {
+          "slug": "8-drawer-dresser-mirror",
+          "name": "8 Drawer Dresser Mirror"
+        },
+        {
+          "slug": "10-drawer-dresser-mirror",
+          "name": "10 Drawer Dresser Mirror"
         },
         {
           "slug": "customize-dresser-mirror",
