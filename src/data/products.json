@@ -42,7 +42,7 @@
         }
       ],
       "images": [
-        "/images/products/oak-dining-table-6-seater/main.jpg"
+        "https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&q=80&w=800"
       ],
       "provinceAvailability": [
         "ON",
@@ -54,10 +54,6 @@
         "bestseller",
         "solid-wood"
       ],
-
-      "images": ["https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&q=80&w=800"],
-      "tags": ["bestseller", "solid-wood"],
-
       "material": "Solid Oak Wood",
       "weight": "45 kg",
       "assemblyRequired": true,
@@ -107,7 +103,7 @@
         }
       ],
       "images": [
-        "/images/products/modern-grey-sectional-sofa/main.jpg"
+        "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=800"
       ],
       "provinceAvailability": [
         "ON",
@@ -118,10 +114,6 @@
         "bestseller",
         "new-arrival"
       ],
-
-      "images": ["https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=800"],
-      "tags": ["bestseller", "new-arrival"],
-
       "material": "Premium Fabric, Solid Wood Frame",
       "weight": "78 kg",
       "assemblyRequired": false,
@@ -136,13 +128,11 @@
       "title": "Walnut Queen Bed Frame",
       "description": "Elegant queen-size bed frame crafted from solid walnut wood. Features a high headboard with subtle panel detailing and solid slat support. No box spring needed.",
       "shortDescription": "Solid walnut queen bed frame with headboard.",
-
       "categorySlug": "beds",
       "priceByProvince": {
         "ON": 999.99,
         "QC": 1049.99
       },
-
       "currency": "CAD",
       "sizes": [
         {
@@ -167,7 +157,7 @@
         }
       ],
       "images": [
-        "/images/products/walnut-queen-bed-frame/main.jpg"
+        "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&q=80&w=800"
       ],
       "provinceAvailability": [
         "ON",
@@ -176,10 +166,6 @@
       "tags": [
         "solid-wood"
       ],
-
-      "images": ["https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&q=80&w=800"],
-      "tags": ["solid-wood"],
-
       "material": "Solid Walnut Wood",
       "weight": "55 kg",
       "assemblyRequired": true,
@@ -231,7 +217,7 @@
         }
       ],
       "images": [
-        "/images/products/minimalist-work-desk/main.jpg"
+        "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&q=80&w=800"
       ],
       "provinceAvailability": [
         "ON",
@@ -242,10 +228,6 @@
       "tags": [
         "new-arrival"
       ],
-
-      "images": ["https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&q=80&w=800"],
-      "tags": ["new-arrival"],
-
       "material": "Engineered Wood, Powder-Coated Steel",
       "weight": "25 kg",
       "assemblyRequired": true,
@@ -289,7 +271,7 @@
         }
       ],
       "images": [
-        "/images/products/round-marble-coffee-table/main.jpg"
+        "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&q=80&w=800"
       ],
       "provinceAvailability": [
         "ON",
@@ -298,10 +280,6 @@
       "tags": [
         "bestseller"
       ],
-
-      "images": ["https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&q=80&w=800"],
-      "tags": ["bestseller"],
-
       "material": "Genuine Marble, Brushed Metal",
       "weight": "32 kg",
       "assemblyRequired": false,
@@ -326,23 +304,47 @@
       "compareAtPrice": 999.99,
       "currency": "CAD",
       "sizes": [
-        { "label": "Standard (160cm x 50cm)", "dimensions": "160cm L x 50cm W x 78cm H", "priceAdjustment": 0 },
-        { "label": "Large (180cm x 55cm)", "dimensions": "180cm L x 55cm W x 78cm H", "priceAdjustment": 150 }
+        {
+          "label": "Standard (160cm x 50cm)",
+          "dimensions": "160cm L x 50cm W x 78cm H",
+          "priceAdjustment": 0
+        },
+        {
+          "label": "Large (180cm x 55cm)",
+          "dimensions": "180cm L x 55cm W x 78cm H",
+          "priceAdjustment": 150
+        }
       ],
       "colours": [
-        { "name": "Matte White", "hex": "#FFFFFF" },
-        { "name": "Oak Finish", "hex": "#D4A574" },
-        { "name": "Charcoal Black", "hex": "#2C2C2C" }
+        {
+          "name": "Matte White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Oak Finish",
+          "hex": "#D4A574"
+        },
+        {
+          "name": "Charcoal Black",
+          "hex": "#2C2C2C"
+        }
       ],
-      "images": ["https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=800"],
-      "tags": ["featured", "bedroom", "storage"],
+      "images": [
+        "https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=800"
+      ],
+      "tags": [
+        "featured",
+        "bedroom",
+        "storage"
+      ],
       "material": "Premium Engineered Board & Metal Hardware",
       "weight": "48 kg",
       "assemblyRequired": true,
       "deliveryEstimate": "5-10 business days",
       "featured": true,
       "inStock": true,
-      "createdAt": "2026-05-01"
+      "createdAt": "2026-05-01",
+      "subcategorySlug": "6-drawer-dressers"
     },
     {
       "id": "prod-007",
@@ -350,7 +352,7 @@
       "title": "Modern Minimalist Wardrobe",
       "description": "A clean-lined clothing wardrobe featuring full-length hanging rail and adjustable wire shelving partitions. Its soft-close doors hide your clothing and storage boxes, maintaining a sleek appearance in your bedroom.",
       "shortDescription": "Elegant wardrobe with hanging rail and adjustable shelves.",
-      "categorySlug": "dressers",
+      "categorySlug": "wardrobes",
       "priceByProvince": {
         "ON": 1199.99,
         "QC": 1249.99,
@@ -358,23 +360,46 @@
       },
       "currency": "CAD",
       "sizes": [
-        { "label": "Twin Door (100cm)", "dimensions": "100cm L x 60cm W x 200cm H", "priceAdjustment": 0 },
-        { "label": "Triple Door (150cm)", "dimensions": "150cm L x 60cm W x 200cm H", "priceAdjustment": 350 }
+        {
+          "label": "Twin Door (100cm)",
+          "dimensions": "100cm L x 60cm W x 200cm H",
+          "priceAdjustment": 0
+        },
+        {
+          "label": "Triple Door (150cm)",
+          "dimensions": "150cm L x 60cm W x 200cm H",
+          "priceAdjustment": 350
+        }
       ],
       "colours": [
-        { "name": "Matte White", "hex": "#FFFFFF" },
-        { "name": "Natural Oak", "hex": "#D4A574" },
-        { "name": "Charcoal Grey", "hex": "#4A4A4A" }
+        {
+          "name": "Matte White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Natural Oak",
+          "hex": "#D4A574"
+        },
+        {
+          "name": "Charcoal Grey",
+          "hex": "#4A4A4A"
+        }
       ],
-      "images": ["https://images.unsplash.com/photo-1558882224-cca166733365?auto=format&fit=crop&q=80&w=800"],
-      "tags": ["bedroom", "wardrobe"],
+      "images": [
+        "https://images.unsplash.com/photo-1558882224-cca166733365?auto=format&fit=crop&q=80&w=800"
+      ],
+      "tags": [
+        "bedroom",
+        "wardrobe"
+      ],
       "material": "Reinforced Structural Board",
       "weight": "85 kg",
       "assemblyRequired": true,
       "deliveryEstimate": "7-14 business days",
       "featured": true,
       "inStock": true,
-      "createdAt": "2026-05-15"
+      "createdAt": "2026-05-15",
+      "subcategorySlug": "2-door-wardrobes"
     },
     {
       "id": "prod-008",
@@ -382,28 +407,44 @@
       "title": "Premium 5-Drawer Chest",
       "description": "A tall, space-saving chest of drawers ideal for compact bedrooms or walk-in closets. Features five vertically stacked drawers with integrated handle cutouts.",
       "shortDescription": "Space-saving vertical chest of drawers.",
-      "categorySlug": "dressers",
+      "categorySlug": "chest-dressers",
       "priceByProvince": {
         "ON": 599.99,
         "BC": 649.99
       },
       "currency": "CAD",
       "sizes": [
-        { "label": "Standard (80cm x 40cm)", "dimensions": "80cm L x 40cm W x 110cm H", "priceAdjustment": 0 }
+        {
+          "label": "Standard (80cm x 40cm)",
+          "dimensions": "80cm L x 40cm W x 110cm H",
+          "priceAdjustment": 0
+        }
       ],
       "colours": [
-        { "name": "White", "hex": "#FFFFFF" },
-        { "name": "Espresso Brown", "hex": "#3E2723" }
+        {
+          "name": "White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Espresso Brown",
+          "hex": "#3E2723"
+        }
       ],
-      "images": ["https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=800"],
-      "tags": ["bestseller", "bedroom"],
+      "images": [
+        "https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=800"
+      ],
+      "tags": [
+        "bestseller",
+        "bedroom"
+      ],
       "material": "Durable Wood Composite",
       "weight": "36 kg",
       "assemblyRequired": true,
       "deliveryEstimate": "5-10 business days",
       "featured": false,
       "inStock": true,
-      "createdAt": "2026-06-01"
+      "createdAt": "2026-06-01",
+      "subcategorySlug": "5-drawer-chest"
     },
     {
       "id": "prod-009",
@@ -421,15 +462,33 @@
       "compareAtPrice": 299.99,
       "currency": "CAD",
       "sizes": [
-        { "label": "Standard (50cm)", "dimensions": "50cm L x 40cm W x 55cm H", "priceAdjustment": 0 }
+        {
+          "label": "Standard (50cm)",
+          "dimensions": "50cm L x 40cm W x 55cm H",
+          "priceAdjustment": 0
+        }
       ],
       "colours": [
-        { "name": "Oak Veneer", "hex": "#D4A574" },
-        { "name": "Walnut Veneer", "hex": "#5C4033" },
-        { "name": "Solid White", "hex": "#FFFFFF" }
+        {
+          "name": "Oak Veneer",
+          "hex": "#D4A574"
+        },
+        {
+          "name": "Walnut Veneer",
+          "hex": "#5C4033"
+        },
+        {
+          "name": "Solid White",
+          "hex": "#FFFFFF"
+        }
       ],
-      "images": ["https://images.unsplash.com/photo-1532372320978-9b4d6a3a854c?auto=format&fit=crop&q=80&w=800"],
-      "tags": ["new-arrival", "bedroom"],
+      "images": [
+        "https://images.unsplash.com/photo-1532372320978-9b4d6a3a854c?auto=format&fit=crop&q=80&w=800"
+      ],
+      "tags": [
+        "new-arrival",
+        "bedroom"
+      ],
       "material": "Engineered Board, Hardwood Legs",
       "weight": "12 kg",
       "assemblyRequired": false,
