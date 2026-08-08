@@ -47,6 +47,23 @@ export default function AboutPage() {
         </p>
       </div>
 
+      <div className="bg-secondary/10 rounded-2xl p-8 sm:p-10 border border-border/50 my-10">
+        <h2 className="text-2xl font-bold font-serif text-foreground mb-6">Message from Leadership</h2>
+        <blockquote className="text-lg sm:text-xl text-foreground/90 italic font-serif leading-relaxed mb-8 border-l-4 border-primary/40 pl-6">
+          &quot;At Yorkville Furniture, our mission is to bring exceptional, direct-to-warehouse quality furniture into Canadian homes without the traditional retail markups. We know that furnishing your home is a significant decision, which is why we&apos;ve built our entire business around customer trust and complete transparency. Through our risk-free cash-on-delivery service, we ensure you can inspect and fall in love with your new pieces before making any payment. We are committed to making your experience as comfortable as the furniture we deliver.&quot;
+        </blockquote>
+        <div className="flex flex-col sm:flex-row gap-6 sm:gap-12">
+          <div>
+            <p className="font-bold text-foreground text-base">Kainat Sheikh</p>
+            <p className="text-muted text-sm uppercase tracking-wider font-semibold mt-1">Chief Executive Officer</p>
+          </div>
+          <div>
+            <p className="font-bold text-foreground text-base">Farwa Sheikh</p>
+            <p className="text-muted text-sm uppercase tracking-wider font-semibold mt-1">Chief Operating Officer</p>
+          </div>
+        </div>
+      </div>
+
       <div className="border-t border-border pt-8 text-center">
         <h3 className="font-bold text-lg text-foreground mb-4">Want something custom built?</h3>
         <Button href="/custom-build">Design Request Form &rarr;</Button>
