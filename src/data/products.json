@@ -29,16 +29,16 @@
       ],
       "colours": [
         {
-          "name": "Natural Oak",
-          "hex": "#D4A574"
+          "name": "Oakwood",
+          "hex": "#B08B57"
         },
         {
-          "name": "Dark Walnut",
-          "hex": "#5C4033"
+          "name": "Chocolate",
+          "hex": "#4B2E1E"
         },
         {
-          "name": "White Wash",
-          "hex": "#F5F0E8"
+          "name": "White",
+          "hex": "#FFFFFF"
         }
       ],
       "images": [
@@ -88,20 +88,7 @@
           "priceAdjustment": -200
         }
       ],
-      "colours": [
-        {
-          "name": "Charcoal Grey",
-          "hex": "#4A4A4A"
-        },
-        {
-          "name": "Light Grey",
-          "hex": "#B0B0B0"
-        },
-        {
-          "name": "Navy Blue",
-          "hex": "#1B2A4A"
-        }
-      ],
+      "colours": [],
       "images": [
         "/images/products/modern-grey-sectional-sofa-main.jpg"
       ],
@@ -148,12 +135,12 @@
       ],
       "colours": [
         {
-          "name": "Dark Walnut",
-          "hex": "#5C4033"
+          "name": "Chocolate",
+          "hex": "#4B2E1E"
         },
         {
-          "name": "Natural Walnut",
-          "hex": "#8B7355"
+          "name": "Auburn",
+          "hex": "#8B4513"
         }
       ],
       "images": [
@@ -208,12 +195,12 @@
           "hex": "#FFFFFF"
         },
         {
-          "name": "Natural Wood",
-          "hex": "#C9A96E"
+          "name": "Maple",
+          "hex": "#E8C39E"
         },
         {
-          "name": "Matte Black",
-          "hex": "#2C2C2C"
+          "name": "Black",
+          "hex": "#1A1A1A"
         }
       ],
       "images": [
@@ -262,12 +249,12 @@
       ],
       "colours": [
         {
-          "name": "White Marble / Gold",
-          "hex": "#F0EAE0"
+          "name": "Almond",
+          "hex": "#EAD9C4"
         },
         {
-          "name": "Black Marble / Black",
-          "hex": "#1C1C1C"
+          "name": "Black",
+          "hex": "#1A1A1A"
         }
       ],
       "images": [
@@ -317,16 +304,16 @@
       ],
       "colours": [
         {
-          "name": "Matte White",
+          "name": "White",
           "hex": "#FFFFFF"
         },
         {
-          "name": "Oak Finish",
-          "hex": "#D4A574"
+          "name": "Oak",
+          "hex": "#C19A6B"
         },
         {
-          "name": "Charcoal Black",
-          "hex": "#2C2C2C"
+          "name": "Black",
+          "hex": "#1A1A1A"
         }
       ],
       "images": [
@@ -373,16 +360,16 @@
       ],
       "colours": [
         {
-          "name": "Matte White",
+          "name": "White",
           "hex": "#FFFFFF"
         },
         {
-          "name": "Natural Oak",
-          "hex": "#D4A574"
+          "name": "Oakwood",
+          "hex": "#B08B57"
         },
         {
-          "name": "Charcoal Grey",
-          "hex": "#4A4A4A"
+          "name": "Smoke Wood",
+          "hex": "#6E6259"
         }
       ],
       "images": [
@@ -426,8 +413,8 @@
           "hex": "#FFFFFF"
         },
         {
-          "name": "Espresso Brown",
-          "hex": "#3E2723"
+          "name": "Chocolate",
+          "hex": "#4B2E1E"
         }
       ],
       "images": [
@@ -470,15 +457,15 @@
       ],
       "colours": [
         {
-          "name": "Oak Veneer",
-          "hex": "#D4A574"
+          "name": "Oak",
+          "hex": "#C19A6B"
         },
         {
-          "name": "Walnut Veneer",
-          "hex": "#5C4033"
+          "name": "Chocolate",
+          "hex": "#4B2E1E"
         },
         {
-          "name": "Solid White",
+          "name": "White",
           "hex": "#FFFFFF"
         }
       ],

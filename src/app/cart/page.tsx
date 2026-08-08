@@ -73,7 +73,7 @@ export default function CartPage() {
                   </div>
                   <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted mt-1 font-medium">
                     <span>Size: {item.selectedSize}</span>
-                    <span>Colour: {item.selectedColour}</span>
+                    {item.selectedColour && <span>Colour: {item.selectedColour}</span>}
                   </div>
                 </div>
 

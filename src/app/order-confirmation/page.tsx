@@ -125,7 +125,7 @@ export default function OrderConfirmationPage() {
           {order.items.map((item) => (
             <div key={`${item.productId}-${item.selectedSize}-${item.selectedColour}`} className="flex justify-between items-center text-xs">
               <span className="text-foreground">
-                {item.title} ({item.selectedSize}, {item.selectedColour}) <span className="font-bold">x{item.quantity}</span>
+                {item.title} ({item.selectedSize}{item.selectedColour ? `, ${item.selectedColour}` : ''}) <span className="font-bold">x{item.quantity}</span>
               </span>
               <span className="font-semibold text-foreground text-right">{formatPrice(item.price * item.quantity)}</span>
             </div>

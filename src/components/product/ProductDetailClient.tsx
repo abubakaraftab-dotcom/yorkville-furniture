@@ -130,7 +130,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   title={colour.name}
                 >
                   <span
-                    className="w-8 h-8 rounded-full border border-black/10 inline-block"
+                    className={`w-8 h-8 rounded-full inline-block ${colour.name === "White" ? "border border-gray-300" : "border border-black/10"}`}
                     style={{ backgroundColor: colour.hex }}
                   />
                   {selectedColour.name === colour.name && (
