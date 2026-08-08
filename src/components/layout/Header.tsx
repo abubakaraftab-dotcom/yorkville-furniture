@@ -4,7 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import MobileMenu from "./MobileMenu";
 import HeaderCategoriesDropdown from "./HeaderCategoriesDropdown";
+import HeaderProvincesDropdown from "./HeaderProvincesDropdown";
 import { getAllCategories } from "@/lib/categories";
+import { getAllProvinces } from "@/lib/provinces";
 import ProvinceSelector from "./ProvinceSelector";
 import CartIcon from "@/components/cart/CartIcon";
 
@@ -20,6 +22,7 @@ const navLinks = [
 
 export default function Header() {
   const categories = getAllCategories();
+  const provinces = getAllProvinces();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -29,7 +32,7 @@ export default function Header() {
           {/* Logo */}
 
           <Link href="/" className="flex items-center gap-2">
-            <img src="/images/logo.png" alt="Yorkville Furniture Logo" className="h-8 w-8 object-contain" />
+            <img src="/images/logo.png" alt="Yorkville Furniture Logo" className="h-14 w-auto object-contain" />
 
           </Link>
 
@@ -38,6 +41,9 @@ export default function Header() {
             {navLinks.map((link) => {
               if (link.label === "Categories") {
                 return <HeaderCategoriesDropdown key={link.href} categories={categories} />;
+              }
+              if (link.label === "Provinces") {
+                return <HeaderProvincesDropdown key={link.href} provinces={provinces} />;
               }
               return (
                 <Link
@@ -95,6 +101,7 @@ export default function Header() {
         onClose={() => setMobileMenuOpen(false)}
         navLinks={navLinks}
         categories={categories}
+        provinces={provinces}
       />
     </header>
   );
