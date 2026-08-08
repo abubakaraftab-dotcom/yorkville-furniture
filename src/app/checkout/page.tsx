@@ -372,7 +372,7 @@ export default function CheckoutPage() {
                   <div className="flex-1">
                     <h4 className="font-semibold text-foreground line-clamp-1">{item.title}</h4>
                     <p className="text-xs text-muted mt-0.5">
-                      Size: {item.selectedSize} | Qty: {item.quantity}
+                      Size: {item.selectedSize}{item.selectedColour ? ` | Colour: ${item.selectedColour}` : ''} | Qty: {item.quantity}
                     </p>
                   </div>
                   <span className="font-bold text-foreground text-right shrink-0">

@@ -18,23 +18,9 @@ export default function ProductsClient({ products, categories }: ProductsClientP
   // Filters State
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [maxPrice, setMaxPrice] = useState<number | "">("");
-  const [selectedColours, setSelectedColours] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState<string>("recommended");
   const [searchQuery, setSearchQuery] = useState("");
   const [showMobileFilters, setShowMobileFilters] = useState(false);
-
-  // Extract unique colours from products
-  const uniqueColours = useMemo(() => {
-    const coloursMap = new Map<string, { name: string; hex: string }>();
-    products.forEach((p) => {
-      p.colours.forEach((c) => {
-        if (!coloursMap.has(c.name)) {
-          coloursMap.set(c.name, c);
-        }
-      });
-    });
-    return Array.from(coloursMap.values());
-  }, [products]);
 
   // Filter and sort products
   const filteredAndSortedProducts = useMemo(() => {
@@ -57,13 +43,6 @@ export default function ProductsClient({ products, categories }: ProductsClientP
     // 3. Filter Price
     if (maxPrice !== "") {
       result = result.filter((p) => getPrice(p) <= maxPrice);
-    }
-
-    // 4. Filter Colours
-    if (selectedColours.length > 0) {
-      result = result.filter((p) =>
-        p.colours.some((c) => selectedColours.includes(c.name))
-      );
     }
 
     // 5. Search query
@@ -90,7 +69,7 @@ export default function ProductsClient({ products, categories }: ProductsClientP
     }
 
     return result;
-  }, [products, selectedProvince, selectedCategories, maxPrice, selectedColours, searchQuery, sortBy]);
+  }, [products, selectedProvince, selectedCategories, maxPrice, searchQuery, sortBy]);
 
   const handleCategoryToggle = (slug: string) => {
     setSelectedCategories((prev) =>
@@ -98,16 +77,9 @@ export default function ProductsClient({ products, categories }: ProductsClientP
     );
   };
 
-  const handleColourToggle = (colourName: string) => {
-    setSelectedColours((prev) =>
-      prev.includes(colourName) ? prev.filter((c) => c !== colourName) : [...prev, colourName]
-    );
-  };
-
   const clearAllFilters = () => {
     setSelectedCategories([]);
     setMaxPrice("");
-    setSelectedColours([]);
     setSearchQuery("");
   };
 
@@ -235,36 +207,9 @@ export default function ProductsClient({ products, categories }: ProductsClientP
         </div>
       </div>
 
-      {/* Colour Filter */}
-      {uniqueColours.length > 0 && (
-        <div>
-          <h3 className="text-sm font-semibold text-foreground mb-3">Colour</h3>
-          <div className="flex flex-wrap md:flex-nowrap gap-2">
-            {uniqueColours.map((colour) => (
-              <button
-                key={colour.name}
-                onClick={() => handleColourToggle(colour.name)}
-                className={`group relative flex items-center gap-1.5 p-1 border rounded-full transition-all cursor-pointer ${
-                  selectedColours.includes(colour.name)
-                    ? "border-primary ring-2 ring-primary/20"
-                    : "border-transparent hover:border-border"
-                }`}
-                title={colour.name}
-              >
-                <span
-                  className="w-8 h-8 rounded-full border border-black/10 inline-block"
-                  style={{ backgroundColor: colour.hex }}
-                />
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
       {/* Clear Button */}
       {(selectedCategories.length > 0 ||
         maxPrice !== "" ||
-        selectedColours.length > 0 ||
         searchQuery !== "") && (
         <button
           onClick={clearAllFilters}
@@ -380,36 +325,9 @@ export default function ProductsClient({ products, categories }: ProductsClientP
         </div>
       </div>
 
-      {/* Colour Filter */}
-      {uniqueColours.length > 0 && (
-        <div>
-          <h3 className="text-sm font-semibold text-foreground mb-3">Colour</h3>
-          <div className="flex flex-wrap md:flex-nowrap gap-2">
-            {uniqueColours.map((colour) => (
-              <button
-                key={colour.name}
-                onClick={() => handleColourToggle(colour.name)}
-                className={`group relative flex items-center gap-1.5 p-1 border rounded-full transition-all cursor-pointer ${
-                  selectedColours.includes(colour.name)
-                    ? "border-primary ring-2 ring-primary/20"
-                    : "border-transparent hover:border-border"
-                }`}
-                title={colour.name}
-              >
-                <span
-                  className="w-8 h-8 rounded-full border border-black/10 inline-block"
-                  style={{ backgroundColor: colour.hex }}
-                />
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
       {/* Clear Button */}
       {(selectedCategories.length > 0 ||
         maxPrice !== "" ||
-        selectedColours.length > 0 ||
         searchQuery !== "") && (
         <button
           onClick={clearAllFilters}
