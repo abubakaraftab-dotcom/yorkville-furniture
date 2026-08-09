@@ -19,11 +19,11 @@ export default function HeroBanner() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 relative z-10 min-h-[90vh] lg:min-h-0 flex flex-col lg:block justify-between">
-        <div className="max-w-2xl relative z-10 h-full flex flex-col justify-between lg:block">
+        <div className="max-w-2xl lg:max-w-xl xl:max-w-lg relative z-10 h-full flex flex-col justify-between lg:block">
 
           {/* Top heading */}
           <div className="mt-8 lg:mt-0">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight drop-shadow-md">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight drop-shadow-lg">
               Premium Quality Furniture for{" "}<br className="hidden lg:inline"/>
               <span className="text-accent">Canadian Homes</span>
             </h1>
@@ -32,12 +32,12 @@ export default function HeroBanner() {
           {/* Mobile spacing block */}
           <div className="flex-grow min-h-[40vh] lg:hidden"></div>
 
-          <div className="mt-6 max-w-2xl mb-8 lg:mb-0">
-            <p className="text-lg text-white font-medium drop-shadow-md">
+          <div className="mt-6 mb-8 lg:mb-0">
+            <p className="text-lg text-white font-medium [text-shadow:0_2px_4px_rgba(0,0,0,0.6)]">
               Quality furniture delivered to your door. Cash on delivery available
               across Ontario, Quebec, British Columbia, and Alberta.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 mt-6">
+            <div className="flex flex-col sm:flex-row gap-4 mt-8">
               <Button href="/products" variant="secondary" size="lg">
                 Shop Now
               </Button>
@@ -45,7 +45,7 @@ export default function HeroBanner() {
                 Custom Sizes
               </Button>
             </div>
-            <div className="flex flex-wrap items-center gap-6 mt-8 text-sm text-white font-medium drop-shadow-md">
+            <div className="flex flex-wrap items-center gap-6 mt-8 text-sm text-white font-medium [text-shadow:0_2px_4px_rgba(0,0,0,0.6)]">
               <span className="flex items-center gap-1.5">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-accent">
                 <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clipRule="evenodd" />
