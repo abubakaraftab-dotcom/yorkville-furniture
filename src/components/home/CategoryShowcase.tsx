@@ -13,7 +13,7 @@ export default function CategoryShowcase() {
           <p className="text-muted mt-2">Find the perfect piece for every room</p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {categories.map((category) => (
             <Link
               key={category.slug}
