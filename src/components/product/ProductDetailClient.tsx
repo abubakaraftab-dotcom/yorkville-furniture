@@ -1,235 +1,155 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { Product } from "@/types/product";
 import ImageGallery from "@/components/ui/ImageGallery";
 import PriceDisplay from "@/components/ui/PriceDisplay";
 import Badge from "@/components/ui/Badge";
 import QuantitySelector from "@/components/ui/QuantitySelector";
 import Button from "@/components/ui/Button";
-import ProvinceAvailability from "./ProvinceAvailability";
 import { useProvince } from "@/context/ProvinceContext";
 import { useCart } from "@/context/CartContext";
 import siteConfig from "@/data/site-config.json";
+import { DEFAULT_COLOUR_ID, furnitureColours, getFurnitureColour, sameAsImageColour } from "@/data/furniture-colours";
 
 interface ProductDetailClientProps {
   product: Product;
+}
+
+function cmToInches(value: string) {
+  const number = Number.parseFloat(value.replace(",", "."));
+  if (Number.isNaN(number)) return value.trim();
+  return `${(number / 2.54).toFixed(1).replace(/\.0$/, "")}"`;
+}
+
+function formatDimensions(dimensions: string) {
+  const values = dimensions.match(/[0-9]+(?:[.,][0-9]+)?/g) ?? [];
+  if (values.length < 3) return { height: dimensions, width: "—", depth: "—" };
+  // Catalog strings use L x W x H, while the storefront presents H/W/D.
+  return { height: cmToInches(values[2] ?? ""), width: cmToInches(values[0] ?? ""), depth: cmToInches(values[1] ?? "") };
 }
 
 export default function ProductDetailClient({ product }: ProductDetailClientProps) {
   const { selectedProvince } = useProvince();
   const { addToCart } = useCart();
   const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
-  const [selectedColour, setSelectedColour] = useState(product.colours[0]);
+  const [selectedColourId, setSelectedColourId] = useState(DEFAULT_COLOUR_ID);
   const [quantity, setQuantity] = useState(1);
   const [customRequestOpen, setCustomRequestOpen] = useState(false);
+  const [colourPopupOpen, setColourPopupOpen] = useState(false);
   const [customMsg, setCustomMsg] = useState("");
+  const [customDimensions, setCustomDimensions] = useState("");
   const [addedMessageVisible, setAddedMessageVisible] = useState(false);
 
-  const provinceCode = selectedProvince?.code || "ON";
-  const basePrice = product.priceByProvince[provinceCode as keyof typeof product.priceByProvince] || 0;
-  const currentPrice = basePrice + selectedSize.priceAdjustment;
+  const selectedColour = selectedColourId === DEFAULT_COLOUR_ID ? sameAsImageColour : getFurnitureColour(selectedColourId);
+  const selectedDimensions = useMemo(() => formatDimensions(selectedSize?.dimensions ?? ""), [selectedSize]);
+  const basePrice = product.priceByProvince.ON || 0;
+  const currentPrice = basePrice + (selectedSize?.priceAdjustment ?? 0);
+  const isAvailableInOntario = product.priceByProvince.ON !== undefined;
+  const provinceName = selectedProvince?.code === "ON" || !selectedProvince ? "Ontario" : selectedProvince.name;
 
-  const isAvailableLocally = selectedProvince
-    ? product.priceByProvince[selectedProvince.code as keyof typeof product.priceByProvince] !== undefined
-    : true;
-
-  // Build temporary WhatsApp message links
   const handleAddToCart = () => {
-    addToCart(product, selectedSize.label, selectedColour.name, quantity);
+    addToCart(product, selectedSize?.label ?? "Standard", selectedColour.name, quantity, selectedSize?.dimensions, customDimensions.trim() || undefined);
     setAddedMessageVisible(true);
-    setTimeout(() => {
-      setAddedMessageVisible(false);
-    }, 3000);
+    setTimeout(() => setAddedMessageVisible(false), 3000);
   };
 
+  const inquiryText = () => `Hi! I have a question about the "${product.title}".\nSize: ${selectedSize?.label}\nColour: ${selectedColour.name}\nDimensions: H ${selectedDimensions.height}, W ${selectedDimensions.width}, D ${selectedDimensions.depth}${customDimensions.trim() ? `\nCustom dimensions: ${customDimensions.trim()}` : ""}\nPrice: $${currentPrice.toFixed(2)} CAD\nProduct link: ${typeof window !== "undefined" ? window.location.href : ""}`;
+
   const handleWhatsAppInquiry = () => {
-    const text = encodeURIComponent(
-      `Hi! I have a question about the "${product.title}" (${selectedSize.label}, ${selectedColour.name}).\n` +
-      `Price: $${currentPrice.toFixed(2)} CAD\n` +
-      `Product link: ${window.location.href}`
-    );
-    window.open(`https://wa.me/${siteConfig.whatsappNumber}?text=${text}`, "_blank");
+    window.open(`https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(inquiryText())}`, "_blank");
   };
 
   const handleCustomSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const text = encodeURIComponent(
-      `Hi! I want a custom version of the "${product.title}".\n` +
-      `Size details: ${selectedSize.label}\n` +
-      `Colour details: ${selectedColour.name}\n` +
-      `My Request: ${customMsg}`
-    );
-    window.open(`https://wa.me/${siteConfig.whatsappNumber}?text=${text}`, "_blank");
+    const request = `${inquiryText()}\nCustom layout request: ${customMsg}`;
+    window.open(`https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(request)}`, "_blank");
+  };
+
+  const handleEmailRequest = () => {
+    const subject = `Custom layout request — ${product.title}`;
+    const body = `${inquiryText()}\n\nCustom layout request: ${customMsg}`;
+    window.location.href = `mailto:${siteConfig.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-      {/* Visuals */}
       <ImageGallery images={product.images} title={product.title} />
 
-      {/* Details */}
       <div className="flex flex-col gap-6">
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-sm font-medium uppercase tracking-wider text-accent-dark">
-              {product.categorySlug.replace("-", " ")}
-            </span>
+            <span className="text-sm font-medium uppercase tracking-wider text-accent-dark">{product.categorySlug.replace("-", " ")}</span>
             {product.tags.includes("bestseller") && <Badge variant="success">Bestseller</Badge>}
             {product.tags.includes("new-arrival") && <Badge>New</Badge>}
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold font-serif text-foreground">
-            {product.title}
-          </h1>
+          <h1 className="text-3xl sm:text-4xl font-bold font-serif text-foreground">{product.title}</h1>
         </div>
 
         <PriceDisplay price={currentPrice} compareAtPrice={product.compareAtPrice} />
+        <p className="text-foreground/80 leading-relaxed">{product.description.replace(/solid/gi, "premium")}</p>
 
-        <p className="text-foreground/80 leading-relaxed">{product.description}</p>
+        <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900">
+          <strong>{isAvailableInOntario ? "Available for delivery in Ontario" : "Ontario availability on request"}</strong>
+          <p className="mt-1">Yorkville Furniture currently delivers this catalogue in Ontario. Other provinces will be added when specifically confirmed.</p>
+        </div>
 
-        {/* Size Selection */}
         {product.sizes.length > 0 && (
           <div>
             <h3 className="text-sm font-semibold text-foreground mb-2">Size</h3>
             <div className="flex flex-wrap gap-2">
               {product.sizes.map((size) => (
-                <button
-                  key={size.label}
-                  onClick={() => setSelectedSize(size)}
-                  className={`px-4 py-2 border rounded-lg text-sm transition-all cursor-pointer ${
-                    selectedSize.label === size.label
-                      ? "border-primary bg-primary/5 text-primary font-semibold"
-                      : "border-border hover:border-primary/50 text-foreground"
-                  }`}
-                >
+                <button key={size.label} type="button" onClick={() => setSelectedSize(size)} className={`px-4 py-2 border rounded-lg text-sm transition-all cursor-pointer ${selectedSize.label === size.label ? "border-primary bg-primary/5 text-primary font-semibold" : "border-border hover:border-primary/50 text-foreground"}`}>
                   <div className="text-left font-medium">{size.label}</div>
-                  <div className="text-[10px] text-muted">
-                    {size.dimensions}
-                    {size.priceAdjustment > 0 && ` (+ $${size.priceAdjustment})`}
-                  </div>
+                  <div className="text-[10px] text-muted">{size.dimensions}{size.priceAdjustment !== 0 && ` (${size.priceAdjustment > 0 ? "+" : "−"} $${Math.abs(size.priceAdjustment)})`}</div>
                 </button>
               ))}
             </div>
           </div>
         )}
 
-        {/* Colour Selection */}
-        {product.colours.length > 0 && (
-          <div>
-            <h3 className="text-sm font-semibold text-foreground mb-2">Colour</h3>
-            <div className="flex flex-wrap md:flex-nowrap gap-3">
-              {product.colours.map((colour) => (
-                <button
-                  key={colour.name}
-                  onClick={() => setSelectedColour(colour)}
-                  className={`group relative flex items-center gap-1.5 p-1 border rounded-full transition-all cursor-pointer ${
-                    selectedColour.name === colour.name
-                      ? "border-primary ring-2 ring-primary/20"
-                      : "border-transparent hover:border-border"
-                  }`}
-                  title={colour.name}
-                >
-                  <span
-                    className={`w-8 h-8 rounded-full inline-block ${colour.name === "White" ? "border border-gray-300" : "border border-black/10"}`}
-                    style={{ backgroundColor: colour.hex }}
-                  />
-                  {selectedColour.name === colour.name && (
-                    <span className="text-xs font-semibold pr-2 text-primary">{colour.name}</span>
-                  )}
-                </button>
-              ))}
-            </div>
+        <div className="rounded-xl border border-border bg-white p-4">
+          <h3 className="text-sm font-semibold text-foreground mb-3">Dimensions (inches)</h3>
+          <div className="grid grid-cols-3 divide-x divide-border text-center">
+            <div><strong className="block text-lg text-primary">{selectedDimensions.height}</strong><span className="text-xs text-muted">Height</span></div>
+            <div><strong className="block text-lg text-primary">{selectedDimensions.width}</strong><span className="text-xs text-muted">Width</span></div>
+            <div><strong className="block text-lg text-primary">{selectedDimensions.depth}</strong><span className="text-xs text-muted">Depth</span></div>
           </div>
-        )}
+          <label className="block mt-4 text-xs font-semibold text-foreground">Need custom dimensions?</label>
+          <input value={customDimensions} onChange={(e) => setCustomDimensions(e.target.value)} placeholder="Enter H × W × D in inches" className="mt-1 w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/20" />
+        </div>
 
-        {/* Province warning */}
-        {!isAvailableLocally && selectedProvince && (
-          <div className="p-3 bg-error/5 border border-error/20 text-error rounded-xl text-sm font-medium">
-            ⚠️ This item is not available for delivery in your selected province ({selectedProvince.name}). You can still inquire about custom ordering via WhatsApp.
-          </div>
-        )}
-
-        {/* Action Controls */}
-        <div className="flex flex-col gap-3">
-          <div className="flex gap-4">
-            <div className="flex flex-col">
-              <span className="text-xs text-muted mb-1 font-semibold">Qty</span>
-              <QuantitySelector quantity={quantity} onChange={setQuantity} />
-            </div>
-
-            <div className="flex-1 flex flex-col justify-end">
-              <Button
-                onClick={handleAddToCart}
-                variant={isAvailableLocally ? "primary" : "outline"}
-                disabled={!isAvailableLocally}
-                className="w-full h-[42px]"
-              >
-                Add to Cart
-              </Button>
-            </div>
-          </div>
-
-          {addedMessageVisible && (
-            <div className="bg-success/10 border border-success/20 text-success text-sm py-2 px-3 rounded-lg font-semibold text-center animate-fade-in">
-              ✓ Added to Cart!
+        <div className="relative" id="color-selector">
+          <h3 className="text-sm font-semibold text-foreground mb-2">Colour</h3>
+          <button type="button" onClick={() => setColourPopupOpen((open) => !open)} className="flex w-full items-center justify-between rounded-xl border border-border bg-white px-4 py-3 text-left shadow-sm transition hover:border-primary">
+            <span className="flex items-center gap-3"><span className="h-9 w-9 rounded-full border border-black/10 shadow-inner" style={{ backgroundColor: selectedColour.hex }} /><span><strong className="block text-sm">{selectedColour.name}</strong><span className="text-xs text-muted">Choose from 16 finish colours</span></span></span><span className="text-muted">{colourPopupOpen ? "▲" : "▼"}</span>
+          </button>
+          {colourPopupOpen && (
+            <div className="absolute z-40 mt-2 w-full rounded-2xl border border-border bg-white p-4 shadow-2xl">
+              <button type="button" onClick={() => { setSelectedColourId(DEFAULT_COLOUR_ID); setColourPopupOpen(false); }} className={`mb-4 flex w-full items-center justify-between rounded-xl border-2 p-3 text-left ${selectedColourId === DEFAULT_COLOUR_ID ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"}`}><span><strong className="block text-sm">Default / As shown in image</strong><span className="text-xs text-muted">Keep the same colour as shown in the image</span></span>{selectedColourId === DEFAULT_COLOUR_ID && <span className="rounded-full bg-primary px-2 py-1 text-xs font-bold text-white">✓</span>}</button>
+              <div className="grid grid-cols-4 gap-3 sm:grid-cols-8">
+                {furnitureColours.map((colour) => (
+                  <button key={colour.id} type="button" title={colour.name} onClick={() => { setSelectedColourId(colour.id); setColourPopupOpen(false); }} className={`group relative flex flex-col items-center gap-1 rounded-lg p-1 transition hover:bg-muted-light ${selectedColourId === colour.id ? "ring-2 ring-primary" : ""}`}>
+                    <span className="h-10 w-10 rounded-full border-2 border-white shadow-md ring-1 ring-black/10 transition group-hover:scale-110" style={{ backgroundColor: colour.hex }} />
+                    <span className="text-[9px] font-semibold leading-tight text-center">{colour.name}</span>
+                    <span className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 hidden w-36 -translate-x-1/2 rounded-xl border border-border bg-white p-2 text-xs shadow-xl group-hover:block"><span className="mb-1 block h-20 w-full rounded-lg" style={{ backgroundColor: colour.hex }} />{colour.name}</span>
+                  </button>
+                ))}
+              </div>
             </div>
           )}
-
-          <div className="flex flex-col sm:flex-row gap-2 mt-2">
-            <button
-              onClick={handleWhatsAppInquiry}
-              className="flex-1 inline-flex items-center justify-center gap-1.5 border border-success hover:bg-success/5 text-success font-semibold px-4 py-2.5 rounded-lg transition-colors cursor-pointer text-sm"
-            >
-              💬 Ask on WhatsApp
-            </button>
-            <button
-              onClick={() => setCustomRequestOpen(!customRequestOpen)}
-              className="flex-1 inline-flex items-center justify-center gap-1.5 border border-accent hover:bg-accent/5 text-accent-dark font-semibold px-4 py-2.5 rounded-lg transition-colors cursor-pointer text-sm"
-            >
-              🛠️ Custom Layout Request
-            </button>
-          </div>
         </div>
 
-        {/* Custom Request Form */}
-        {customRequestOpen && (
-          <form onSubmit={handleCustomSubmit} className="border border-accent/20 rounded-xl p-4 bg-accent/5 flex flex-col gap-3">
-            <h3 className="font-serif font-bold text-lg text-accent-dark">Custom Design Request</h3>
-            <p className="text-xs text-muted">
-              We can build dynamic adjustments, custom sizes, drawers, drawers styles, and materials. Detail your request below.
-            </p>
-            <textarea
-              required
-              value={customMsg}
-              onChange={(e) => setCustomMsg(e.target.value)}
-              className="border border-border bg-white rounded-lg p-2.5 text-sm w-full h-24 focus:ring-1 focus:ring-accent focus:outline-none"
-              placeholder="E.g., I want this built in Walnut, with 3 drawers instead of a drawer, and 200cm length."
-            />
-            <Button type="submit" variant="secondary" size="sm" className="self-end">
-              Send Request via WhatsApp
-            </Button>
-          </form>
-        )}
+        <div className="flex flex-col gap-3">
+          <div className="flex gap-4"><div className="flex flex-col"><span className="text-xs text-muted mb-1 font-semibold">Qty</span><QuantitySelector quantity={quantity} onChange={setQuantity} /></div><div className="flex-1 flex flex-col justify-end"><Button onClick={handleAddToCart} variant={isAvailableInOntario ? "primary" : "outline"} disabled={!isAvailableInOntario} className="w-full h-[42px]">Add to Cart</Button></div></div>
+          {addedMessageVisible && <div className="bg-success/10 border border-success/20 text-success text-sm py-2 px-3 rounded-lg font-semibold text-center">✓ Added to Cart!</div>}
+          <div className="flex flex-col sm:flex-row gap-2 mt-2"><button onClick={handleWhatsAppInquiry} className="flex-1 inline-flex items-center justify-center gap-1.5 border border-success hover:bg-success/5 text-success font-semibold px-4 py-2.5 rounded-lg transition-colors cursor-pointer text-sm">💬 Ask on WhatsApp</button><button onClick={() => setCustomRequestOpen(!customRequestOpen)} className="flex-1 inline-flex items-center justify-center gap-1.5 border border-accent hover:bg-accent/5 text-accent-dark font-semibold px-4 py-2.5 rounded-lg transition-colors cursor-pointer text-sm">🛠️ Custom Layout Request</button></div>
+        </div>
 
-        {/* Technical specifications */}
+        {customRequestOpen && <form onSubmit={handleCustomSubmit} className="border border-accent/20 rounded-xl p-4 bg-accent/5 flex flex-col gap-3"><h3 className="font-serif font-bold text-lg text-accent-dark">Custom Design Request</h3><p className="text-xs text-muted">Tell us your preferred dimensions, finish, storage, or layout changes.</p><textarea required value={customMsg} onChange={(e) => setCustomMsg(e.target.value)} className="border border-border bg-white rounded-lg p-2.5 text-sm w-full h-24 focus:ring-1 focus:ring-accent focus:outline-none" placeholder="Describe your custom request..." /><div className="flex flex-col sm:flex-row justify-end gap-2"><Button type="submit" variant="secondary" size="sm">Send via WhatsApp</Button><button type="button" onClick={handleEmailRequest} className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary-dark">Send via Email</button></div></form>}
+
         <hr className="border-border" />
-        <div className="grid grid-cols-2 gap-y-3 gap-x-6 text-sm">
-          <div>
-            <span className="text-muted">Material:</span> <span className="font-semibold text-foreground">{product.material}</span>
-          </div>
-          <div>
-            <span className="text-muted">Assembly:</span> <span className="font-semibold text-foreground">{product.assemblyRequired ? "Requires Assembly" : "Pre-assembled"}</span>
-          </div>
-          <div>
-            <span className="text-muted">Weight:</span> <span className="font-semibold text-foreground">{product.weight}</span>
-          </div>
-          <div>
-            <span className="text-muted">Delivery:</span> <span className="font-semibold text-foreground">{product.deliveryEstimate}</span>
-          </div>
-        </div>
-
-        {/* Location Availability */}
-        <ProvinceAvailability priceByProvince={product.priceByProvince} />
+        <div className="grid grid-cols-2 gap-y-3 gap-x-6 text-sm"><div><span className="text-muted">Material:</span> <span className="font-semibold text-foreground">Wood</span></div><div><span className="text-muted">Assembly:</span> <span className="font-semibold text-foreground">Ready to use</span></div><div><span className="text-muted">Delivery:</span> <span className="font-semibold text-foreground">1–3 days</span></div><div><span className="text-muted">Province:</span> <span className="font-semibold text-foreground">Ontario</span></div></div>
       </div>
     </div>
   );

@@ -81,9 +81,10 @@ export default function HeaderCategoriesDropdown({ categories }: HeaderCategorie
                     className={`flex items-center justify-between p-3 cursor-pointer hover:bg-muted-light/50 transition-colors ${
                       isExpanded ? "bg-muted-light/50" : ""
                     }`}
+                    onMouseEnter={() => hasSubcategories && setExpandedCategory(category.slug)}
                     onClick={() => {
                       if (hasSubcategories) {
-                        toggleCategory(category.slug);
+                        setExpandedCategory(category.slug);
                       } else {
                         setIsOpen(false);
                         router.push(categoryLink);
@@ -109,6 +110,7 @@ export default function HeaderCategoriesDropdown({ categories }: HeaderCategorie
 
                   {hasSubcategories && (
                     <div
+                      onMouseEnter={() => setExpandedCategory(category.slug)}
                       className={`overflow-hidden transition-all duration-300 ease-in-out ${
                         isExpanded ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
                       }`}

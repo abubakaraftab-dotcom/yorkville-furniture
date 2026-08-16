@@ -75,6 +75,7 @@ export default function HeroBanner() {
 
       <div className="relative z-10 mx-auto flex min-h-[680px] max-w-7xl flex-col justify-between px-5 py-12 sm:min-h-[720px] sm:px-8 sm:py-16 lg:min-h-[calc(100vh-96px)] lg:px-10 lg:py-20">
         <div className="max-w-2xl pt-8 sm:pt-12 lg:pt-16">
+          <p className="mb-3 text-sm font-bold uppercase tracking-[0.24em] text-[#f4d2a8]">Yorkville Furniture Canada</p>
           <p className="mb-6 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.28em] text-[#e7c49b]">
             <span className="h-px w-10 bg-[#e7c49b]" />
             {slide.eyebrow}

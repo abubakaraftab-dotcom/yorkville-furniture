@@ -47,5 +47,7 @@ export interface CartItem {
   quantity: number;
   selectedSize: string;
   selectedColour: string;
+  selectedDimensions?: string;
+  customDimensions?: string;
   image: string;
 }

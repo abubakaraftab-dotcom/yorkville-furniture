@@ -6,7 +6,7 @@ import { useProvince } from "@/context/ProvinceContext";
 
 interface CartContextType {
   cart: CartItem[];
-  addToCart: (product: Product, sizeLabel: string, colourName: string, qty: number) => void;
+  addToCart: (product: Product, sizeLabel: string, colourName: string, qty: number, selectedDimensions?: string, customDimensions?: string) => void;
   removeFromCart: (productId: string, sizeLabel: string, colourName: string) => void;
   updateQuantity: (productId: string, sizeLabel: string, colourName: string, qty: number) => void;
   clearCart: () => void;
@@ -41,7 +41,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
     localStorage.setItem("yorkville-furniture-cart", JSON.stringify(newCart));
   };
 
-  const addToCart = (product: Product, sizeLabel: string, colourName: string, qty: number) => {
+  const addToCart = (product: Product, sizeLabel: string, colourName: string, qty: number, selectedDimensions?: string, customDimensions?: string) => {
     const provinceCode = selectedProvince?.code || "ON";
     const basePrice = product.priceByProvince[provinceCode as keyof typeof product.priceByProvince] || 0;
     const size = product.sizes.find((s) => s.label === sizeLabel);
@@ -52,7 +52,8 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
       (item) =>
         item.productId === product.id &&
         item.selectedSize === sizeLabel &&
-        item.selectedColour === colourName
+        item.selectedColour === colourName &&
+        item.customDimensions === customDimensions
     );
 
     const newCart = [...cart];
@@ -67,6 +68,8 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
         quantity: qty,
         selectedSize: sizeLabel,
         selectedColour: colourName,
+        selectedDimensions,
+        customDimensions,
         image: product.images[0] || "",
       });
     }

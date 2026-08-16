@@ -31,9 +31,8 @@ export default function Header() {
         <div className="flex h-24 items-center justify-between">
           {/* Logo */}
 
-          <Link href="/" className="flex items-center gap-2">
-            <img src="/images/logo.png" alt="Yorkville Furniture Logo" className="h-[4.25rem] w-auto object-contain" />
-
+          <Link href="/" className="flex items-center gap-2 rounded-xl bg-white px-2 py-1.5 shadow-[0_2px_10px_rgba(45,41,37,0.16)] ring-1 ring-[#d9aa78]/40">
+            <img src="/images/logo.png" alt="Yorkville Furniture Logo" className="h-[4.25rem] w-auto object-contain contrast-125 drop-shadow-[0_1px_2px_rgba(0,0,0,0.28)]" />
           </Link>
 
           {/* Desktop Nav */}
