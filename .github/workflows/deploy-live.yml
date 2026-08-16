@@ -32,5 +32,5 @@ jobs:
           protocol: ftp
           port: 21
           local-dir: ./out/
-          server-dir: /
+          server-dir: /public_html/
           dangerous-clean-slate: false
