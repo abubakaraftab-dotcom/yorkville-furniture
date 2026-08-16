@@ -1,6 +1,7 @@
 export const DEFAULT_COLOUR_ID = "same-as-image";
 
 export const furnitureColours = [
+  { id: "almond", name: "Almond", hex: "#F4EED8", image: "/images/colours/Almond.png" },
   { id: "smoke-wood", name: "Smoke Wood", hex: "#6B533E", image: "/images/colours/SmokeWood.png" },
   { id: "red", name: "Red", hex: "#B82323", image: "/images/colours/Red.png" },
   { id: "black", name: "Black", hex: "#1C1C1C", image: "/images/colours/Black.png" },

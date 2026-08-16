@@ -17,6 +17,8 @@ interface ProductDetailClientProps {
   product: Product;
 }
 
+const withBasePath = (assetPath: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${assetPath}`;
+
 function cmToInches(value: string) {
   const number = Number.parseFloat(value.replace(",", "."));
   if (Number.isNaN(number)) return value.trim();
@@ -108,12 +110,14 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           <div>
             <h3 className="text-sm font-semibold text-foreground mb-2">Size</h3>
             <div className="flex flex-wrap gap-2">
-              {product.sizes.map((size) => (
-                <button key={size.label} type="button" onClick={() => setSelectedSize(size)} className={`px-4 py-2 border rounded-lg text-sm transition-all cursor-pointer ${selectedSize.label === size.label ? "border-primary bg-primary/5 text-primary font-semibold" : "border-border hover:border-primary/50 text-foreground"}`}>
-                  <div className="text-left font-medium">{size.label}</div>
-                  <div className="text-[10px] text-muted">H {formatDimensions(size.dimensions).height} ({formatDimensions(size.dimensions).heightCm}) × W {formatDimensions(size.dimensions).width} ({formatDimensions(size.dimensions).widthCm}) × D {formatDimensions(size.dimensions).depth} ({formatDimensions(size.dimensions).depthCm}){size.priceAdjustment !== 0 && ` (${size.priceAdjustment > 0 ? "+" : "−"} $${Math.abs(size.priceAdjustment)})`}</div>
-                </button>
-              ))}
+              {product.sizes.map((size) => {
+                const dimensions = formatDimensions(size.dimensions);
+                return <button key={size.label} type="button" onClick={() => setSelectedSize(size)} className={`px-4 py-3 border rounded-lg text-sm transition-all cursor-pointer ${selectedSize.label === size.label ? "border-primary bg-primary/5 text-primary font-semibold" : "border-border hover:border-primary/50 text-foreground"}`}>
+                  <div className="text-left font-semibold">Height × Width × Depth</div>
+                  <div className="mt-1 text-left text-[11px] font-medium text-foreground">{dimensions.height} × {dimensions.width} × {dimensions.depth}</div>
+                  <div className="text-left text-[10px] text-muted">({dimensions.heightCm} × {dimensions.widthCm} × {dimensions.depthCm}){size.priceAdjustment !== 0 && ` (${size.priceAdjustment > 0 ? "+" : "−"} $${Math.abs(size.priceAdjustment)})`}</div>
+                </button>;
+              })}
             </div>
           </div>
         )}
@@ -121,7 +125,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         <div className="relative" id="color-selector">
           <h3 className="text-sm font-semibold text-foreground mb-2">Colour</h3>
           <button type="button" onClick={() => setColourPopupOpen((open) => !open)} className="flex w-full items-center justify-between rounded-xl border border-border bg-white px-4 py-3 text-left shadow-sm transition hover:border-primary">
-            <span className="flex items-center gap-3">{selectedColourId !== DEFAULT_COLOUR_ID && "image" in selectedColour && <img src={selectedColour.image} alt="" className="h-9 w-9 rounded-full border border-black/10 object-cover shadow-inner" />}<span><strong className="block text-sm">{selectedColour.name}</strong><span className="text-xs text-muted">Choose from {furnitureColours.length} uploaded finish colours</span></span></span><span className="text-muted">{colourPopupOpen ? "▲" : "▼"}</span>
+            <span className="flex items-center gap-3">{selectedColourId !== DEFAULT_COLOUR_ID && "image" in selectedColour && <img src={withBasePath(selectedColour.image)} alt="" className="h-9 w-9 rounded-full border border-black/10 bg-white object-contain p-0.5 shadow-inner" />}<span><strong className="block text-sm">{selectedColour.name}</strong><span className="text-xs text-muted">Choose from {furnitureColours.length} uploaded finish colours</span></span></span><span className="text-muted">{colourPopupOpen ? "▲" : "▼"}</span>
           </button>
           {colourPopupOpen && (
             <div className="absolute z-40 mt-2 w-full rounded-2xl border border-border bg-white p-4 shadow-2xl">
@@ -129,9 +133,9 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <div className="grid grid-cols-4 gap-3 sm:grid-cols-8">
                 {furnitureColours.map((colour) => (
                   <button key={colour.id} type="button" title={colour.name} onClick={() => { setSelectedColourId(colour.id); setColourPopupOpen(false); }} className={`group relative flex flex-col items-center gap-1 rounded-lg p-1 transition hover:bg-muted-light ${selectedColourId === colour.id ? "ring-2 ring-primary" : ""}`}>
-                    <img src={colour.image} alt={colour.name} className="h-10 w-10 rounded-full border-2 border-white object-cover shadow-md ring-1 ring-black/10 transition group-hover:scale-110" />
+                    <img src={withBasePath(colour.image)} alt={colour.name} className="h-10 w-10 rounded-full border-2 border-white bg-white object-contain p-0.5 shadow-md ring-1 ring-black/10 transition group-hover:scale-110" />
                     <span className="text-[9px] font-semibold leading-tight text-center">{colour.name}</span>
-                    <span className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 hidden w-36 -translate-x-1/2 rounded-xl border border-border bg-white p-2 text-xs shadow-xl group-hover:block"><img src={colour.image} alt="" className="mb-1 block h-20 w-full rounded-lg object-cover" />{colour.name}</span>
+                    <span className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 hidden w-36 -translate-x-1/2 rounded-xl border border-border bg-white p-2 text-xs shadow-xl group-hover:block"><img src={withBasePath(colour.image)} alt="" className="mb-1 block h-20 w-full rounded-lg bg-white object-contain p-1" />{colour.name}</span>
                   </button>
                 ))}
               </div>
