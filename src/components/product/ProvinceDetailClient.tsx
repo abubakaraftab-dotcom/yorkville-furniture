@@ -86,9 +86,20 @@ export default function ProvinceDetailClient({ province, products }: ProvinceDet
 
         {/* Available Products grid */}
         <div className="lg:col-span-3">
-          <h2 className="text-2xl font-bold font-serif text-foreground mb-6">
-            Available Collection in {province.name}
-          </h2>
+          <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="mb-1 text-xs font-semibold uppercase tracking-[0.16em] text-primary">Delivery collection</p>
+              <h2 className="text-2xl font-bold font-serif text-foreground">
+                Available Furniture in {province.name}
+              </h2>
+              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">
+                Explore the pieces currently available for delivery in {province.name}. Availability and delivery options are curated for this province.
+              </p>
+            </div>
+            <span className="shrink-0 rounded-full border border-border bg-white px-3 py-1.5 text-xs font-semibold text-primary">
+              {products.length} pieces available
+            </span>
+          </div>
           <ProductGrid
             products={products}
             emptyMessage={`We currently have no items available locally for ${province.name}.`}

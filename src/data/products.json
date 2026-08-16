@@ -60,10 +60,7 @@
         "/images/products/oak-dining-table-6-seater-main.jpg"
       ],
       "provinceAvailability": [
-        "ON",
-        "QC",
-        "BC",
-        "AB"
+        "ON"
       ],
       "tags": [
         "bestseller",
@@ -105,10 +102,7 @@
         "/images/products/modern-grey-sectional-sofa-main.jpg"
       ],
       "provinceAvailability": [
-        "ON",
-        "QC",
-        "BC",
-        "AB"
+        "ON"
       ],
       "tags": [
         "bestseller",
@@ -182,10 +176,7 @@
         "/images/products/walnut-queen-bed-frame-main.jpg"
       ],
       "provinceAvailability": [
-        "ON",
-        "QC",
-        "BC",
-        "AB"
+        "ON"
       ],
       "tags": [
         "solid-wood"
@@ -260,10 +251,7 @@
         "/images/products/minimalist-work-desk-main.jpg"
       ],
       "provinceAvailability": [
-        "ON",
-        "QC",
-        "BC",
-        "AB"
+        "ON"
       ],
       "tags": [
         "new-arrival"
@@ -336,10 +324,7 @@
         "/images/products/round-marble-coffee-table-main.jpg"
       ],
       "provinceAvailability": [
-        "ON",
-        "QC",
-        "BC",
-        "AB"
+        "QC"
       ],
       "tags": [
         "bestseller"
@@ -426,10 +411,7 @@
       "createdAt": "2026-05-01",
       "subcategorySlug": "6-drawer-dressers",
       "provinceAvailability": [
-        "ON",
-        "QC",
-        "BC",
-        "AB"
+        "QC"
       ],
       "stockQuantity": 4
     },
@@ -504,10 +486,7 @@
       "createdAt": "2026-05-15",
       "subcategorySlug": "2-door-wardrobes",
       "provinceAvailability": [
-        "ON",
-        "QC",
-        "BC",
-        "AB"
+        "BC"
       ],
       "stockQuantity": 10
     },
@@ -582,10 +561,7 @@
       "createdAt": "2026-06-01",
       "subcategorySlug": "5-drawer-chest",
       "provinceAvailability": [
-        "ON",
-        "QC",
-        "BC",
-        "AB"
+        "BC"
       ],
       "stockQuantity": 2
     },
@@ -660,9 +636,6 @@
       "inStock": true,
       "createdAt": "2026-06-10",
       "provinceAvailability": [
-        "ON",
-        "QC",
-        "BC",
         "AB"
       ],
       "stockQuantity": 7
@@ -727,9 +700,6 @@
         "/images/products/minimalist-work-desk-main.jpg"
       ],
       "provinceAvailability": [
-        "ON",
-        "QC",
-        "BC",
         "AB"
       ],
       "tags": [

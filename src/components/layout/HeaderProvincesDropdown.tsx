@@ -34,7 +34,7 @@ export default function HeaderProvincesDropdown({ provinces }: HeaderProvincesDr
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center gap-1 text-sm font-semibold uppercase tracking-[0.12em] transition-colors ${
+        className={`flex items-center gap-1 whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.08em] transition-colors ${
           isOpen ? "text-primary" : "text-foreground hover:text-primary"
         }`}
       >

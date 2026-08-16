@@ -28,15 +28,15 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-[#e7e1da] bg-[#faf9f7]/95 backdrop-blur-md">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-24 items-center justify-between">
+        <div className="flex min-h-[5.25rem] items-center justify-between gap-3">
           {/* Logo */}
 
           <Link href="/" className="flex items-center gap-2">
-            <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/images/logo-transparent.png`} alt="Yorkville Furniture Logo" className="h-[4.25rem] w-auto object-contain contrast-[1.35] brightness-[0.88] drop-shadow-[0_1px_2px_rgba(0,0,0,0.18)]" />
+            <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/images/logo-transparent.png`} alt="Yorkville Furniture Logo" className="h-12 w-auto shrink-0 object-contain contrast-[1.45] brightness-[0.84] drop-shadow-[0_1px_2px_rgba(0,0,0,0.18)]" />
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden items-center gap-8 lg:flex">
+          <nav className="hidden min-w-0 flex-1 items-center justify-center gap-4 xl:gap-5 lg:flex">
             {navLinks.map((link) => {
               if (link.label === "Categories") {
                 return <HeaderCategoriesDropdown key={link.href} categories={categories} />;
@@ -48,7 +48,7 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm font-semibold uppercase tracking-[0.12em] text-foreground/80 transition-colors hover:text-primary"
+                  className="whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.08em] text-foreground/80 transition-colors hover:text-primary"
                 >
                   {link.label}
                 </Link>
@@ -57,7 +57,7 @@ export default function Header() {
           </nav>
 
           {/* Right side: Province + Cart + Mobile Toggle */}
-          <div className="flex items-center gap-5">
+          <div className="flex shrink-0 items-center gap-2">
             {/* Province Selector */}
             <ProvinceSelector />
 
