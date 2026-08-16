@@ -36,6 +36,7 @@ export interface Product {
   deliveryEstimate: string;
   featured: boolean;
   inStock: boolean;
+  stockQuantity?: number;
   createdAt: string;
 }
 

@@ -74,7 +74,8 @@
       "deliveryEstimate": "1–3 days",
       "featured": true,
       "inStock": true,
-      "createdAt": "2025-01-15"
+      "createdAt": "2025-01-15",
+      "stockQuantity": 8
     },
     {
       "id": "prod-002",
@@ -117,7 +118,8 @@
       "deliveryEstimate": "1–3 days",
       "featured": true,
       "inStock": true,
-      "createdAt": "2025-02-10"
+      "createdAt": "2025-02-10",
+      "stockQuantity": 3
     },
     {
       "id": "prod-003",
@@ -192,7 +194,8 @@
       "featured": true,
       "inStock": true,
       "createdAt": "2025-03-01",
-      "subcategorySlug": "queen"
+      "subcategorySlug": "queen",
+      "stockQuantity": 12
     },
     {
       "id": "prod-004",
@@ -267,7 +270,8 @@
       "deliveryEstimate": "1–3 days",
       "featured": true,
       "inStock": true,
-      "createdAt": "2025-04-20"
+      "createdAt": "2025-04-20",
+      "stockQuantity": 6
     },
     {
       "id": "prod-005",
@@ -341,7 +345,8 @@
       "deliveryEstimate": "1–3 days",
       "featured": true,
       "inStock": true,
-      "createdAt": "2025-05-05"
+      "createdAt": "2025-05-05",
+      "stockQuantity": 15
     },
     {
       "id": "prod-006",
@@ -419,7 +424,8 @@
       "subcategorySlug": "6-drawer-dressers",
       "provinceAvailability": [
         "ON"
-      ]
+      ],
+      "stockQuantity": 4
     },
     {
       "id": "prod-007",
@@ -495,7 +501,8 @@
       "subcategorySlug": "2-door-wardrobes",
       "provinceAvailability": [
         "ON"
-      ]
+      ],
+      "stockQuantity": 10
     },
     {
       "id": "prod-008",
@@ -566,7 +573,8 @@
       "subcategorySlug": "5-drawer-chest",
       "provinceAvailability": [
         "ON"
-      ]
+      ],
+      "stockQuantity": 2
     },
     {
       "id": "prod-009",
@@ -637,7 +645,8 @@
       "createdAt": "2026-06-10",
       "provinceAvailability": [
         "ON"
-      ]
+      ],
+      "stockQuantity": 7
     }
   ]
 }

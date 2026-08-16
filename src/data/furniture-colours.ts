@@ -1,22 +1,21 @@
 export const DEFAULT_COLOUR_ID = "same-as-image";
 
 export const furnitureColours = [
-  { id: "smoke-wood", name: "Smoke Wood", hex: "#6B533E" },
-  { id: "red", name: "Red", hex: "#B82323" },
-  { id: "black", name: "Black", hex: "#1C1C1C" },
-  { id: "silver", name: "Silver", hex: "#D3D6DB" },
-  { id: "dhwani", name: "Dhwani", hex: "#3B3533" },
-  { id: "shadow-oak", name: "Shadow Oak", hex: "#26211E" },
-  { id: "oak", name: "Oak", hex: "#A87640" },
-  { id: "auburn", name: "Auburn", hex: "#8F3D18" },
-  { id: "oakwood", name: "Oakwood", hex: "#C5BDB1" },
-  { id: "pink", name: "Bright Pink", hex: "#FF4081" },
-  { id: "chocolate", name: "Chocolate", hex: "#301D17" },
-  { id: "white", name: "White", hex: "#FFFFFF" },
-  { id: "loft", name: "Loft", hex: "#423129" },
-  { id: "maple", name: "Maple", hex: "#E5D0A6" },
-  { id: "almond", name: "Almond", hex: "#EAE6D0" },
-  { id: "cherry", name: "Cherry", hex: "#4E2728" },
+  { id: "smoke-wood", name: "Smoke Wood", hex: "#6B533E", image: "/images/colours/SmokeWood.png" },
+  { id: "red", name: "Red", hex: "#B82323", image: "/images/colours/Red.png" },
+  { id: "black", name: "Black", hex: "#1C1C1C", image: "/images/colours/Black.png" },
+  { id: "silver", name: "Silver", hex: "#D3D6DB", image: "/images/colours/Silver.png" },
+  { id: "dhawni", name: "Dhwani", hex: "#3B3533", image: "/images/colours/Dhawni.png" },
+  { id: "shadow-oak", name: "Shadow Oak", hex: "#26211E", image: "/images/colours/ShadowOak.png" },
+  { id: "oak", name: "Oak", hex: "#A87640", image: "/images/colours/Oak.png" },
+  { id: "auburn", name: "Auburn", hex: "#8F3D18", image: "/images/colours/Auburn.png" },
+  { id: "oakwood", name: "Oakwood", hex: "#C5BDB1", image: "/images/colours/Oakwood.png" },
+  { id: "bright-pink", name: "Bright Pink", hex: "#FF4081", image: "/images/colours/BrightPink.png" },
+  { id: "chocolate", name: "Chocolate", hex: "#301D17", image: "/images/colours/Chocolate.png" },
+  { id: "white", name: "White", hex: "#FFFFFF", image: "/images/colours/White.png" },
+  { id: "loft", name: "Loft", hex: "#423129", image: "/images/colours/Loft.png" },
+  { id: "maple", name: "Maple", hex: "#E5D0A6", image: "/images/colours/Maple.png" },
+  { id: "cherry", name: "Cherry", hex: "#4E2728", image: "/images/colours/Cherry.png" },
 ] as const;
 
 export type FurnitureColour = (typeof furnitureColours)[number];
@@ -24,7 +23,6 @@ export type FurnitureColour = (typeof furnitureColours)[number];
 export const sameAsImageColour = {
   id: DEFAULT_COLOUR_ID,
   name: "Default / As shown in image",
-  hex: "#9B8C7B",
 };
 
 export function getFurnitureColour(id: string) {

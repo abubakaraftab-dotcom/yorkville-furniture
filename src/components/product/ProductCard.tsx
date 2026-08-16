@@ -13,7 +13,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const { selectedProvince } = useProvince();
-  const provinceCode = selectedProvince?.code || "ON";
+  const provinceCode = "ON";
 
   // Check province availability and price
   const price = product.priceByProvince[provinceCode as keyof typeof product.priceByProvince];
@@ -39,9 +39,9 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* Unavailable overlay */}
         {!isAvailable && (
           <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-            <span className="bg-error text-white text-xs font-bold px-3 py-1.5 rounded-lg">
-              Not Available in {selectedProvince?.name || provinceCode}
-            </span>
+              <span className="bg-error text-white text-xs font-bold px-3 py-1.5 rounded-lg">
+              Not Available in Ontario
+              </span>
           </div>
         )}
 
@@ -81,23 +81,9 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         </div>
 
-        {/* Province availability badges */}
-        <div className="flex gap-1 mt-2">
-          {["ON", "QC", "BC", "AB"].map((code) => {
-            const isAvail = product.priceByProvince[code as keyof typeof product.priceByProvince] !== undefined;
-            return (
-              <span
-                key={code}
-                className={`text-[9px] font-bold px-1.5 py-0.5 rounded ${
-                  isAvail
-                    ? "bg-success/10 text-success"
-                    : "bg-muted-light text-muted opacity-40"
-                }`}
-              >
-                {code}
-              </span>
-            );
-          })}
+        <div className="mt-3 flex items-center justify-between rounded-lg bg-primary/5 px-2.5 py-2 text-[11px]">
+          <span className="font-semibold text-primary">Delivery availability: Ontario</span>
+          <span className="text-muted">{product.stockQuantity ?? 1} in stock</span>
         </div>
       </div>
     </Link>
