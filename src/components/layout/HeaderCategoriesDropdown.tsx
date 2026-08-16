@@ -84,7 +84,7 @@ export default function HeaderCategoriesDropdown({ categories }: HeaderCategorie
                     onMouseEnter={() => hasSubcategories && setExpandedCategory(category.slug)}
                     onClick={() => {
                       if (hasSubcategories) {
-                        setExpandedCategory(category.slug);
+                        setExpandedCategory(isExpanded ? null : category.slug);
                       } else {
                         setIsOpen(false);
                         router.push(categoryLink);
@@ -102,6 +102,7 @@ export default function HeaderCategoriesDropdown({ categories }: HeaderCategorie
                         className={`w-4 h-4 text-muted transition-transform duration-300 ${
                           isExpanded ? "rotate-180" : ""
                         }`}
+                      aria-label={isExpanded ? `Collapse ${category.name} subcategories` : `Expand ${category.name} subcategories`}
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                       </svg>

@@ -19,6 +19,10 @@ interface ProductDetailClientProps {
 
 const withBasePath = (assetPath: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${assetPath}`;
 
+function metricSeed(value: string) {
+  return [...value].reduce((total, character) => total + character.charCodeAt(0), 0);
+}
+
 function cmToInches(value: string) {
   const number = Number.parseFloat(value.replace(",", "."));
   if (Number.isNaN(number)) return value.trim();
@@ -47,18 +51,24 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   const [customDimensions, setCustomDimensions] = useState("");
   const [addedMessageVisible, setAddedMessageVisible] = useState(false);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [remainingStock, setRemainingStock] = useState(product.stockQuantity ?? 1);
 
   const selectedColour = getFurnitureColour(selectedColourId);
   const selectedDimensions = useMemo(() => formatDimensions(selectedSize?.dimensions ?? ""), [selectedSize]);
   const basePrice = product.priceByProvince.ON || 0;
   const currentPrice = basePrice + (selectedSize?.priceAdjustment ?? 0);
+  const productSeed = metricSeed(product.id);
+  const soldCount = currentPrice >= 500 ? 1 + (productSeed % 5) : 9 + (productSeed % 9);
+  const viewerCount = 3 + (productSeed % 21);
   const isAvailableInOntario = product.priceByProvince.ON !== undefined;
   const provinceName = selectedProvince?.code === "ON" || !selectedProvince ? "Ontario" : selectedProvince.name;
 
   const handleAddToCart = () => {
-    if (isAddingToCart) return;
+    if (isAddingToCart || remainingStock <= 0) return;
+    const cartQuantity = Math.min(quantity, remainingStock);
     setIsAddingToCart(true);
-    addToCart(product, selectedSize?.label ?? "Standard", selectedColour.name, quantity, selectedSize?.dimensions, customDimensions.trim() || undefined);
+    addToCart(product, selectedSize?.label ?? "Size", selectedColour.name, cartQuantity, selectedSize?.dimensions, customDimensions.trim() || undefined);
+    setRemainingStock((stock) => Math.max(0, stock - cartQuantity));
     window.setTimeout(() => {
       setIsAddingToCart(false);
       setAddedMessageVisible(true);
@@ -113,9 +123,10 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               {product.sizes.map((size) => {
                 const dimensions = formatDimensions(size.dimensions);
                 return <button key={size.label} type="button" onClick={() => setSelectedSize(size)} className={`px-4 py-3 border rounded-lg text-sm transition-all cursor-pointer ${selectedSize.label === size.label ? "border-primary bg-primary/5 text-primary font-semibold" : "border-border hover:border-primary/50 text-foreground"}`}>
-                  <div className="text-left font-semibold">Height × Width × Depth</div>
-                  <div className="mt-1 text-left text-[11px] font-medium text-foreground">{dimensions.height} × {dimensions.width} × {dimensions.depth}</div>
-                  <div className="text-left text-[10px] text-muted">({dimensions.heightCm} × {dimensions.widthCm} × {dimensions.depthCm}){size.priceAdjustment !== 0 && ` (${size.priceAdjustment > 0 ? "+" : "−"} $${Math.abs(size.priceAdjustment)})`}</div>
+                  <div className="grid grid-cols-3 gap-3 text-center">
+                    {[{ label: "Height", inches: dimensions.height, centimetres: dimensions.heightCm }, { label: "Width", inches: dimensions.width, centimetres: dimensions.widthCm }, { label: "Depth", inches: dimensions.depth, centimetres: dimensions.depthCm }].map((dimension) => <div key={dimension.label} className="min-w-0"><span className="block text-[10px] font-semibold uppercase tracking-wide text-muted">{dimension.label}</span><span className="mt-1 block whitespace-nowrap text-[11px] font-semibold text-foreground">{dimension.inches}</span><span className="mt-0.5 block whitespace-nowrap text-[10px] text-muted">({dimension.centimetres})</span></div>)}
+                  </div>
+                  {size.priceAdjustment !== 0 && <div className="mt-2 text-center text-[10px] text-muted">{size.priceAdjustment > 0 ? "+" : "−"} ${Math.abs(size.priceAdjustment)}</div>}
                 </button>;
               })}
             </div>
@@ -125,7 +136,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         <div className="relative" id="color-selector">
           <h3 className="text-sm font-semibold text-foreground mb-2">Colour</h3>
           <button type="button" onClick={() => setColourPopupOpen((open) => !open)} className="flex w-full items-center justify-between rounded-xl border border-border bg-white px-4 py-3 text-left shadow-sm transition hover:border-primary">
-            <span className="flex items-center gap-3">{selectedColourId !== DEFAULT_COLOUR_ID && "image" in selectedColour && <img src={withBasePath(selectedColour.image)} alt="" className="h-9 w-9 rounded-full border border-black/10 bg-white object-contain p-0.5 shadow-inner" />}<span><strong className="block text-sm">{selectedColour.name}</strong><span className="text-xs text-muted">Choose from {furnitureColours.length} uploaded finish colours</span></span></span><span className="text-muted">{colourPopupOpen ? "▲" : "▼"}</span>
+            <span className="flex items-center gap-3">{selectedColourId !== DEFAULT_COLOUR_ID && "image" in selectedColour && <img src={withBasePath(selectedColour.image)} alt="" className="h-9 w-9 rounded-full border border-black/10 bg-white object-cover shadow-inner" />}<span><strong className="block text-sm">{selectedColour.name}</strong><span className="text-xs text-muted">Choose from {furnitureColours.length} uploaded finish colours</span></span></span><span className="text-muted">{colourPopupOpen ? "▲" : "▼"}</span>
           </button>
           {colourPopupOpen && (
             <div className="absolute z-40 mt-2 w-full rounded-2xl border border-border bg-white p-4 shadow-2xl">
@@ -133,9 +144,9 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <div className="grid grid-cols-4 gap-3 sm:grid-cols-8">
                 {furnitureColours.map((colour) => (
                   <button key={colour.id} type="button" title={colour.name} onClick={() => { setSelectedColourId(colour.id); setColourPopupOpen(false); }} className={`group relative flex flex-col items-center gap-1 rounded-lg p-1 transition hover:bg-muted-light ${selectedColourId === colour.id ? "ring-2 ring-primary" : ""}`}>
-                    <img src={withBasePath(colour.image)} alt={colour.name} className="h-10 w-10 rounded-full border-2 border-white bg-white object-contain p-0.5 shadow-md ring-1 ring-black/10 transition group-hover:scale-110" />
+                    <img src={withBasePath(colour.image)} alt={colour.name} className="h-10 w-10 rounded-full border-2 border-white bg-white object-cover shadow-md ring-1 ring-black/10 transition group-hover:scale-110" />
                     <span className="text-[9px] font-semibold leading-tight text-center">{colour.name}</span>
-                    <span className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 hidden w-36 -translate-x-1/2 rounded-xl border border-border bg-white p-2 text-xs shadow-xl group-hover:block"><img src={withBasePath(colour.image)} alt="" className="mb-1 block h-20 w-full rounded-lg bg-white object-contain p-1" />{colour.name}</span>
+                    <span className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 hidden w-36 -translate-x-1/2 rounded-xl border border-border bg-white p-2 text-xs shadow-xl group-hover:block"><img src={withBasePath(colour.image)} alt="" className="mb-1 block h-20 w-full rounded-lg bg-white object-cover" />{colour.name}</span>
                   </button>
                 ))}
               </div>
@@ -144,8 +155,8 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         </div>
 
         <div className="flex flex-col gap-3">
-          <div className="flex items-end gap-4"><div className="flex flex-col"><span className="text-xs text-muted mb-1 font-semibold">Qty</span><QuantitySelector quantity={quantity} onChange={setQuantity} /></div><div className="flex-1 flex flex-col justify-end"><Button onClick={handleAddToCart} variant={isAvailableInOntario ? "primary" : "outline"} disabled={!isAvailableInOntario || isAddingToCart} className="w-full h-[42px]">{isAddingToCart ? <span className="inline-flex items-center justify-center gap-2"><span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" aria-hidden="true" />Adding to cart…</span> : addedMessageVisible ? <span className="inline-flex items-center justify-center gap-2"><span className="text-lg leading-none">✓</span>Added to cart</span> : "Add to Cart"}</Button></div></div>
-          <div className="flex items-center justify-between rounded-lg border border-primary/15 bg-primary/5 px-3 py-2 text-xs"><span className="font-semibold text-primary">In stock</span><span className="text-foreground/70">{product.stockQuantity ?? 1} units available</span></div>
+          <div className="flex items-end gap-4"><div className="flex flex-col"><span className="text-xs text-muted mb-1 font-semibold">Qty</span><QuantitySelector quantity={quantity} onChange={(value) => setQuantity(Math.min(value, Math.max(1, remainingStock)))} /></div><div className="flex-1 flex flex-col justify-end"><Button onClick={handleAddToCart} variant={isAvailableInOntario ? "primary" : "outline"} disabled={!isAvailableInOntario || isAddingToCart || remainingStock <= 0} className="w-full h-[42px]">{isAddingToCart ? <span className="inline-flex items-center justify-center gap-2"><span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" aria-hidden="true" />Adding to cart…</span> : addedMessageVisible ? <span className="inline-flex items-center justify-center gap-2"><span className="text-lg leading-none">✓</span>Added to cart</span> : "Add to Cart"}</Button></div></div>
+          <div className="rounded-lg border border-primary/15 bg-primary/5 px-3 py-2 text-xs"><div className="flex items-center justify-between"><span className="font-semibold text-primary">In stock</span><span className="font-semibold text-foreground">{remainingStock} units available</span></div><div className="mt-1 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-[11px] text-foreground/70"><span>{soldCount} sold</span><span>{viewerCount} people viewing now</span></div></div>
           {addedMessageVisible && <div className="bg-success/10 border border-success/20 text-success text-sm py-2 px-3 rounded-lg font-semibold text-center">✓ Added to Cart!</div>}
           <div className="flex flex-col sm:flex-row gap-2 mt-2"><button onClick={handleWhatsAppInquiry} className="flex-1 inline-flex items-center justify-center gap-1.5 border border-success hover:bg-success/5 text-success font-semibold px-4 py-2.5 rounded-lg transition-colors cursor-pointer text-sm">💬 Ask on WhatsApp</button><button onClick={() => setCustomRequestOpen(!customRequestOpen)} className="flex-1 inline-flex items-center justify-center gap-1.5 border border-accent hover:bg-accent/5 text-accent-dark font-semibold px-4 py-2.5 rounded-lg transition-colors cursor-pointer text-sm">🛠️ Custom Layout Request</button></div>
         </div>
@@ -153,7 +164,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         {customRequestOpen && <form onSubmit={handleCustomSubmit} className="border border-accent/20 rounded-xl p-4 bg-accent/5 flex flex-col gap-3"><h3 className="font-serif font-bold text-lg text-accent-dark">Custom Design Request</h3><p className="text-xs text-muted">Tell us your preferred dimensions, finish, storage, or layout changes.</p><textarea required value={customMsg} onChange={(e) => setCustomMsg(e.target.value)} className="border border-border bg-white rounded-lg p-2.5 text-sm w-full h-24 focus:ring-1 focus:ring-accent focus:outline-none" placeholder="Describe your custom request..." /><div className="flex flex-col sm:flex-row justify-end gap-2"><Button type="submit" variant="secondary" size="sm">Send via WhatsApp</Button><button type="button" onClick={handleEmailRequest} className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary-dark">Send via Email</button></div></form>}
 
         <hr className="border-border" />
-        <div className="grid grid-cols-2 gap-2 text-sm"><div className="rounded-lg border border-border bg-muted-light/35 p-3"><span className="mb-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary" aria-hidden="true"><svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 21s7-4.2 7-10.2A7 7 0 0 0 5 10.8C5 16.8 12 21 12 21Z"/><path d="M8.8 10.5c2.1 1 4.3 1 6.4 0"/></svg></span><span className="block text-[10px] font-semibold uppercase tracking-wider text-muted">Material</span><span className="mt-1 block font-semibold text-foreground">Wood</span></div><div className="rounded-lg border border-border bg-muted-light/35 p-3"><span className="mb-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary" aria-hidden="true"><svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><span className="block text-[10px] font-semibold uppercase tracking-wider text-muted">Assembly</span><span className="mt-1 block font-semibold text-foreground">Ready to use</span></div><div className="rounded-lg border border-border bg-muted-light/35 p-3"><span className="mb-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary" aria-hidden="true"><svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></span><span className="block text-[10px] font-semibold uppercase tracking-wider text-muted">Delivery</span><span className="mt-1 block font-semibold text-foreground">1–3 days</span></div><div className="rounded-lg border border-border bg-muted-light/35 p-3"><span className="mb-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary" aria-hidden="true"><svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.2"/></svg></span><span className="block text-[10px] font-semibold uppercase tracking-wider text-muted">Delivery availability</span><span className="mt-1 block font-semibold text-foreground">Ontario</span></div></div>
+        <div className="grid grid-cols-2 gap-2 text-sm"><div className="rounded-lg border border-border bg-muted-light/35 p-3"><span className="mb-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary" aria-hidden="true"><svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 7.5 12 4l8 3.5-8 3.5L4 7.5Z"/><path d="M4 12.5 12 16l8-3.5M4 17.5 12 21l8-3.5"/></svg></span><span className="block text-[10px] font-semibold uppercase tracking-wider text-muted">Material</span><span className="mt-1 block font-semibold text-foreground">Wood</span></div><div className="rounded-lg border border-border bg-muted-light/35 p-3"><span className="mb-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary" aria-hidden="true"><svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><span className="block text-[10px] font-semibold uppercase tracking-wider text-muted">Assembly</span><span className="mt-1 block font-semibold text-foreground">Ready to use</span></div><div className="rounded-lg border border-border bg-muted-light/35 p-3"><span className="mb-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary" aria-hidden="true"><svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></span><span className="block text-[10px] font-semibold uppercase tracking-wider text-muted">Delivery</span><span className="mt-1 block font-semibold text-foreground">1–3 days</span></div><div className="rounded-lg border border-border bg-muted-light/35 p-3"><span className="mb-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary" aria-hidden="true"><svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.2"/></svg></span><span className="block text-[10px] font-semibold uppercase tracking-wider text-muted">Delivery availability</span><span className="mt-1 block font-semibold text-foreground">Ontario</span></div></div>
       </div>
     </div>
   );

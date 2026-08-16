@@ -36,7 +36,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden items-center gap-7 lg:flex">
+          <nav className="hidden items-center gap-8 lg:flex">
             {navLinks.map((link) => {
               if (link.label === "Categories") {
                 return <HeaderCategoriesDropdown key={link.href} categories={categories} />;
@@ -48,7 +48,7 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-foreground/75 transition-colors hover:text-primary"
+                  className="text-sm font-semibold uppercase tracking-[0.1em] text-foreground/80 transition-colors hover:text-primary"
                 >
                   {link.label}
                 </Link>
@@ -57,7 +57,7 @@ export default function Header() {
           </nav>
 
           {/* Right side: Province + Cart + Mobile Toggle */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-5">
             {/* Province Selector */}
             <ProvinceSelector />
 
