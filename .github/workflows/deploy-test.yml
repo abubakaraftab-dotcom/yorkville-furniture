@@ -21,6 +21,8 @@ jobs:
         run: npm ci
 
       - name: Build static site
+        env:
+          NEXT_PUBLIC_BASE_PATH: /test-deploy
         run: npm run build
 
       - name: Upload test site to Hostinger
