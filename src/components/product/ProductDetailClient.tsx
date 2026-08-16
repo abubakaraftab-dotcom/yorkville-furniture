@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import type { Product } from "@/types/product";
 import ImageGallery from "@/components/ui/ImageGallery";
@@ -52,16 +52,27 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   const [addedMessageVisible, setAddedMessageVisible] = useState(false);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [remainingStock, setRemainingStock] = useState(product.stockQuantity ?? 1);
+  const [viewerCount, setViewerCount] = useState(3 + (metricSeed(product.id) % 21));
 
   const selectedColour = getFurnitureColour(selectedColourId);
   const selectedDimensions = useMemo(() => formatDimensions(selectedSize?.dimensions ?? ""), [selectedSize]);
-  const basePrice = product.priceByProvince.ON || 0;
+  const provinceCode = selectedProvince?.code ?? "ON";
+  const basePrice = product.priceByProvince[provinceCode as keyof typeof product.priceByProvince] || 0;
   const currentPrice = basePrice + (selectedSize?.priceAdjustment ?? 0);
   const productSeed = metricSeed(product.id);
   const soldCount = currentPrice >= 500 ? 1 + (productSeed % 5) : 9 + (productSeed % 9);
-  const viewerCount = 3 + (productSeed % 21);
-  const isAvailableInOntario = product.priceByProvince.ON !== undefined;
-  const provinceName = selectedProvince?.code === "ON" || !selectedProvince ? "Ontario" : selectedProvince.name;
+  const isAvailableInProvince = product.priceByProvince[provinceCode as keyof typeof product.priceByProvince] !== undefined;
+  const provinceName = selectedProvince?.name ?? "Ontario";
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setViewerCount((current) => {
+        const next = current + (Math.random() > 0.5 ? 1 : -1);
+        return Math.min(23, Math.max(3, next));
+      });
+    }, 4200);
+    return () => window.clearInterval(timer);
+  }, []);
 
   const handleAddToCart = () => {
     if (isAddingToCart || remainingStock <= 0) return;
@@ -69,11 +80,10 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
     setIsAddingToCart(true);
     addToCart(product, selectedSize?.label ?? "Size", selectedColour.name, cartQuantity, selectedSize?.dimensions, customDimensions.trim() || undefined);
     setRemainingStock((stock) => Math.max(0, stock - cartQuantity));
-    window.setTimeout(() => {
-      setIsAddingToCart(false);
-      setAddedMessageVisible(true);
-      window.setTimeout(() => setAddedMessageVisible(false), 3000);
-    }, 650);
+      window.setTimeout(() => {
+        setIsAddingToCart(false);
+        setAddedMessageVisible(true);
+      }, 650);
   };
 
   const inquiryText = () => `Hi! I have a question about the "${product.title}".\nSize: ${selectedSize?.label}\nColour: ${selectedColour.name}\nDimensions: H ${selectedDimensions.height}, W ${selectedDimensions.width}, D ${selectedDimensions.depth}${customDimensions.trim() ? `\nCustom dimensions: ${customDimensions.trim()}` : ""}\nPrice: $${currentPrice.toFixed(2)} CAD\nProduct link: ${typeof window !== "undefined" ? window.location.href : ""}`;
@@ -112,8 +122,8 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         <p className="text-foreground/80 leading-relaxed">{product.description.replace(/solid/gi, "premium")}</p>
 
         <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900">
-          <strong>{isAvailableInOntario ? "Available for delivery in Ontario" : "Ontario availability on request"}</strong>
-          <p className="mt-1">This product is currently available for delivery in Ontario. For items available in your province, <Link href="/provinces" className="font-semibold underline underline-offset-2 hover:text-emerald-700">view our provinces page</Link>.</p>
+          <strong>{isAvailableInProvince ? `Available for delivery in ${provinceName}` : `${product.title} is not currently listed for delivery in ${provinceName}`}</strong>
+          <p className="mt-1">This product is currently available for delivery in {provinceName}. For items available in your province, <Link href="/provinces" className="font-semibold underline underline-offset-2 hover:text-emerald-700">view our provinces page</Link>.</p>
         </div>
 
         {product.sizes.length > 0 && (
@@ -155,8 +165,8 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         </div>
 
         <div className="flex flex-col gap-3">
-          <div className="flex items-end gap-4"><div className="flex flex-col"><span className="text-xs text-muted mb-1 font-semibold">Qty</span><QuantitySelector quantity={quantity} onChange={(value) => setQuantity(Math.min(value, Math.max(1, remainingStock)))} /></div><div className="flex-1 flex flex-col justify-end"><Button onClick={handleAddToCart} variant={isAvailableInOntario ? "primary" : "outline"} disabled={!isAvailableInOntario || isAddingToCart || remainingStock <= 0} className="w-full h-[42px]">{isAddingToCart ? <span className="inline-flex items-center justify-center gap-2"><span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" aria-hidden="true" />Adding to cart…</span> : addedMessageVisible ? <span className="inline-flex items-center justify-center gap-2"><span className="text-lg leading-none">✓</span>Added to cart</span> : "Add to Cart"}</Button></div></div>
-          <div className="rounded-lg border border-primary/15 bg-primary/5 px-3 py-2 text-xs"><div className="flex items-center justify-between"><span className="font-semibold text-primary">In stock</span><span className="font-semibold text-foreground">{remainingStock} units available</span></div><div className="mt-1 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-[11px] text-foreground/70"><span>{soldCount} sold</span><span>{viewerCount} people viewing now</span></div></div>
+          <div className="flex items-end gap-4"><div className="flex flex-col"><span className="text-xs text-muted mb-1 font-semibold">Qty</span><QuantitySelector quantity={quantity} onChange={(value) => setQuantity(Math.min(value, Math.max(1, remainingStock)))} /></div><div className="flex-1 flex flex-col justify-end"><Button onClick={handleAddToCart} variant={isAvailableInProvince ? "primary" : "outline"} disabled={!isAvailableInProvince || isAddingToCart || remainingStock <= 0} className="w-full h-[42px]">{isAddingToCart ? <span className="inline-flex items-center justify-center gap-2"><span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" aria-hidden="true" />Adding to cart…</span> : addedMessageVisible ? <span className="inline-flex items-center justify-center gap-2"><span className="text-lg leading-none">✓</span>Added to cart</span> : "Add to Cart"}</Button></div></div>
+          <div className="grid grid-cols-3 gap-2"><div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-center"><span className="mx-auto mb-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-emerald-100 text-emerald-700" aria-hidden="true">✓</span><span className="block text-[10px] font-semibold uppercase tracking-wide text-emerald-800">In stock</span><span className="mt-1 block text-sm font-bold text-emerald-950">{remainingStock}</span><span className="block text-[10px] text-emerald-800">units available</span></div><div className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-center"><span className="mx-auto mb-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-amber-100 text-amber-700" aria-hidden="true">↗</span><span className="block text-[10px] font-semibold uppercase tracking-wide text-amber-800">Sold</span><span className="mt-1 block text-sm font-bold text-amber-950">{soldCount}</span><span className="block text-[10px] text-amber-800">this season</span></div><div className="rounded-xl border border-sky-200 bg-sky-50 p-3 text-center"><span className="mx-auto mb-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-sky-100 text-sky-700" aria-hidden="true">◉</span><span className="block text-[10px] font-semibold uppercase tracking-wide text-sky-800">Viewing now</span><span className="mt-1 block text-sm font-bold text-sky-950">{viewerCount}</span><span className="block text-[10px] text-sky-800">people</span></div></div>
           {addedMessageVisible && <div className="bg-success/10 border border-success/20 text-success text-sm py-2 px-3 rounded-lg font-semibold text-center">✓ Added to Cart!</div>}
           <div className="flex flex-col sm:flex-row gap-2 mt-2"><button onClick={handleWhatsAppInquiry} className="flex-1 inline-flex items-center justify-center gap-1.5 border border-success hover:bg-success/5 text-success font-semibold px-4 py-2.5 rounded-lg transition-colors cursor-pointer text-sm">💬 Ask on WhatsApp</button><button onClick={() => setCustomRequestOpen(!customRequestOpen)} className="flex-1 inline-flex items-center justify-center gap-1.5 border border-accent hover:bg-accent/5 text-accent-dark font-semibold px-4 py-2.5 rounded-lg transition-colors cursor-pointer text-sm">🛠️ Custom Layout Request</button></div>
         </div>

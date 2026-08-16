@@ -302,6 +302,15 @@ export default function CheckoutPage() {
                     <option key={city} value={city} />
                   ))}
                 </datalist>
+                {formData.city && deliveryCharge !== null && (
+                  <p className="mt-2 flex items-center gap-2 text-sm font-medium text-emerald-700">
+                    <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100" aria-hidden="true">✓</span>
+                    Delivery available for <strong>${deliveryCharge.toFixed(2)} CAD</strong>
+                  </p>
+                )}
+                {formData.city && deliveryCharge === null && (
+                  <p className="mt-2 text-xs text-muted">Delivery charge will be confirmed for this city.</p>
+                )}
               </div>
               <div>
                 <label className="block text-sm font-semibold mb-1 text-foreground">

@@ -19,9 +19,9 @@ export default function ProvinceSelector() {
         aria-haspopup="menu"
         aria-expanded={isOpen}
         onClick={() => setIsOpen((open) => !open)}
-        className="flex items-center gap-2 rounded-lg px-2 py-2 text-sm font-semibold text-primary transition hover:bg-primary/5"
+        className="flex items-center gap-2 rounded-lg px-2 py-2 text-sm font-semibold uppercase tracking-[0.12em] text-primary transition hover:bg-primary/5"
       >
-        <span className="hidden md:inline text-muted font-medium">Deliver to:</span>
+        <span className="hidden md:inline text-muted font-medium">Select your province:</span>
         <span>{currentProvince?.name ?? "Ontario"} ({currentProvince?.code ?? "ON"})</span>
         <svg viewBox="0 0 20 20" fill="none" className={`h-4 w-4 transition-transform ${isOpen ? "rotate-180" : ""}`} aria-hidden="true">
           <path d="m5 7.5 5 5 5-5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />

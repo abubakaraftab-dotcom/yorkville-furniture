@@ -8,7 +8,10 @@
       "shortDescription": "Solid oak dining table for 6, natural finish.",
       "categorySlug": "dining-tables",
       "priceByProvince": {
-        "ON": 1299.99
+        "ON": 1299.99,
+        "QC": 1338.99,
+        "BC": 1377.99,
+        "AB": 1312.99
       },
       "compareAtPrice": 1499.99,
       "currency": "CAD",
@@ -57,7 +60,10 @@
         "/images/products/oak-dining-table-6-seater-main.jpg"
       ],
       "provinceAvailability": [
-        "ON"
+        "ON",
+        "QC",
+        "BC",
+        "AB"
       ],
       "tags": [
         "bestseller",
@@ -80,7 +86,10 @@
       "shortDescription": "L-shaped grey sectional sofa, seats 5.",
       "categorySlug": "sofas",
       "priceByProvince": {
-        "ON": 1899.99
+        "ON": 1899.99,
+        "QC": 1956.99,
+        "BC": 2013.99,
+        "AB": 1918.99
       },
       "compareAtPrice": 2299.99,
       "currency": "CAD",
@@ -96,7 +105,10 @@
         "/images/products/modern-grey-sectional-sofa-main.jpg"
       ],
       "provinceAvailability": [
-        "ON"
+        "ON",
+        "QC",
+        "BC",
+        "AB"
       ],
       "tags": [
         "bestseller",
@@ -119,7 +131,10 @@
       "shortDescription": "Solid walnut queen bed frame with headboard.",
       "categorySlug": "beds",
       "priceByProvince": {
-        "ON": 999.99
+        "ON": 999.99,
+        "QC": 1029.99,
+        "BC": 1059.99,
+        "AB": 1009.99
       },
       "currency": "CAD",
       "sizes": [
@@ -167,7 +182,10 @@
         "/images/products/walnut-queen-bed-frame-main.jpg"
       ],
       "provinceAvailability": [
-        "ON"
+        "ON",
+        "QC",
+        "BC",
+        "AB"
       ],
       "tags": [
         "solid-wood"
@@ -190,7 +208,10 @@
       "shortDescription": "Modern minimalist desk with drawer and cable management.",
       "categorySlug": "desks",
       "priceByProvince": {
-        "ON": 449.99
+        "ON": 449.99,
+        "QC": 463.49,
+        "BC": 476.99,
+        "AB": 454.49
       },
       "compareAtPrice": 549.99,
       "currency": "CAD",
@@ -239,7 +260,10 @@
         "/images/products/minimalist-work-desk-main.jpg"
       ],
       "provinceAvailability": [
-        "ON"
+        "ON",
+        "QC",
+        "BC",
+        "AB"
       ],
       "tags": [
         "new-arrival"
@@ -261,7 +285,10 @@
       "shortDescription": "Round marble top coffee table with gold base.",
       "categorySlug": "coffee-tables",
       "priceByProvince": {
-        "ON": 699.99
+        "ON": 699.99,
+        "QC": 720.99,
+        "BC": 741.99,
+        "AB": 706.99
       },
       "currency": "CAD",
       "sizes": [
@@ -309,7 +336,10 @@
         "/images/products/round-marble-coffee-table-main.jpg"
       ],
       "provinceAvailability": [
-        "ON"
+        "ON",
+        "QC",
+        "BC",
+        "AB"
       ],
       "tags": [
         "bestseller"
@@ -331,7 +361,10 @@
       "shortDescription": "Spacious bedroom dresser with six soft-close drawers.",
       "categorySlug": "dressers",
       "priceByProvince": {
-        "ON": 899.99
+        "ON": 899.99,
+        "QC": 926.99,
+        "BC": 953.99,
+        "AB": 908.99
       },
       "compareAtPrice": 999.99,
       "currency": "CAD",
@@ -393,7 +426,10 @@
       "createdAt": "2026-05-01",
       "subcategorySlug": "6-drawer-dressers",
       "provinceAvailability": [
-        "ON"
+        "ON",
+        "QC",
+        "BC",
+        "AB"
       ],
       "stockQuantity": 4
     },
@@ -405,7 +441,10 @@
       "shortDescription": "Elegant wardrobe with hanging rail and adjustable shelves.",
       "categorySlug": "wardrobes",
       "priceByProvince": {
-        "ON": 1199.99
+        "ON": 1199.99,
+        "QC": 1235.99,
+        "BC": 1271.99,
+        "AB": 1211.99
       },
       "currency": "CAD",
       "sizes": [
@@ -465,7 +504,10 @@
       "createdAt": "2026-05-15",
       "subcategorySlug": "2-door-wardrobes",
       "provinceAvailability": [
-        "ON"
+        "ON",
+        "QC",
+        "BC",
+        "AB"
       ],
       "stockQuantity": 10
     },
@@ -477,7 +519,10 @@
       "shortDescription": "Space-saving vertical chest of drawers.",
       "categorySlug": "chest-dressers",
       "priceByProvince": {
-        "ON": 599.99
+        "ON": 599.99,
+        "QC": 617.99,
+        "BC": 635.99,
+        "AB": 605.99
       },
       "currency": "CAD",
       "sizes": [
@@ -537,7 +582,10 @@
       "createdAt": "2026-06-01",
       "subcategorySlug": "5-drawer-chest",
       "provinceAvailability": [
-        "ON"
+        "ON",
+        "QC",
+        "BC",
+        "AB"
       ],
       "stockQuantity": 2
     },
@@ -549,7 +597,10 @@
       "shortDescription": "Sleek bedside nightstand with two drawers.",
       "categorySlug": "nightstands",
       "priceByProvince": {
-        "ON": 249.99
+        "ON": 249.99,
+        "QC": 257.49,
+        "BC": 264.99,
+        "AB": 252.49
       },
       "compareAtPrice": 299.99,
       "currency": "CAD",
@@ -609,9 +660,89 @@
       "inStock": true,
       "createdAt": "2026-06-10",
       "provinceAvailability": [
-        "ON"
+        "ON",
+        "QC",
+        "BC",
+        "AB"
       ],
       "stockQuantity": 7
+    },
+    {
+      "id": "prod-010",
+      "slug": "yorkville-entryway-console",
+      "title": "Yorkville Entryway Console",
+      "description": "A refined, space-conscious console designed for entryways, hallways, and living spaces. Its clean silhouette and warm wood finish bring practical storage and Canadian-inspired simplicity to the home.",
+      "shortDescription": "Refined wood console for entryways and living spaces.",
+      "categorySlug": "dressers",
+      "priceByProvince": {
+        "ON": 649.99,
+        "QC": 669.49,
+        "BC": 688.99,
+        "AB": 656.49
+      },
+      "compareAtPrice": 749.99,
+      "currency": "CAD",
+      "sizes": [
+        {
+          "label": "Console",
+          "dimensions": "120cm L x 38cm W x 78cm H",
+          "priceAdjustment": 0
+        }
+      ],
+      "colours": [
+        {
+          "name": "Shadow Oak",
+          "hex": "#5C4A3D"
+        },
+        {
+          "name": "Smoke Wood",
+          "hex": "#6E6259"
+        },
+        {
+          "name": "Oak",
+          "hex": "#C19A6B"
+        },
+        {
+          "name": "Auburn",
+          "hex": "#8B4513"
+        },
+        {
+          "name": "Oakwood",
+          "hex": "#B08B57"
+        },
+        {
+          "name": "Pink",
+          "hex": "#FF69B4"
+        },
+        {
+          "name": "Chocolate",
+          "hex": "#4B2E1E"
+        },
+        {
+          "name": "White",
+          "hex": "#FFFFFF"
+        }
+      ],
+      "images": [
+        "/images/products/minimalist-work-desk-main.jpg"
+      ],
+      "provinceAvailability": [
+        "ON",
+        "QC",
+        "BC",
+        "AB"
+      ],
+      "tags": [
+        "new-arrival"
+      ],
+      "material": "Wood",
+      "weight": "25 kg",
+      "assemblyRequired": false,
+      "deliveryEstimate": "1–3 days",
+      "featured": false,
+      "inStock": true,
+      "createdAt": "2025-04-20",
+      "stockQuantity": 6
     }
   ]
 }
