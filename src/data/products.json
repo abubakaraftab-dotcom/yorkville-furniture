@@ -17,11 +17,6 @@
           "label": "Standard (180cm x 90cm)",
           "dimensions": "180cm L x 90cm W x 76cm H",
           "priceAdjustment": 0
-        },
-        {
-          "label": "Large (220cm x 100cm)",
-          "dimensions": "220cm L x 100cm W x 76cm H",
-          "priceAdjustment": 200
         }
       ],
       "colours": [
@@ -94,11 +89,6 @@
           "label": "Standard (280cm x 180cm)",
           "dimensions": "280cm L x 180cm W x 85cm H",
           "priceAdjustment": 0
-        },
-        {
-          "label": "Compact (240cm x 160cm)",
-          "dimensions": "240cm L x 160cm W x 85cm H",
-          "priceAdjustment": -200
         }
       ],
       "colours": [],
@@ -137,11 +127,6 @@
           "label": "Queen",
           "dimensions": "213cm L x 162cm W x 120cm H",
           "priceAdjustment": 0
-        },
-        {
-          "label": "King",
-          "dimensions": "213cm L x 193cm W x 120cm H",
-          "priceAdjustment": 300
         }
       ],
       "colours": [
@@ -214,11 +199,6 @@
           "label": "Standard (120cm x 60cm)",
           "dimensions": "120cm L x 60cm W x 75cm H",
           "priceAdjustment": 0
-        },
-        {
-          "label": "Wide (150cm x 70cm)",
-          "dimensions": "150cm L x 70cm W x 75cm H",
-          "priceAdjustment": 100
         }
       ],
       "colours": [
@@ -289,11 +269,6 @@
           "label": "Small (80cm diameter)",
           "dimensions": "80cm D x 45cm H",
           "priceAdjustment": 0
-        },
-        {
-          "label": "Medium (100cm diameter)",
-          "dimensions": "100cm D x 45cm H",
-          "priceAdjustment": 150
         }
       ],
       "colours": [
@@ -365,11 +340,6 @@
           "label": "Standard (160cm x 50cm)",
           "dimensions": "160cm L x 50cm W x 78cm H",
           "priceAdjustment": 0
-        },
-        {
-          "label": "Large (180cm x 55cm)",
-          "dimensions": "180cm L x 55cm W x 78cm H",
-          "priceAdjustment": 150
         }
       ],
       "colours": [
@@ -443,11 +413,6 @@
           "label": "Twin Door (100cm)",
           "dimensions": "100cm L x 60cm W x 200cm H",
           "priceAdjustment": 0
-        },
-        {
-          "label": "Triple Door (150cm)",
-          "dimensions": "150cm L x 60cm W x 200cm H",
-          "priceAdjustment": 350
         }
       ],
       "colours": [

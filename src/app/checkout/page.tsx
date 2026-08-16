@@ -11,7 +11,6 @@ import type { OrderFormData, Order } from "@/types/order";
 import Button from "@/components/ui/Button";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import deliveryCitiesData from "@/data/delivery-cities.json";
-import siteConfig from "@/data/site-config.json";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -32,8 +31,6 @@ export default function CheckoutPage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-  const [customRequest, setCustomRequest] = useState("");
-  const [customDimensions, setCustomDimensions] = useState("");
 
   // Helper to safely get delivery charge (returns null if city not found)
   const getDeliveryCharge = (city: string): number | null => {
@@ -100,19 +97,6 @@ export default function CheckoutPage() {
     }
 
     return null;
-  };
-
-  const buildCustomRequestText = () => {
-    const items = cart.map((item) => `${item.title} — Size: ${item.selectedSize}; Dimensions: ${item.selectedDimensions || "Not specified"}; Colour: ${item.selectedColour}`).join("\\n");
-    return `Hello Yorkville Furniture Canada,\\n\\nI would like a custom layout request.\\n${items}\\nCustom dimensions: ${customDimensions || "Please advise"}\\nRequest: ${customRequest || "Please contact me to discuss."}\\nCustomer: ${formData.firstName} ${formData.lastName}\\nEmail: ${formData.email}\\nPhone: ${formData.phone}`;
-  };
-
-  const sendCustomRequestWhatsApp = () => {
-    window.open(`https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(buildCustomRequestText())}`, "_blank");
-  };
-
-  const sendCustomRequestEmail = () => {
-    window.location.href = `mailto:${siteConfig.email}?subject=${encodeURIComponent("Custom layout request — Yorkville Furniture")}&body=${encodeURIComponent(buildCustomRequestText())}`;
   };
 
   const handleFormSubmit = async (e: React.FormEvent) => {
@@ -396,13 +380,6 @@ export default function CheckoutPage() {
 
             <hr className="border-border mb-4" />
 
-            <div className="rounded-xl border border-accent/20 bg-accent/5 p-4">
-              <h3 className="font-serif text-lg font-bold text-accent-dark">Custom Layout Request</h3>
-              <p className="mt-1 text-xs text-muted">Need a different size or layout? Add your dimensions and request, then send it by WhatsApp or email.</p>
-              <input value={customDimensions} onChange={(e) => setCustomDimensions(e.target.value)} placeholder="Custom H × W × D in inches" className="mt-3 w-full rounded-lg border border-border bg-white px-3 py-2 text-sm focus:border-primary focus:outline-none" />
-              <textarea value={customRequest} onChange={(e) => setCustomRequest(e.target.value)} placeholder="Describe your custom layout request" className="mt-2 h-20 w-full rounded-lg border border-border bg-white px-3 py-2 text-sm focus:border-primary focus:outline-none" />
-              <div className="mt-2 flex flex-col gap-2 sm:flex-row"><button type="button" onClick={sendCustomRequestWhatsApp} className="flex-1 rounded-lg border border-success px-3 py-2 text-sm font-semibold text-success transition hover:bg-success/5">Send via WhatsApp</button><button type="button" onClick={sendCustomRequestEmail} className="flex-1 rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-white transition hover:bg-primary-dark">Send via Email</button></div>
-            </div>
 
             {/* Totals */}
             <div className="space-y-3 text-sm text-foreground/80">
