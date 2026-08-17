@@ -1,7 +1,12 @@
 import type { Product, ProductLocation } from "@/types/product";
 import productsData from "@/data/products.json";
+import dashboardData from "@/data/dashboard-products.json";
+import { mergeCatalogWithOverlay } from "@/lib/catalogMerge";
 
-const products: Product[] = productsData.products as Product[];
+const products: Product[] = mergeCatalogWithOverlay(
+  productsData.products as Product[],
+  dashboardData as { records: Record<string, Record<string, unknown>>; deletedIds: string[] }
+);
 
 export function getAllProducts(): Product[] {
   return products;
@@ -41,7 +46,7 @@ export function getProductLocation(product: Product, provinceCode: string, cityN
   const location = locations[provinceCode] || locations[provinceName] || {};
   const cities = location.cities || [];
   const cityAllowed = !cityName || cities.length === 0 || cities.some((city) => normalise(city) === normalise(cityName));
-  const provinceAllowed = getProductProvinceCodes(product).includes(provinceCode);
+  const provinceAllowed = getProductProvinceCodes(product).some((code) => code.toLowerCase() === provinceCode.toLowerCase());
   return {
     provinceCode,
     provinceName,

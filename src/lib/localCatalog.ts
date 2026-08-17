@@ -1,14 +1,19 @@
 "use client";
 
-export const CATALOG_STORAGE_KEY = "yorkville_local_catalog_v1";
+export const CATALOG_STORAGE_KEY = "yorkville_local_catalog_v2";
 export const MEDIA_STORAGE_KEY = "yorkville_local_media_v1";
 export const ADMIN_SESSION_KEY = "yorkville_admin_session";
 export const SUPPORTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
-export type LocalCatalogChanges = {
+export type LocalCatalogState = {
   records: Record<string, Record<string, unknown>>;
   deletedIds: string[];
+  pendingIds: string[];
+  recentExportedIds: string[];
+  lastExportedAt: string | null;
 };
+
+export type LocalCatalogChanges = Pick<LocalCatalogState, "records" | "deletedIds">;
 
 export type LocalMediaRecord = {
   id: string;
@@ -21,53 +26,90 @@ export type LocalMediaRecord = {
   updatedAt: string;
 };
 
-export function readCatalogChanges(): LocalCatalogChanges {
-  if (typeof window === "undefined") return { records: {}, deletedIds: [] };
+const emptyState = (): LocalCatalogState => ({ records: {}, deletedIds: [], pendingIds: [], recentExportedIds: [], lastExportedAt: null });
+
+export function readCatalogState(): LocalCatalogState {
+  if (typeof window === "undefined") return emptyState();
   try {
-    const value = JSON.parse(window.localStorage.getItem(CATALOG_STORAGE_KEY) || "{}");
-    return { records: value.records || {}, deletedIds: value.deletedIds || [] };
+    const raw = JSON.parse(window.localStorage.getItem(CATALOG_STORAGE_KEY) || "{}");
+    return {
+      records: raw.records || {},
+      deletedIds: raw.deletedIds || [],
+      pendingIds: raw.pendingIds || [],
+      recentExportedIds: raw.recentExportedIds || [],
+      lastExportedAt: raw.lastExportedAt || null,
+    };
   } catch {
-    return { records: {}, deletedIds: [] };
+    return emptyState();
   }
 }
 
-export function writeCatalogChanges(changes: LocalCatalogChanges) {
-  window.localStorage.setItem(CATALOG_STORAGE_KEY, JSON.stringify(changes));
+export function readCatalogChanges(): LocalCatalogChanges {
+  const state = readCatalogState();
+  return { records: state.records, deletedIds: state.deletedIds };
+}
+
+export function writeCatalogState(state: LocalCatalogState) {
+  window.localStorage.setItem(CATALOG_STORAGE_KEY, JSON.stringify(state));
   window.dispatchEvent(new Event("yorkville-catalog-changed"));
 }
 
-export function mergeCatalogChanges<T extends { id: string }>(baseProducts: T[]): T[] {
-  const changes = readCatalogChanges();
-  const deleted = new Set(changes.deletedIds.map(String));
+export function writeCatalogChanges(changes: LocalCatalogChanges) {
+  const current = readCatalogState();
+  writeCatalogState({ ...current, ...changes });
+}
+
+export function mergeCatalogChanges<T extends { id: string | number }>(baseProducts: T[]): T[] {
+  const state = readCatalogState();
+  const deleted = new Set(state.deletedIds.map(String));
   const baseIds = new Set(baseProducts.map((product) => String(product.id)));
   const merged = baseProducts
     .filter((product) => !deleted.has(String(product.id)))
-    .map((product) => ({ ...product, ...(changes.records[String(product.id)] || {}) } as T));
-  Object.entries(changes.records).forEach(([id, record]) => {
+    .map((product) => ({ ...product, ...(state.records[String(product.id)] || {}) } as T));
+  Object.entries(state.records).forEach(([id, record]) => {
     if (!baseIds.has(String(id)) && !deleted.has(String(id))) merged.push(record as T);
   });
   return merged;
 }
 
+export function nextDashboardId(baseIds: Array<string | number>, localIds: Array<string | number> = []): number {
+  const allIds = [...baseIds, ...localIds].map((id) => Number(id)).filter((id) => Number.isFinite(id));
+  return Math.max(0, ...allIds) + 1;
+}
+
 export function saveProductRecord(product: Record<string, unknown>) {
-  const changes = readCatalogChanges();
+  const state = readCatalogState();
   const id = String(product.id);
-  changes.records[id] = { ...product, updatedAt: new Date().toISOString() };
-  changes.deletedIds = changes.deletedIds.filter((deletedId) => deletedId !== id);
-  writeCatalogChanges(changes);
+  state.records[id] = { ...product, updatedAt: new Date().toISOString() };
+  state.deletedIds = state.deletedIds.filter((deletedId) => deletedId !== id);
+  state.pendingIds = Array.from(new Set([...state.pendingIds, id]));
+  writeCatalogState(state);
 }
 
-export function removeProductRecord(id: string) {
-  const changes = readCatalogChanges();
-  changes.deletedIds = Array.from(new Set([...changes.deletedIds, String(id)]));
-  delete changes.records[String(id)];
-  writeCatalogChanges(changes);
+export function removeProductRecord(id: string | number) {
+  const state = readCatalogState();
+  const key = String(id);
+  state.deletedIds = Array.from(new Set([...state.deletedIds, key]));
+  delete state.records[key];
+  state.pendingIds = Array.from(new Set([...state.pendingIds, key]));
+  writeCatalogState(state);
 }
 
-export function restoreProductRecord(id: string) {
-  const changes = readCatalogChanges();
-  changes.deletedIds = changes.deletedIds.filter((deletedId) => deletedId !== String(id));
-  writeCatalogChanges(changes);
+export function restoreProductRecord(id: string | number) {
+  const state = readCatalogState();
+  const key = String(id);
+  state.deletedIds = state.deletedIds.filter((deletedId) => deletedId !== key);
+  state.pendingIds = Array.from(new Set([...state.pendingIds, key]));
+  writeCatalogState(state);
+}
+
+export function markCatalogExported() {
+  const state = readCatalogState();
+  const exportedIds = [...state.pendingIds].reverse();
+  state.recentExportedIds = Array.from(new Set([...exportedIds, ...state.recentExportedIds])).slice(0, 5);
+  state.pendingIds = [];
+  state.lastExportedAt = new Date().toISOString();
+  writeCatalogState(state);
 }
 
 export function readMediaRecords(): LocalMediaRecord[] {
