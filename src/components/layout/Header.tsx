@@ -14,7 +14,7 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/categories", label: "Categories" },
   { href: "/products", label: "Products" },
-  { href: "/provinces", label: "Provinces" },
+  { href: "/provinces", label: "Shop by Province" },
   { href: "/custom-build", label: "Custom Build" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
@@ -41,7 +41,7 @@ export default function Header() {
               if (link.label === "Categories") {
                 return <HeaderCategoriesDropdown key={link.href} categories={categories} />;
               }
-              if (link.label === "Provinces") {
+              if (link.label === "Shop by Province") {
                 return <HeaderProvincesDropdown key={link.href} provinces={provinces} />;
               }
               return (

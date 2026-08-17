@@ -1,5 +1,5 @@
 import { getProvinceBySlug, getAllProvinces, getCityBySlug } from "@/lib/provinces";
-import { getProductsByProvince } from "@/lib/products";
+import { getProductsByCity } from "@/lib/products";
 import { notFound } from "next/navigation";
 import ProductGrid from "@/components/product/ProductGrid";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
@@ -50,25 +50,26 @@ export default async function CityPage({ params }: PageProps) {
     notFound();
   }
 
-  const products = getProductsByProvince(province.code);
+  const products = getProductsByCity(province.code, city.name);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <Breadcrumbs
         items={[
-          { label: "Provinces", href: "/provinces" },
+          { label: "Shop by Province", href: "/provinces" },
           { label: province.name, href: `/provinces/${province.slug}` },
           { label: city.name },
         ]}
       />
 
-      <div className="mb-10 text-center max-w-2xl mx-auto bg-primary/5 rounded-2xl p-6 border border-primary/10">
-        <h1 className="text-3xl font-bold font-serif text-foreground">
-          Furniture Delivery in {city.name}, {province.code}
-        </h1>
-        <p className="text-muted mt-2 text-sm leading-relaxed">
-          Need premium quality dining tables, bed frames, or sectionals? We deliver directly to {city.name} households. Order online and pay cash when your furniture arrives!
-        </p>
+      <div className="relative mb-10 overflow-hidden rounded-3xl border border-[#d8c6b3] bg-[#2b2926] px-6 py-12 text-center text-white shadow-xl sm:px-12">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(183,135,83,0.45),transparent_48%),linear-gradient(135deg,rgba(28,31,30,0.98),rgba(73,58,44,0.88))]" />
+        <div className="relative mx-auto max-w-3xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#e5c49d]">Yorkville Furniture Canada · Shop by City</p>
+          <h1 className="mt-3 text-3xl font-bold font-serif sm:text-5xl">Furniture Delivery in {city.name}</h1>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-white/80">Curated furniture for homes across {city.name}, {province.name}. Browse products that are currently available in this exact delivery area.</p>
+          <p className="mt-5 text-xs font-semibold uppercase tracking-[0.16em] text-[#e5c49d]">Inspired by the character of {city.name}</p>
+        </div>
       </div>
 
       <h2 className="text-2xl font-bold font-serif text-foreground mb-6">

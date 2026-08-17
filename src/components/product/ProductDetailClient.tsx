@@ -12,6 +12,7 @@ import { useProvince } from "@/context/ProvinceContext";
 import { useCart } from "@/context/CartContext";
 import siteConfig from "@/data/site-config.json";
 import { DEFAULT_COLOUR_ID, furnitureColours, getFurnitureColour } from "@/data/furniture-colours";
+import { getProductLocation } from "@/lib/products";
 
 interface ProductDetailClientProps {
   product: Product;
@@ -61,8 +62,10 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   const currentPrice = basePrice + (selectedSize?.priceAdjustment ?? 0);
   const productSeed = metricSeed(product.id);
   const soldCount = currentPrice >= 500 ? 1 + (productSeed % 5) : 9 + (productSeed % 9);
-  const isAvailableInProvince = product.priceByProvince[provinceCode as keyof typeof product.priceByProvince] !== undefined;
+  const location = getProductLocation(product, provinceCode);
+  const isAvailableInProvince = location.available;
   const provinceName = selectedProvince?.name ?? "Ontario";
+  const availabilityText = location.cities.length > 0 ? `Currently available in ${provinceName}: ${location.cities.join(", ")}.` : `Currently available across ${provinceName}.`;
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -121,9 +124,9 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         <PriceDisplay price={currentPrice} compareAtPrice={product.compareAtPrice} />
         <p className="text-foreground/80 leading-relaxed">{product.description.replace(/solid/gi, "premium")}</p>
 
-        <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900">
-          <strong>{isAvailableInProvince ? `Available for delivery in ${provinceName}` : `${product.title} is not currently listed for delivery in ${provinceName}`}</strong>
-          <p className="mt-1">This product is currently available for delivery in {provinceName}. For items available in your province, <Link href="/provinces" className="font-semibold underline underline-offset-2 hover:text-emerald-700">view our provinces page</Link>.</p>
+        <div className={`rounded-xl border p-4 text-sm ${isAvailableInProvince ? "border-emerald-200 bg-emerald-50 text-emerald-900" : "border-amber-200 bg-amber-50 text-amber-950"}`}>
+          <strong>{isAvailableInProvince ? `Delivery availability in ${provinceName}` : `${product.title} is not currently available in ${provinceName}`}</strong>
+          <p className="mt-1">{isAvailableInProvince ? availabilityText : `This product is not currently available in ${provinceName}. For another province or city, please visit our location pages or message us on WhatsApp.`} For location-specific options, <Link href="/provinces" className="font-semibold underline underline-offset-2 hover:text-emerald-700">view Shop by Province</Link>.</p>
         </div>
 
         {product.sizes.length > 0 && (

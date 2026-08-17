@@ -11,6 +11,8 @@ import type { OrderFormData, Order } from "@/types/order";
 import Button from "@/components/ui/Button";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import deliveryCitiesData from "@/data/delivery-cities.json";
+import { getAllProvinces, getProvinceByCode } from "@/lib/provinces";
+import { getProductBySlug, getProductLocation } from "@/lib/products";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -31,6 +33,12 @@ export default function CheckoutPage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [availabilityPopup, setAvailabilityPopup] = useState("");
+  const provinces = getAllProvinces();
+  const cartProducts = cart.map((item) => getProductBySlug(item.slug)).filter(Boolean);
+  const isProvinceAvailable = (provinceCode: string) => cartProducts.length > 0 && cartProducts.every((product) => getProductLocation(product!, provinceCode).available);
+  const isCityAvailable = (cityName: string) => cartProducts.length > 0 && cartProducts.every((product) => getProductLocation(product!, formData.province, cityName).available);
+  const selectedProvinceData = getProvinceByCode(formData.province);
 
   // Helper to safely get delivery charge (returns null if city not found)
   const getDeliveryCharge = (city: string): number | null => {
@@ -63,12 +71,16 @@ export default function CheckoutPage() {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-
-    // If changing province in form, sync with global context so delivery rates and taxes reload dynamically
-    if (name === "province") {
-      changeProvince(value);
+    if (name === "province" && !isProvinceAvailable(value)) {
+      setAvailabilityPopup(`This product is not currently available in ${getProvinceByCode(value)?.name || value}. Please message us on WhatsApp and we will check when availability may be possible.`);
+      return;
     }
+    if (name === "city" && !isCityAvailable(value)) {
+      setAvailabilityPopup(`This product is not currently available in ${value}. Please message us on WhatsApp and we will check when availability may be possible.`);
+      return;
+    }
+    setFormData((prev) => ({ ...prev, [name]: value, ...(name === "province" ? { city: "" } : {}) }));
+    if (name === "province") changeProvince(value);
   };
 
   const validateForm = () => {
@@ -88,6 +100,14 @@ export default function CheckoutPage() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       return "Please enter a valid email address.";
+    }
+
+    if (!isProvinceAvailable(formData.province)) {
+      return `This product is not currently available in ${getProvinceByCode(formData.province)?.name || formData.province}. Please contact us on WhatsApp so we can check future availability.`;
+    }
+    if (!isCityAvailable(formData.city)) {
+      setAvailabilityPopup(`This product is not currently available in ${formData.city}. Please message us on WhatsApp and we will check when availability may be possible.`);
+      return `This product is not currently available in ${formData.city}.`;
     }
 
     // Canadian Postal Code validation (A1A 1A1 or A1A1A1 format)
@@ -288,20 +308,20 @@ export default function CheckoutPage() {
                 <label className="block text-sm font-semibold mb-1 text-foreground">
                   City <span className="text-error">*</span>
                 </label>
-                <input
+                <select
                   required
-                  type="text"
                   name="city"
-                  list="delivery-cities-list"
                   value={formData.city}
                   onChange={handleInputChange}
-                  className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-                />
-                <datalist id="delivery-cities-list">
-                  {Object.keys(deliveryCitiesData).map((city) => (
-                    <option key={city} value={city} />
-                  ))}
-                </datalist>
+                  className="w-full border border-border rounded-lg bg-white px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                >
+                  <option value="">Select an available city</option>
+                  {(selectedProvinceData?.cities || []).map((city) => {
+                    const available = isCityAvailable(city.name);
+                    return <option key={city.slug} value={city.name} disabled={!available}>{city.name}{available ? "" : " — not available for this order"}</option>;
+                  })}
+                </select>
+                <button type="button" onClick={() => setAvailabilityPopup("Some locations are dimmed because one or more products in this order are not currently available there. Message us on WhatsApp and we will check when availability may be possible.")} className="mt-2 text-left text-xs font-semibold text-muted underline decoration-dotted underline-offset-2">Why are some locations unavailable?</button>
                 {formData.city && deliveryCharge !== null && (
                   <p className="mt-2 flex items-center gap-2 text-sm font-medium text-emerald-700">
                     <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100" aria-hidden="true">✓</span>
@@ -322,7 +342,10 @@ export default function CheckoutPage() {
                   onChange={handleInputChange}
                   className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary bg-white"
                 >
-                  <option value="ON">Ontario (ON)</option>
+                  {provinces.map((province) => {
+                    const available = isProvinceAvailable(province.code);
+                    return <option key={province.code} value={province.code} disabled={!available}>{province.name}{available ? "" : " — not available for this order"}</option>;
+                  })}
                 </select>
               </div>
               <div>
@@ -447,6 +470,15 @@ export default function CheckoutPage() {
 
             {errorMsg && (
               <p className="text-sm font-semibold text-error mt-4 text-center">{errorMsg}</p>
+            )}
+
+            {availabilityPopup && (
+              <div role="dialog" aria-modal="true" className="mt-4 rounded-2xl border border-[#d8c6b3] bg-[#fffaf4] p-4 shadow-sm">
+                <div className="flex items-start justify-between gap-4">
+                  <div><p className="text-sm font-bold text-foreground">Location availability notice</p><p className="mt-1 text-xs leading-5 text-muted">{availabilityPopup}</p><a href="https://wa.me/14387006095?text=Hi%2C%20I%20would%20like%20to%20check%20product%20availability%20in%20my%20city%20or%20province." target="_blank" rel="noreferrer" className="mt-3 inline-flex rounded-lg bg-[#1f8b4c] px-3 py-2 text-xs font-semibold text-white">Ask us on WhatsApp</a></div>
+                  <button type="button" onClick={() => setAvailabilityPopup("")} aria-label="Close availability notice" className="text-lg text-muted">×</button>
+                </div>
+              </div>
             )}
 
             <Button

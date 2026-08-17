@@ -9,6 +9,24 @@ export interface ProductColour {
   hex: string;
 }
 
+export interface ProductLocation {
+  provinceCode: string;
+  provinceName: string;
+  cityName?: string;
+  provinceAllowed: boolean;
+  cityAllowed: boolean;
+  available: boolean;
+  cities: string[];
+  delivery: boolean;
+  pickup: boolean;
+}
+
+export interface ProductProvinceAvailability {
+  cities?: string[];
+  delivery?: boolean;
+  pickup?: boolean;
+}
+
 export interface Product {
   id: string;
   slug: string;
@@ -25,6 +43,7 @@ export interface Product {
     AB?: number;
   };
   provinceAvailability?: string[];
+  availability?: Record<string, ProductProvinceAvailability>;
   compareAtPrice?: number;
   currency: string;
   sizes: ProductSize[];
