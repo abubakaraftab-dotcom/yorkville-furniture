@@ -26,7 +26,12 @@ const normalise = (value: string) => value.trim().toLowerCase().replace(/\s+/g, 
 
 export function getProductProvinceCodes(product: Product): string[] {
   const explicit = product.provinceAvailability || [];
-  if (explicit.length) return explicit;
+  if (explicit.length) {
+    return explicit.map((value) => {
+      const match = Object.entries(provinceNameByCode).find(([code, name]) => code === value || name.toLowerCase() === value.toLowerCase());
+      return match?.[0] || value;
+    });
+  }
   return Object.keys(product.priceByProvince).filter((code) => product.priceByProvince[code as keyof Product["priceByProvince"]] !== undefined);
 }
 
