@@ -24,6 +24,7 @@ export interface Product {
     BC?: number;
     AB?: number;
   };
+  provinceAvailability?: string[];
   compareAtPrice?: number;
   currency: string;
   sizes: ProductSize[];
