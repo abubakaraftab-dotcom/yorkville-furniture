@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "import-dashboard": "node scripts/import-dashboard-package.mjs"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
