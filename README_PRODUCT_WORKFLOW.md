@@ -8,9 +8,11 @@ Yorkville uses a **local password-protected product dashboard** and a versioned 
 
 1. Copy `.env.example` to `.env.local`.
 2. Set `NEXT_PUBLIC_LOCAL_ADMIN_PASSWORD` to a private password. Never commit `.env.local`.
-3. Run `npm install` once, then run `npm run dev`, or double-click `start-dashboard.bat` on Windows.
-4. Open `http://127.0.0.1:3000/admin/products`.
+3. On Windows, double-click `start-dashboard.bat`. It automatically downloads the latest `main` branch from GitHub, preserves `.env.local`, updates project files and packages, and starts the dashboard. ZIP download/extraction is not required.
+4. Open `http://localhost:3000/admin/products` using the Local address shown in the launcher window.
 5. The login is stored only in browser `sessionStorage` and is cleared when the browser session ends.
+
+The launcher is safe to run again whenever a new dashboard version is published. It does not overwrite `.env.local`, `node_modules`, `.next`, or an unimported `yorkville-dashboard-package.json`.
 
 The hosted storefront does not expose this dashboard in the public header. This dashboard is intended for the administrator's local computer.
 
