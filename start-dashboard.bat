@@ -17,13 +17,23 @@ echo   Yorkville Furniture Dashboard - Auto Update
 echo ================================================
 echo.
 
+echo Node.js check:
+where node >> "%LOG%" 2>&1
+if errorlevel 1 (
+  echo ERROR: Node.js not found. Please install Node.js from https://nodejs.org
+  echo and run this launcher again.
+  goto :cleanup
+)
+for /f "tokens=*" %%V in ('node -v') do echo Using Node.js: %%V
+node -v >> "%LOG%" 2>&1
+
 rem ---------- Stage 1: download the latest code ----------
 if not exist "%WORK%" mkdir "%WORK%"
 
-powershell -NoProfile -ExecutionPolicy Bypass -Command "try{ [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12 }catch{}; $ErrorActionPreference='Stop'; New-Item -ItemType Directory -Force -Path '%EXTRACT%' | Out-Null; Invoke-WebRequest -Uri 'https://codeload.github.com/%REPO%/zip/refs/heads/%BRANCH%' -OutFile '%ZIP%' -TimeoutSec 120; Expand-Archive -LiteralPath '%ZIP%' -DestinationPath '%EXTRACT%' -Force" > "%LOG%" 2>&1
+powershell -NoProfile -ExecutionPolicy Bypass -Command "try{ [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12 }catch{}; $ErrorActionPreference='Stop'; New-Item -ItemType Directory -Force -Path '%EXTRACT%' | Out-Null; Invoke-WebRequest -Uri 'https://codeload.github.com/%REPO%/zip/refs/heads/%BRANCH%' -OutFile '%ZIP%' -TimeoutSec 240; Expand-Archive -LiteralPath '%ZIP%' -DestinationPath '%EXTRACT%' -Force" > "%LOG%" 2>&1
 if errorlevel 1 (
   echo Retrying download once...
-  powershell -NoProfile -ExecutionPolicy Bypass -Command "try{ [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12 }catch{}; $ErrorActionPreference='Stop'; Invoke-WebRequest -Uri 'https://codeload.github.com/%REPO%/zip/refs/heads/%BRANCH%' -OutFile '%ZIP%' -TimeoutSec 240; Expand-Archive -LiteralPath '%ZIP%' -DestinationPath '%EXTRACT%' -Force" >> "%LOG%" 2>&1
+  powershell -NoProfile -ExecutionPolicy Bypass -Command "try{ [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12 }catch{}; $ErrorActionPreference='Stop'; Invoke-WebRequest -Uri 'https://codeload.github.com/%REPO%/zip/refs/heads/%BRANCH%' -OutFile '%ZIP%' -TimeoutSec 300; Expand-Archive -LiteralPath '%ZIP%' -DestinationPath '%EXTRACT%' -Force" >> "%LOG%" 2>&1
 )
 if errorlevel 1 (
   echo Could not download the latest version. Check your internet connection.
@@ -49,21 +59,41 @@ if not exist "%ROOT%.env.local" (
 )
 if exist "%ROOT%.env.local" copy /Y "%ROOT%.env.local" "%WORK%\.env.local.backup" >nul
 
-rem ---------- Stage 4: copy project files ----------
-rem robocopy returns errorlevel 1-7 on success (it counts as warning);
-rem only 8+ is a real failure, so we always run the reliable fallback copy
-rem first and treat robocopy only as an optional speed-up helper.
-echo Copying project files (this may take a few minutes)...
-call node "%~dp0scripts\dashboard-copy.mjs" "%SOURCE%" "%ROOT%" >> "%LOG%" 2>&1
-if errorlevel 1 (
-  echo Node.js copy failed. Retrying with robocopy...
+rem ---------- Stage 4: copy project files (3 methods) ----------
+set "COPY_OK=0"
+
+echo Method 1 of 3: Node.js copy...
+node "%~dp0scripts\dashboard-copy.mjs" "%SOURCE%" "%ROOT%" >> "%LOG%" 2>&1
+if not errorlevel 1 set "COPY_OK=1"
+if not "%COPY_OK%"=="1" (
+  echo Method 2 of 3: robocopy...
   robocopy "%SOURCE%" "%ROOT%" /E /R:1 /W:1 /XD node_modules .next out .git /XF .env.local yorkville-dashboard-package.json >> "%LOG%" 2>&1
   if errorlevel 8 (
-    echo File copy failed. See dashboard-update.log for details.
-    goto :cleanup
+    echo Creating copy exclusion list...
+    echo \node_modules\ > "%WORK%\xcopy-exclude.txt"
+    echo \.next\ >> "%WORK%\xcopy-exclude.txt"
+    echo \out\ >> "%WORK%\xcopy-exclude.txt"
+    echo \.git\ >> "%WORK%\xcopy-exclude.txt"
+    echo .env.local >> "%WORK%\xcopy-exclude.txt"
+    echo yorkville-dashboard-package.json >> "%WORK%\xcopy-exclude.txt"
+    echo Method 3 of 3: xcopy...
+    xcopy "%SOURCE%\*" "%ROOT%" /E /Y /R /D /I /EXCLUDE:%WORK%\xcopy-exclude.txt >> "%LOG%" 2>&1
+    if not errorlevel 1 set "COPY_OK=1"
+    if not "%COPY_OK%"=="1" (
+      echo xcopy finished with warnings; checking results next...
+    )
+  ) else (
+    set "COPY_OK=1"
   )
 )
-echo Project files copied successfully.
+
+if "%COPY_OK%"=="1" (
+  echo Project files copied successfully.
+) else (
+  echo File copy failed. See dashboard-update.log in this folder for details.
+  echo Send this log file to get help.
+  goto :cleanup
+)
 
 if exist "%WORK%\.env.local.backup" copy /Y "%WORK%\.env.local.backup" "%ROOT%.env.local" >nul
 

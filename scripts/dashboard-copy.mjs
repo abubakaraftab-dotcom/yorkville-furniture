@@ -3,8 +3,13 @@
 // preserving local directories and files that must not be overwritten.
 // Usage: node scripts/dashboard-copy.mjs <sourceDir> <destinationDir>
 
-import { cpSync, mkdirSync, existsSync, readdirSync, statSync } from 'node:fs';
+import {
+  cpSync, mkdirSync, existsSync, readdirSync, statSync, writeFileSync,
+  openSync, readSync, closeSync, fstatSync,
+} from 'node:fs';
 import { join, resolve, basename } from 'node:path';
+
+console.log('Node.js version: ' + process.version);
 
 const [sourceArg, destArg] = process.argv.slice(2);
 if (!sourceArg || !destArg) {
@@ -15,8 +20,15 @@ if (!sourceArg || !destArg) {
 const source = resolve(sourceArg);
 const destination = resolve(destArg);
 
+console.log('Source: ' + source);
+console.log('Destination: ' + destination);
+
 if (!existsSync(source)) {
-  console.error('Source directory not found: ' + source);
+  console.error('ERROR: Source directory not found: ' + source);
+  process.exit(1);
+}
+if (!existsSync(destination)) {
+  console.error('ERROR: Destination directory not found: ' + destination);
   process.exit(1);
 }
 
@@ -25,6 +37,21 @@ const excludeFiles = new Set(['.env.local', 'yorkville-dashboard-package.json'])
 
 let copied = 0;
 let skipped = 0;
+const skipReasons = new Map();
+
+function readRaw(filePath) {
+  // Read via explicit handle open/close, which sometimes works on files
+  // where cpSync fails because of a lock on the source side.
+  const fd = openSync(filePath, 'r');
+  try {
+    const size = fstatSync(fd).size;
+    const buf = Buffer.alloc(size);
+    readSync(fd, buf, 0, size, 0);
+    return buf;
+  } finally {
+    closeSync(fd);
+  }
+}
 
 function copyEntry(srcPath, destPath) {
   const name = basename(srcPath);
@@ -36,7 +63,7 @@ function copyEntry(srcPath, destPath) {
     stat = statSync(srcPath);
   } catch (err) {
     skipped += 1;
-    console.log('Skipping unreadable: ' + name);
+    skipReasons.set(srcPath, String(err));
     return;
   }
   if (stat.isDirectory()) {
@@ -44,14 +71,20 @@ function copyEntry(srcPath, destPath) {
       return;
     }
     if (!existsSync(destPath)) {
-      mkdirSync(destPath, { recursive: true });
+      try {
+        mkdirSync(destPath, { recursive: true });
+      } catch (err) {
+        skipped += 1;
+        skipReasons.set(destPath, 'mkdir: ' + String(err));
+        return;
+      }
     }
     let entries = [];
     try {
       entries = readdirSync(srcPath);
     } catch (err) {
       skipped += 1;
-      console.log('Skipping directory: ' + name);
+      skipReasons.set(srcPath, 'readdir: ' + String(err));
       return;
     }
     for (const child of entries) {
@@ -61,9 +94,21 @@ function copyEntry(srcPath, destPath) {
     try {
       cpSync(srcPath, destPath, { force: true });
       copied += 1;
+      return;
+    } catch (err) {
+      if (err.code !== 'EBUSY' && err.code !== 'EPERM') {
+        skipped += 1;
+        skipReasons.set(srcPath, String(err));
+        return;
+      }
+    }
+    // Locked: try raw handle read + direct write of bytes
+    try {
+      writeFileSync(destPath, readRaw(srcPath));
+      copied += 1;
     } catch (err) {
       skipped += 1;
-      console.log('Skipping locked file: ' + name);
+      skipReasons.set(srcPath, 'raw read/write: ' + String(err));
     }
   }
 }
@@ -73,6 +118,19 @@ for (const child of readdirSync(source)) {
   copyEntry(join(source, child), join(destination, child));
 }
 
+if (skipReasons.size > 0) {
+  console.log('--- Skipped / failed items (first 40) ---');
+  let shown = 0;
+  for (const [item, reason] of skipReasons) {
+    console.log(item + '  ->  ' + reason);
+    shown += 1;
+    if (shown >= 40) break;
+  }
+}
+
 console.log('Copied ' + copied + ' files, skipped ' + skipped + '.');
-console.log('Fallback file copy finished.');
+if (copied === 0) {
+  console.error('ERROR: No files were copied. See details above.');
+  process.exit(1);
+}
 process.exit(0);
