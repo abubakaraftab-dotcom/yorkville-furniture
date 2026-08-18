@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
   basePath,
   assetPrefix: basePath ? `${basePath}/` : undefined,
   trailingSlash: true,
+  // Allow both URLs commonly used by local Windows browsers during development.
+  allowedDevOrigins: ["localhost", "127.0.0.1"],
   images: {
     unoptimized: true,
   },
