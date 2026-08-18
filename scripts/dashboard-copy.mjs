@@ -3,7 +3,7 @@
 // preserving local directories and files that must not be overwritten.
 // Usage: node scripts/dashboard-copy.mjs <sourceDir> <destinationDir>
 
-import { cpSync, mkdirSync, existsSync, readdirSync, statSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdirSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join, resolve, basename } from 'node:path';
 
 const [sourceArg, destArg] = process.argv.slice(2);
@@ -23,6 +23,9 @@ if (!existsSync(source)) {
 const excludeDirs = new Set(['node_modules', '.next', 'out', '.git', '__MACOSX']);
 const excludeFiles = new Set(['.env.local', 'yorkville-dashboard-package.json']);
 
+let copied = 0;
+let skipped = 0;
+
 function copyEntry(srcPath, destPath) {
   const name = basename(srcPath);
   if (excludeFiles.has(name)) {
@@ -32,6 +35,7 @@ function copyEntry(srcPath, destPath) {
   try {
     stat = statSync(srcPath);
   } catch (err) {
+    skipped += 1;
     console.log('Skipping unreadable: ' + name);
     return;
   }
@@ -46,6 +50,7 @@ function copyEntry(srcPath, destPath) {
     try {
       entries = readdirSync(srcPath);
     } catch (err) {
+      skipped += 1;
       console.log('Skipping directory: ' + name);
       return;
     }
@@ -55,7 +60,9 @@ function copyEntry(srcPath, destPath) {
   } else {
     try {
       cpSync(srcPath, destPath, { force: true });
+      copied += 1;
     } catch (err) {
+      skipped += 1;
       console.log('Skipping locked file: ' + name);
     }
   }
@@ -66,4 +73,6 @@ for (const child of readdirSync(source)) {
   copyEntry(join(source, child), join(destination, child));
 }
 
+console.log('Copied ' + copied + ' files, skipped ' + skipped + '.');
 console.log('Fallback file copy finished.');
+process.exit(0);
