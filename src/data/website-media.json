@@ -1,0 +1,154 @@
+{
+  "media": [
+    {
+      "group": "Hero banners",
+      "title": "Main hero banner",
+      "slot": "hero-banner",
+      "path": "hero-banner.jpg"
+    },
+    {
+      "group": "Hero banners",
+      "title": "Hero image (alternate slot)",
+      "slot": "hero-alt",
+      "path": "Hero.png"
+    },
+    {
+      "group": "Hero banners",
+      "title": "Hero furniture image",
+      "slot": "hero-furniture",
+      "path": "Hero/hero-furniture.jpg"
+    },
+    {
+      "group": "Hero banners",
+      "title": "Ontario hero image",
+      "slot": "province-ontario",
+      "path": "provinces/on.jpg"
+    },
+    {
+      "group": "Hero banners",
+      "title": "Quebec hero image",
+      "slot": "province-quebec",
+      "path": "provinces/qc.jpg"
+    },
+    {
+      "group": "Hero banners",
+      "title": "British Columbia hero image",
+      "slot": "province-british-columbia",
+      "path": "provinces/bc.jpg"
+    },
+    {
+      "group": "Hero banners",
+      "title": "Alberta hero image",
+      "slot": "province-alberta",
+      "path": "provinces/ab.jpg"
+    },
+    {
+      "group": "Brand",
+      "title": "Primary logo",
+      "slot": "logo",
+      "path": "logo.png"
+    },
+    {
+      "group": "Brand",
+      "title": "Transparent logo",
+      "slot": "logo-transparent",
+      "path": "logo-transparent.png"
+    },
+    {
+      "group": "Brand",
+      "title": "Full brand logo",
+      "slot": "brand-full",
+      "path": "brand/brand-logo-full.png"
+    },
+    {
+      "group": "Category images",
+      "title": "Bedroom Set",
+      "slot": "category-bedroom-set.jpg",
+      "path": "categories/bedroom-set.jpg"
+    },
+    {
+      "group": "Category images",
+      "title": "Bookshelves",
+      "slot": "category-bookshelves.jpg",
+      "path": "categories/bookshelves.jpg"
+    },
+    {
+      "group": "Category images",
+      "title": "Chest Dressers",
+      "slot": "category-chest-dressers.jpg",
+      "path": "categories/chest-dressers.jpg"
+    },
+    {
+      "group": "Category images",
+      "title": "Custom Bedroom Cabinets",
+      "slot": "category-custom-bedroom-cabinets.jpg",
+      "path": "categories/custom-bedroom-cabinets.jpg"
+    },
+    {
+      "group": "Category images",
+      "title": "Custom Closets",
+      "slot": "category-custom-closets.jpg",
+      "path": "categories/custom-closets.jpg"
+    },
+    {
+      "group": "Category images",
+      "title": "Dresser Mirrors",
+      "slot": "category-dresser-mirrors.jpg",
+      "path": "categories/dresser-mirrors.jpg"
+    },
+    {
+      "group": "Category images",
+      "title": "Dresser Set",
+      "slot": "category-dresser-set.jpg",
+      "path": "categories/dresser-set.jpg"
+    },
+    {
+      "group": "Category images",
+      "title": "Dressers",
+      "slot": "category-dressers.jpg",
+      "path": "categories/dressers.jpg"
+    },
+    {
+      "group": "Category images",
+      "title": "Headboards",
+      "slot": "category-headboards.jpg",
+      "path": "categories/headboards.jpg"
+    },
+    {
+      "group": "Category images",
+      "title": "Kitchen Cabinets",
+      "slot": "category-kitchen-cabinets.jpg",
+      "path": "categories/kitchen-cabinets.jpg"
+    },
+    {
+      "group": "Category images",
+      "title": "Mattresses",
+      "slot": "category-mattresses.jpg",
+      "path": "categories/mattresses.jpg"
+    },
+    {
+      "group": "Category images",
+      "title": "Sidetables",
+      "slot": "category-sidetables.jpg",
+      "path": "categories/sidetables.jpg"
+    },
+    {
+      "group": "Category images",
+      "title": "Sofas",
+      "slot": "category-sofas.jpg",
+      "path": "categories/sofas.jpg"
+    },
+    {
+      "group": "Category images",
+      "title": "Wardrobes",
+      "slot": "category-wardrobes.jpg",
+      "path": "categories/wardrobes.jpg"
+    },
+    {
+      "group": "Category images",
+      "title": "Wooden Beds",
+      "slot": "category-wooden-beds.jpg",
+      "path": "categories/wooden-beds.jpg"
+    }
+  ]
+}

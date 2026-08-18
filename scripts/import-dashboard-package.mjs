@@ -14,8 +14,23 @@ if (!fs.existsSync(packagePath)) {
 }
 
 const payload = JSON.parse(fs.readFileSync(packagePath, "utf8"));
+console.log(`Importing: ${packagePath} (${(fs.statSync(packagePath).size / 1024).toFixed(1)} KB)`);
 const records = payload.records || payload.changes?.records;
-if (!records || typeof records !== "object") throw new Error("Invalid dashboard package: records object is missing.");
+const recordCount = records && typeof records === "object" ? Object.keys(records).length : 0;
+const mediaCountInPackage = (payload.media || []).length;
+const format = payload.format || "unknown";
+const version = payload.version;
+console.log(`Package format: ${format} version ${version}, records: ${recordCount}, media slots: ${mediaCountInPackage}`);
+if (!records || typeof records !== "object" || recordCount === 0) {
+  if (mediaCountInPackage > 0) {
+    console.log("No product records found in this package, but media slots were exported. Processing media only.");
+  } else {
+    console.error("No product records found in this package.");
+    console.error("Dashboard tip: after filling the form, press 'Save product locally' (wait for the green tick) and check that 'Pending changes' shows 1 or more BEFORE pressing 'Export update package'.");
+    console.error(`Keys found in package: ${Object.keys(payload).join(", ")}`);
+    process.exit(1);
+  }
+}
 
 const decodeDataUrl = (dataUrl) => {
   const match = /^data:(image\/(?:jpeg|png|webp));base64,(.+)$/.exec(dataUrl || "");

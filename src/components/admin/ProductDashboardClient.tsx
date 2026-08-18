@@ -5,6 +5,7 @@ import productsData from "@/data/products.json";
 import categoriesData from "@/data/categories.json";
 import colours from "@/data/colours.json";
 import deliveryCities from "@/data/delivery-cities.json";
+import websiteMediaData from "@/data/website-media.json";
 import type { Product } from "@/types/product";
 import {
   downloadTextFile,
@@ -72,7 +73,21 @@ const categoryName = (slug: string) =>
 
 export default function ProductDashboardClient() {
   const baseProducts = productsData.products as Product[];
-  const [authenticated, setAuthenticated] = useState(isAdminSessionActive());
+  // Hydration safety: sessionStorage is unavailable during server rendering,
+  // so detect the session only after the component mounts on the client.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  const [authenticated, setAuthenticated] = useState(
+    mounted ? isAdminSessionActive() : false,
+  );
+  useEffect(() => {
+    if (mounted) setAuthenticated(isAdminSessionActive());
+  }, [mounted]);
+  const [exporting, setExporting] = useState(false);
+  const [exported, setExported] = useState(false);
+  const [imported, setImported] = useState(false);
   const [password, setPassword] = useState("");
   const [query, setQuery] = useState("");
   const [catalogCategory, setCatalogCategory] = useState("all");
@@ -346,17 +361,55 @@ export default function ProductDashboardClient() {
       const payload = JSON.parse(await file.text());
       importCatalogPackage(payload);
       setCatalogState(readCatalogState());
+      setImported(true);
       setNotice(
         "Dashboard package imported locally. Review the catalogue before exporting again.",
       );
       setError("");
-    } catch {
-      setError("This file is not a valid Yorkville dashboard package.");
+    } catch (importError) {
+      setError(
+        importError instanceof Error
+          ? importError.message
+          : "This file is not a valid Yorkville dashboard package.",
+      );
     } finally {
       setImporting(false);
       event.target.value = "";
+      setTimeout(() => setImported(false), 2500);
     }
   };
+  const checkmarkIcon = (
+    <svg
+      className="h-4 w-4"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="3"
+    >
+      <path d="M5 12l5 5L20 7" />
+    </svg>
+  );
+  const spinnerIcon = (
+    <svg
+      className="h-4 w-4 animate-spin"
+      viewBox="0 0 24 24"
+      fill="none"
+    >
+      <circle
+        className="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeWidth="3"
+      />
+      <path
+        className="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.4 0 0 5.4 0 12h4z"
+      />
+    </svg>
+  );
   const exportPackage = () => {
     const state = readCatalogState();
     const overlay = {
@@ -372,15 +425,24 @@ export default function ProductDashboardClient() {
       instructions:
         "Copy this overlay package into the repository and run npm run import-dashboard -- yorkville-dashboard-package.json, then review, commit, and test deploy.",
     };
-    downloadTextFile(
-      "yorkville-dashboard-package.json",
-      JSON.stringify(payload, null, 2),
-    );
-    markCatalogExported();
-    setCatalogState(readCatalogState());
-    setNotice(
-      "Overlay package downloaded. Baseline products remain protected and only dashboard changes will be published.",
-    );
+    setExporting(true);
+    setTimeout(() => {
+      try {
+        downloadTextFile(
+          "yorkville-dashboard-package.json",
+          JSON.stringify(payload, null, 2),
+        );
+        markCatalogExported();
+        setCatalogState(readCatalogState());
+        setExported(true);
+        setNotice(
+          "Overlay package downloaded. Baseline products remain protected and only dashboard changes will be published.",
+        );
+      } finally {
+        setExporting(false);
+      }
+    }, 450);
+    setTimeout(() => setExported(false), 2500);
   };
   const handleMedia = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -523,9 +585,11 @@ export default function ProductDashboardClient() {
               onClick={() =>
                 document.getElementById("dashboard-import-package")?.click()
               }
-              className="rounded-xl border border-[#ded7cc] bg-white px-5 py-3 text-sm font-semibold"
+              className="flex items-center gap-2 rounded-xl border border-[#ded7cc] bg-white px-5 py-3 text-sm font-semibold"
+              style={imported ? { borderColor: "#16a34a", color: "#16a34a" } : undefined}
             >
-              {importing ? "Importing…" : "Import dashboard package"}
+              {importing ? spinnerIcon : imported ? checkmarkIcon : null}
+              {importing ? "Importing…" : imported ? "Imported" : "Import dashboard package"}
             </button>
             <input
               id="dashboard-import-package"
@@ -536,10 +600,13 @@ export default function ProductDashboardClient() {
             />
             <button
               type="button"
+              disabled={exporting || exporting === exported}
               onClick={exportPackage}
-              className="rounded-xl border border-[#1e2422] bg-white px-5 py-3 text-sm font-semibold"
+              className="flex items-center gap-2 rounded-xl border border-[#1e2422] bg-white px-5 py-3 text-sm font-semibold"
+              style={exported ? { borderColor: "#16a34a", color: "#16a34a" } : undefined}
             >
-              Export update package
+              {exporting ? spinnerIcon : exported ? checkmarkIcon : null}
+              {exporting ? "Exporting…" : exported ? "Exported" : "Export update package"}
             </button>
           </div>
         </header>
@@ -1186,78 +1253,101 @@ export default function ProductDashboardClient() {
             </form>
           ) : (
             <div className="space-y-6">
-              <section className="rounded-3xl bg-white p-6 shadow-lg">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#9b6b3d]">
-                  Checklist
-                </p>
-                <h2 className="mt-1 font-serif text-2xl font-semibold">
-                  Complete every required field
-                </h2>
-                <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                  {[
-                    "Title and description",
-                    "Up to 3 product images",
-                    "Category and subcategory",
-                    "Colours with texture images",
-                    "Height × Width × Depth in inches",
-                    "Stock status and quantity",
-                    "Bed or mattress sizes",
-                    "Province-specific prices",
-                    "City delivery and pickup rules",
-                    "Export package before publishing",
-                  ].map((item) => (
-                    <p
-                      key={item}
-                      className="rounded-xl bg-[#f5f2ed] px-4 py-3 text-sm"
-                    >
-                      □ {item}
-                    </p>
-                  ))}
-                </div>
-              </section>
+
               <section className="rounded-3xl bg-white p-6 shadow-lg">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#9b6b3d]">
                   Website media
                 </p>
                 <h2 className="mt-1 font-serif text-2xl font-semibold">
-                  Replace hero and category images
+                  Replace hero banners and website images
                 </h2>
                 <p className="mt-2 text-sm leading-6 text-slate-600">
-                  Upload a replacement to save it locally in the next export
-                  package. The publish helper places it in the correct
-                  `public/images` folder.
+                  Every current website image is listed below with a live
+                  preview. Click `Change image`, choose a replacement, and it
+                  will be included in the next exported package. Product images
+                  are managed separately inside each product record.
                 </p>
-                <div className="mt-5 grid gap-4 md:grid-cols-3">
-                  <select
-                    value={mediaSlot}
-                    onChange={(event) => setMediaSlot(event.target.value)}
-                    className="rounded-xl border border-slate-200 px-3 py-3"
-                  >
-                    <option value="hero">Hero banner</option>
-                    <option value="category">Category image</option>
-                    <option value="subcategory">Subcategory image</option>
-                    <option value="logo">Logo / brand image</option>
-                  </select>
-                  <input
-                    value={mediaTitle}
-                    onChange={(event) => setMediaTitle(event.target.value)}
-                    placeholder="Media title or slot name"
-                    className="rounded-xl border border-slate-200 px-3 py-3"
-                  />
-                  <input
-                    type="file"
-                    accept={SUPPORTED_IMAGE_TYPES.join(",")}
-                    onChange={handleMedia}
-                    className="rounded-xl border border-slate-200 px-3 py-3 text-sm"
-                  />
+                <div className="mt-5 grid gap-4 md:grid-cols-3 lg:grid-cols-4">
+                  {(websiteMediaData as { media: { group: string; title: string; slot: string; path: string }[] }).media.map(
+                    (mediaItem) => (
+                      <div
+                        key={mediaItem.slot}
+                        className="rounded-2xl border border-slate-200 bg-[#f5f2ed] p-3"
+                      >
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#9b6b3d]">
+                          {mediaItem.group}
+                        </p>
+                        <p className="mt-1 truncate text-sm font-semibold text-[#1e2422]">
+                          {mediaItem.title}
+                        </p>
+                        <div className="mt-2 flex h-24 w-full items-center justify-center overflow-hidden rounded-xl bg-white">
+                          <img
+                            src={`/${mediaItem.path}`}
+                            alt={mediaItem.title}
+                            loading="lazy"
+                            className="max-h-full max-w-full rounded-xl object-contain"
+                          />
+                        </div>
+                        <p className="mt-2 truncate text-[10px] text-slate-500">
+                          {mediaItem.path}
+                        </p>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setMediaSlot(mediaItem.slot);
+                            setMediaTitle(mediaItem.title);
+                            setMediaPreview("");
+                            document
+                              .getElementById("dashboard-media-upload")
+                              ?.scrollIntoView({ behavior: "smooth", block: "center" });
+                          }}
+                          className="mt-3 w-full rounded-xl border border-[#1e2422] px-3 py-2 text-xs font-semibold hover:bg-[#1e2422] hover:text-white"
+                        >
+                          Change image
+                        </button>
+                      </div>
+                    ),
+                  )}
                 </div>
-                {mediaPreview && (
-                  <img
-                    src={mediaPreview}
-                    alt="Replacement preview"
-                    className="mt-5 max-h-64 w-full rounded-2xl bg-[#f5f2ed] object-contain p-4"
-                  />
-                )}
+                <div id="dashboard-media-upload" className="mt-6 rounded-2xl border border-[#ded7cc] bg-[#f5f2ed] p-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#9b6b3d]">
+                    Upload replacement
+                  </p>
+                  <div className="mt-3 grid gap-3 md:grid-cols-3">
+                    <select
+                      value={mediaSlot}
+                      onChange={(event) => setMediaSlot(event.target.value)}
+                      className="rounded-xl border border-slate-200 bg-white px-3 py-3"
+                    >
+                      {(websiteMediaData as { media: { group: string; title: string; slot: string; path: string }[] }).media.map(
+                        (option) => (
+                          <option key={option.slot} value={option.slot}>
+                            {option.title}
+                          </option>
+                        ),
+                      )}
+                    </select>
+                    <input
+                      value={mediaTitle}
+                      onChange={(event) => setMediaTitle(event.target.value)}
+                      placeholder="Media title or slot name"
+                      className="rounded-xl border border-slate-200 bg-white px-3 py-3"
+                    />
+                    <input
+                      type="file"
+                      accept={SUPPORTED_IMAGE_TYPES.join(",")}
+                      onChange={handleMedia}
+                      className="rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm"
+                    />
+                  </div>
+                  {mediaPreview && (
+                    <img
+                      src={mediaPreview}
+                      alt="Replacement preview"
+                      className="mt-4 max-h-64 w-full rounded-2xl bg-white object-contain p-3"
+                    />
+                  )}
+                </div>
               </section>
             </div>
           )}
