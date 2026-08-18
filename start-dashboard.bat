@@ -40,13 +40,14 @@ if not exist "%ROOT%.env.local" (
 if exist "%ROOT%.env.local" copy /Y "%ROOT%.env.local" "%WORK%\.env.local.backup" >nul
 
 echo Updating project files while preserving your local password...
-robocopy "%SOURCE%" "%ROOT%" /E /R:2 /W:2 /XD node_modules .next out .git /XF .env.local yorkville-dashboard-package.json >nul
+robocopy "%SOURCE%" "%ROOT%" /E /R:1 /W:1 /XD node_modules .next out .git /XF .env.local yorkville-dashboard-package.json >nul
 if errorlevel 8 (
-  echo Project file update failed.
-  goto :cleanup
+  echo Retrying with file copy (this may take a few minutes)...
+  call node "%~dp0scripts\dashboard-copy.mjs" "%SOURCE%" "%ROOT%"
 )
 
 if exist "%WORK%\.env.local.backup" copy /Y "%WORK%\.env.local.backup" "%ROOT%.env.local" >nul
+echo File update complete.
 
 echo Installing or updating packages...
 call npm install
