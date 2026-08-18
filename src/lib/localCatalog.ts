@@ -146,6 +146,15 @@ export function normalizeImageFile(file: File, maxEdge = 1600, quality = 0.88): 
   });
 }
 
+export function importCatalogPackage(payload: { records?: Record<string, Record<string, unknown>>; deletedIds?: string[] }) {
+  const current = readCatalogState();
+  const incomingRecords = payload.records || {};
+  const incomingDeleted = payload.deletedIds || [];
+  const records = { ...current.records, ...incomingRecords };
+  incomingDeleted.forEach((id) => delete records[String(id)]);
+  writeCatalogState({ ...current, records, deletedIds: Array.from(new Set([...current.deletedIds, ...incomingDeleted.map(String)])), pendingIds: Array.from(new Set([...current.pendingIds, ...Object.keys(incomingRecords), ...incomingDeleted.map(String)])) });
+}
+
 export function downloadTextFile(filename: string, content: string, type = "application/json") {
   const blob = new Blob([content], { type });
   const url = URL.createObjectURL(blob);
