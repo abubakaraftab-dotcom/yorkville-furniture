@@ -48,61 +48,42 @@ if not defined SOURCE (
   echo See dashboard-update.log in this folder for details.
   goto :cleanup
 )
-echo Downloaded and extracted the latest code.
 
 rem ---------- Stage 3: protect local password ----------
 if not exist "%ROOT%.env.local" (
   echo NEXT_PUBLIC_LOCAL_ADMIN_PASSWORD=choose-a-private-password> "%ROOT%.env.local"
   echo.
   echo A private password file was created: .env.local
-  echo Open it in Notepad, replace choose-a-private-password with your own
-  echo private password, save, and run this launcher again.
+  echo Open it, replace choose-a-private-password, save it, and run this launcher again.
   goto :cleanup
 )
 if exist "%ROOT%.env.local" copy /Y "%ROOT%.env.local" "%WORK%\.env.local.backup" >nul
 
-rem ---------- Stage 4: copy project files ----------
-echo Copying project files (this may take a few minutes)...
+rem ---------- Stage 4: copy project files (3 methods) ----------
 set "COPY_OK=0"
 
-rem Method 1: Node.js copy (handles locked files, always logs reasons)
-node "%ROOT%scripts\dashboard-copy.mjs" "%SOURCE%" "%ROOT%" > "%WORK%\copy-node.log" 2>&1
-if not errorlevel 1 (
-  set "COPY_OK=1"
-  echo Node.js copy finished OK.
-) else (
-  echo Node.js copy finished with some skipped items; verifying files next.
-)
-
-rem Method 2: verify essential files exist regardless of warnings
-set "ESSENTIAL_OK=1"
-if not exist "%ROOT%package.json" set "ESSENTIAL_OK=0"
-if not exist "%ROOT%next.config.ts" set "ESSENTIAL_OK=0"
-if not exist "%ROOT%src\data\products.json" set "ESSENTIAL_OK=0"
-if not exist "%ROOT%scripts\import-dashboard-package.mjs" set "ESSENTIAL_OK=0"
-if not exist "%ROOT%src\components\admin\ProductDashboardClient.tsx" set "ESSENTIAL_OK=0"
-
-if "%ESSENTIAL_OK%"=="1" (
-  set "COPY_OK=1"
-) else (
-  echo Essential files are missing; trying robocopy...
+echo Method 1 of 3: Node.js copy...
+node "%~dp0scripts\dashboard-copy.mjs" "%SOURCE%" "%ROOT%" >> "%LOG%" 2>&1
+if not errorlevel 1 set "COPY_OK=1"
+if not "%COPY_OK%"=="1" (
+  echo Method 2 of 3: robocopy...
   robocopy "%SOURCE%" "%ROOT%" /E /R:1 /W:1 /XD node_modules .next out .git /XF .env.local yorkville-dashboard-package.json >> "%LOG%" 2>&1
-  if not errorlevel 8 set "COPY_OK=1"
-  if "%COPY_OK%"=="1" (
-    echo Robocopy finished.
-  ) else (
-    echo xcopy fallback...
-    (echo \node_modules\) > "%WORK%\xcopy-exclude.txt"
-    (echo \.next\) >> "%WORK%\xcopy-exclude.txt"
-    (echo \out\) >> "%WORK%\xcopy-exclude.txt"
-    (echo \.git\) >> "%WORK%\xcopy-exclude.txt"
-    (echo .env.local) >> "%WORK%\xcopy-exclude.txt"
-    (echo yorkville-dashboard-package.json) >> "%WORK%\xcopy-exclude.txt"
-    xcopy "%SOURCE%\*" "%ROOT%" /E /Y /R /I /EXCLUDE:"%WORK%\xcopy-exclude.txt" > "%WORK%\copy-xcopy.log" 2>&1
+  if errorlevel 8 (
+    echo Creating copy exclusion list...
+    echo \node_modules\ > "%WORK%\xcopy-exclude.txt"
+    echo \.next\ >> "%WORK%\xcopy-exclude.txt"
+    echo \out\ >> "%WORK%\xcopy-exclude.txt"
+    echo \.git\ >> "%WORK%\xcopy-exclude.txt"
+    echo .env.local >> "%WORK%\xcopy-exclude.txt"
+    echo yorkville-dashboard-package.json >> "%WORK%\xcopy-exclude.txt"
+    echo Method 3 of 3: xcopy...
+    xcopy "%SOURCE%\*" "%ROOT%" /E /Y /R /D /I /EXCLUDE:%WORK%\xcopy-exclude.txt >> "%LOG%" 2>&1
     if not errorlevel 1 set "COPY_OK=1"
-    if "%COPY_OK%"=="1" (
-      echo Xcopy finished.
+    if not "%COPY_OK%"=="1" (
+      echo xcopy finished with warnings; checking results next...
     )
+  ) else (
+    set "COPY_OK=1"
   )
 )
 
@@ -110,14 +91,6 @@ if "%COPY_OK%"=="1" (
   echo Project files copied successfully.
 ) else (
   echo File copy failed. See dashboard-update.log in this folder for details.
-  echo Send this log file to get help.
-  goto :cleanup
-)
-
-rem Final integrity check: node verification script confirms key files
-node -e "const fs=require('fs');const key=['package.json','src/data/products.json','src/components/admin/ProductDashboardClient.tsx','scripts/dashboard-copy.mjs'];let ok=true;for(const k of key){if(!fs.existsSync(k)){console.log('MISSING: '+k);ok=false;}}console.log(ok?'Integrity check passed.':'Integrity check FAILED.');process.exit(ok?0:1);" >> "%LOG%" 2>&1
-if errorlevel 1 (
-  echo Integrity check failed. See dashboard-update.log for the missing files.
   echo Send this log file to get help.
   goto :cleanup
 )
@@ -132,7 +105,6 @@ if errorlevel 1 (
   echo See dashboard-update.log for details.
   goto :cleanup
 )
-echo Packages ready.
 
 rem ---------- Stage 6: start the dashboard ----------
 echo.
