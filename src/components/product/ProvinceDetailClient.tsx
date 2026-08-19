@@ -5,6 +5,7 @@ import type { Province } from "@/types/province";
 import type { Product } from "@/types/product";
 import ProductGrid from "@/components/product/ProductGrid";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import SearchBar from "@/components/search/SearchBar";
 import Link from 'next/link';
 
 interface ProvinceDetailClientProps {
@@ -76,7 +77,7 @@ export default function ProvinceDetailClient({ province, products }: ProvinceDet
                     href={`/provinces/${province.slug}/${city.slug}`}
                     className="block py-2 px-3 rounded-lg text-foreground/80 hover:bg-muted-light hover:text-primary transition-colors font-medium"
                   >
-                    🏡 Furniture delivery in {city.name}
+                    🏡 Furniture availability in {city.name}
                   </Link>
                 </li>
               ))}
@@ -93,12 +94,18 @@ export default function ProvinceDetailClient({ province, products }: ProvinceDet
                 Available Furniture in {province.name}
               </h2>
               <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">
-                Explore the pieces currently available for delivery in {province.name}. Availability and delivery options are curated for this province.
+                Explore the pieces currently available in {province.name}. Availability and delivery options are curated for this province.
               </p>
             </div>
             <span className="shrink-0 rounded-full border border-border bg-white px-3 py-1.5 text-xs font-semibold text-primary">
               {products.length} pieces available
             </span>
+            <div className="w-full max-w-sm sm:w-64">
+              <SearchBar
+                placeholder={`Search in ${province.name}...`}
+                provinceCode={province.code}
+              />
+            </div>
           </div>
           <ProductGrid
             products={products}

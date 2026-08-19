@@ -10,7 +10,7 @@ export default function ProvinceCards() {
         <div className="text-center mb-10">
           <h2 className="text-3xl font-bold text-foreground">Shop by Province</h2>
           <p className="text-muted mt-2">
-            Find furniture available for delivery in your area
+            Find furniture available in your area
           </p>
         </div>
 

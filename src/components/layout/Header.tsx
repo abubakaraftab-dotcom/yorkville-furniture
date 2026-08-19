@@ -9,6 +9,7 @@ import { getAllCategories } from "@/lib/categories";
 import { getAllProvinces } from "@/lib/provinces";
 import ProvinceSelector from "./ProvinceSelector";
 import CartIcon from "@/components/cart/CartIcon";
+import SearchBar from "@/components/search/SearchBar";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -56,8 +57,27 @@ export default function Header() {
             })}
           </nav>
 
-          {/* Right side: Province + Cart + Mobile Toggle */}
+          {/* Right side: Search + Province + Cart + Mobile Toggle */}
           <div className="flex shrink-0 items-center gap-2">
+            {/* Site-wide search */}
+            <div className="hidden md:block w-44 xl:w-56">
+              <SearchBar />
+            </div>
+            <button
+              type="button"
+              className="md:hidden p-2 text-foreground/80 hover:text-primary transition-colors"
+              aria-label="Search products"
+              onClick={() => {
+                const q = window.prompt("Search products:");
+                if (q && q.trim()) {
+                  window.location.href = `/search?q=${encodeURIComponent(q.trim())}`;
+                }
+              }}
+            >
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
+              </svg>
+            </button>
             {/* Province Selector */}
             <ProvinceSelector />
 

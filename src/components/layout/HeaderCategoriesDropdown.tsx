@@ -9,21 +9,55 @@ interface HeaderCategoriesDropdownProps {
   categories: Category[];
 }
 
+const OPEN_DELAY_MS = 400;
+const SUB_DELAY_MS = 300;
+
 export default function HeaderCategoriesDropdown({ categories }: HeaderCategoriesDropdownProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const openTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const expandTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const scheduleOpen = () => {
+    if (openTimerRef.current) clearTimeout(openTimerRef.current);
+    openTimerRef.current = setTimeout(() => setIsOpen(true), OPEN_DELAY_MS);
+  };
+
+  const cancelOpen = () => {
+    if (openTimerRef.current) {
+      clearTimeout(openTimerRef.current);
+      openTimerRef.current = null;
+    }
+    setIsOpen(false);
+  };
+
+  const scheduleExpand = (slug: string | null) => {
+    if (expandTimerRef.current) clearTimeout(expandTimerRef.current);
+    if (slug) {
+      expandTimerRef.current = setTimeout(() => setExpandedCategory(slug), SUB_DELAY_MS);
+    } else {
+      setExpandedCategory(null);
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
+        cancelOpen();
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (openTimerRef.current) clearTimeout(openTimerRef.current);
+      if (expandTimerRef.current) clearTimeout(expandTimerRef.current);
+    };
   }, []);
 
   const toggleCategory = (slug: string) => {
@@ -34,8 +68,9 @@ export default function HeaderCategoriesDropdown({ categories }: HeaderCategorie
     <div
       className="relative"
       ref={dropdownRef}
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
+      onMouseEnter={scheduleOpen}
+      onMouseLeave={cancelOpen}
+      onMouseDown={scheduleOpen}
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -81,7 +116,8 @@ export default function HeaderCategoriesDropdown({ categories }: HeaderCategorie
                     className={`flex items-center justify-between p-3 cursor-pointer hover:bg-muted-light/50 transition-colors ${
                       isExpanded ? "bg-muted-light/50" : ""
                     }`}
-                    onMouseEnter={() => hasSubcategories && setExpandedCategory(category.slug)}
+                    onMouseEnter={() => hasSubcategories && scheduleExpand(category.slug)}
+                    onMouseLeave={() => scheduleExpand(null)}
                     onClick={() => {
                       if (hasSubcategories) {
                         setExpandedCategory(isExpanded ? null : category.slug);
@@ -111,7 +147,8 @@ export default function HeaderCategoriesDropdown({ categories }: HeaderCategorie
 
                   {hasSubcategories && (
                     <div
-                      onMouseEnter={() => setExpandedCategory(category.slug)}
+                      onMouseEnter={() => scheduleExpand(category.slug)}
+                      onMouseLeave={() => scheduleExpand(null)}
                       className={`overflow-hidden transition-all duration-300 ease-in-out ${
                         isExpanded ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
                       }`}

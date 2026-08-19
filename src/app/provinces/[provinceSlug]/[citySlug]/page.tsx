@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!city) return {};
 
   return {
-    title: `Furniture Delivery in ${city.name}, ${province.name}`,
+    title: `Furniture Availability in ${city.name}, ${province.name}`,
     description: `Shop premium quality wood furniture delivered straight to your door in ${city.name}, ${province.name}. Payment on delivery.`,
   };
 }
@@ -66,7 +66,7 @@ export default async function CityPage({ params }: PageProps) {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(183,135,83,0.45),transparent_48%),linear-gradient(135deg,rgba(28,31,30,0.98),rgba(73,58,44,0.88))]" />
         <div className="relative mx-auto max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#e5c49d]">Yorkville Furniture Canada · Shop by City</p>
-          <h1 className="mt-3 text-3xl font-bold font-serif sm:text-5xl">Furniture Delivery in {city.name}</h1>
+          <h1 className="mt-3 text-3xl font-bold font-serif sm:text-5xl">Furniture Availability in {city.name}</h1>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-white/80">Curated furniture for homes across {city.name}, {province.name}. Browse products that are currently available in this exact delivery area.</p>
           <p className="mt-5 text-xs font-semibold uppercase tracking-[0.16em] text-[#e5c49d]">Inspired by the character of {city.name}</p>
         </div>
@@ -78,7 +78,7 @@ export default async function CityPage({ params }: PageProps) {
 
       <ProductGrid
         products={products}
-        emptyMessage={`No items currently available for delivery in ${city.name}.`}
+        emptyMessage={`No items currently available in ${city.name}.`}
       />
     </div>
   );

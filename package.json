@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/build-website-media.mjs && next build",
+    "build": "node scripts/build-website-media.mjs && node scripts/build-search-index.mjs && next build",
     "start": "next start",
     "lint": "eslint",
     "import-dashboard": "node scripts/import-dashboard-package.mjs"

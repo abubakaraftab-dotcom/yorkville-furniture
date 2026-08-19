@@ -448,11 +448,15 @@ export default function ProductDashboardClient() {
     try {
       const normalized = await normalizeImageFile(file);
       setMediaPreview(normalized.dataUrl);
+      const mediaSlots = (websiteMediaData as { media: { slot: string; path: string; title: string }[] }).media;
+      const slot = mediaSlots.find((option) => option.slot === mediaSlot);
+      // Always use the site's canonical path for this slot so the storefront never breaks.
+      const canonicalPath = slot ? slot.path : `public/images/${mediaSlot === "hero" ? "Hero" : "categories"}/${file.name.toLowerCase().replace(/\s+/g, "-")}`;
       saveMediaRecord({
         id: `${mediaSlot}-${Date.now()}`,
         slot: mediaSlot,
-        title: mediaTitle || file.name,
-        path: `public/images/${mediaSlot === "hero" ? "Hero" : "categories"}/${file.name.toLowerCase().replace(/\s+/g, "-")}`,
+        title: mediaTitle || slot?.title || file.name,
+        path: canonicalPath,
         dataUrl: normalized.dataUrl,
         width: normalized.width,
         height: normalized.height,
@@ -1317,7 +1321,9 @@ export default function ProductDashboardClient() {
                         onClick={() => {
                           setMediaSlot(mediaItem.slot);
                           setMediaTitle(mediaItem.title);
-                          setMediaPreview("");
+                          setMediaPreview(
+                            "dataUrl" in mediaItem ? String((mediaItem as { dataUrl?: string }).dataUrl || "") : "",
+                          );
                           document
                             .getElementById("dashboard-media-upload")
                             ?.scrollIntoView({

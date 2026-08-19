@@ -94,7 +94,7 @@ export default function ProductsClient({ products, categories }: ProductsClientP
           </h1>
           <p className="text-sm text-muted mt-1">
             {selectedProvince
-              ? `Showing items available for delivery in ${selectedProvince.name}`
+              ? `Showing items available in ${selectedProvince.name}`
               : "Showing all items"}
           </p>
         </div>

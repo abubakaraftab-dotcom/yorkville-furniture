@@ -1,18 +1,37 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useProvince } from "@/context/ProvinceContext";
+
+const HOVER_DELAY_MS = 400;
 
 export default function ProvinceSelector() {
   const { selectedProvince, changeProvince, availableProvinces } = useProvince();
   const [isOpen, setIsOpen] = useState(false);
+  const openTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const currentProvince = selectedProvince ?? availableProvinces[0];
+
+  const scheduleOpen = () => {
+    if (openTimerRef.current) clearTimeout(openTimerRef.current);
+    openTimerRef.current = setTimeout(() => setIsOpen(true), HOVER_DELAY_MS);
+  };
+
+  const cancelOpen = () => {
+    if (openTimerRef.current) {
+      clearTimeout(openTimerRef.current);
+      openTimerRef.current = null;
+    }
+    setIsOpen(false);
+  };
+
+  useEffect(() => () => (openTimerRef.current ? clearTimeout(openTimerRef.current) : undefined), []);
 
   return (
     <div
       className="relative"
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
+      onMouseEnter={scheduleOpen}
+      onMouseLeave={cancelOpen}
+      onMouseDown={scheduleOpen}
     >
       <button
         type="button"

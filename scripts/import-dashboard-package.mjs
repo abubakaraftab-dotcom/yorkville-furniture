@@ -117,6 +117,19 @@ if (!records || typeof records !== "object" || recordCount === 0) {
   }
 }
 
+// Resolve the canonical public path for a media slot using the website-media inventory,
+// so that imported replacements always land on the exact file path the site code expects.
+let mediaSlotPaths = {};
+const mediaInventoryPath = path.join(root, "src", "data", "website-media.json");
+try {
+  const mediaInventory = JSON.parse(fs.readFileSync(mediaInventoryPath, "utf8"));
+  for (const item of mediaInventory.media || []) {
+    if (item && item.slot && item.path) mediaSlotPaths[item.slot] = "images/" + item.path;
+  }
+} catch (inventoryError) {
+  console.warn("Could not read the website media inventory. Media will be written to fallback folders.");
+}
+
 const decodeDataUrl = (dataUrl) => {
   const match = /^data:(image\/(?:jpeg|png|webp));base64,(.+)$/.exec(dataUrl || "");
   if (!match) return null;
@@ -161,10 +174,18 @@ for (const media of payload.media || []) {
   const decoded = decodeDataUrl(media.dataUrl);
   if (!decoded) continue;
   const slot = media.slot || "category";
-  const directory = slot === "hero" ? "public/images/Hero" : slot === "logo" ? "public/images" : slot === "subcategory" ? "public/images/subcategories" : "public/images/categories";
-  const filename = safeName(media.path, `${slugify(media.title)}.${extension(decoded.mime)}`);
-  fs.mkdirSync(path.join(root, directory), { recursive: true });
-  fs.writeFileSync(path.join(root, directory, filename), decoded.buffer);
+  let canonical = mediaSlotPaths[slot];
+  if (!canonical) {
+    // Guess for slots not listed in the media inventory
+    if (slot === "hero") canonical = "images/Hero/" + safeName(media.path, `${slugify(media.title)}.jpg`);
+    else if (slot === "subcategory") canonical = "images/subcategories/" + safeName(media.path, `${slugify(media.title)}.jpg`);
+    else if (slot.startsWith("category-")) canonical = "images/categories/" + safeName(media.path, `${slugify(media.title)}.jpg`);
+    else canonical = "images/categories/" + safeName(media.path, `${slugify(media.title)}.jpg`);
+    console.warn(`Media slot "${slot}" is not in the website media inventory; writing to fallback path /${canonical}. Check the dashboard media list.`);
+  }
+  fs.mkdirSync(path.join(root, path.dirname(canonical)), { recursive: true });
+  fs.writeFileSync(path.join(root, canonical), decoded.buffer);
+  console.log(`Media written: /${canonical} (slot: ${slot})`);
   mediaCount += 1;
 }
 

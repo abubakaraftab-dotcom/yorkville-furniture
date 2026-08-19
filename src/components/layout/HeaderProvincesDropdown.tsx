@@ -8,20 +8,38 @@ interface HeaderProvincesDropdownProps {
   provinces: Province[];
 }
 
+const HOVER_DELAY_MS = 400;
+
 export default function HeaderProvincesDropdown({ provinces }: HeaderProvincesDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const openTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const scheduleOpen = () => {
+    if (openTimerRef.current) clearTimeout(openTimerRef.current);
+    openTimerRef.current = setTimeout(() => setIsOpen(true), HOVER_DELAY_MS);
+  };
+
+  const cancelOpen = () => {
+    if (openTimerRef.current) {
+      clearTimeout(openTimerRef.current);
+      openTimerRef.current = null;
+    }
+    setIsOpen(false);
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) setIsOpen(false);
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) cancelOpen();
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => () => (openTimerRef.current ? clearTimeout(openTimerRef.current) : undefined), []);
+
   return (
-    <div className="relative" ref={dropdownRef} onMouseEnter={() => setIsOpen(true)} onMouseLeave={() => setIsOpen(false)}>
+    <div className="relative" ref={dropdownRef} onMouseEnter={scheduleOpen} onMouseLeave={cancelOpen} onMouseDown={scheduleOpen}>
       <button onClick={() => setIsOpen(!isOpen)} className={`flex items-center gap-1 whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.08em] transition-colors ${isOpen ? "text-primary" : "text-foreground hover:text-primary"}`}>
         Shop by Province
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`h-4 w-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}>
