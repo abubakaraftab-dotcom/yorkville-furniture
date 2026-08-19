@@ -27,7 +27,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/images/logo-transparent.png`} alt="Yorkville Furniture Logo" className="h-24 w-auto object-contain invert mix-blend-screen" />
+              <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/images/logo-dark.png`} alt="Yorkville Furniture Logo" className="h-24 w-auto object-contain rounded-md shadow-lg" />
 
             </Link>
             <p className="text-white/70 text-sm mb-4">{siteConfig.tagline}</p>
