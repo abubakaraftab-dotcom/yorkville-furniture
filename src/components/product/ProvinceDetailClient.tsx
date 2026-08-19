@@ -5,7 +5,6 @@ import type { Province } from "@/types/province";
 import type { Product } from "@/types/product";
 import ProductGrid from "@/components/product/ProductGrid";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
-import SearchBar from "@/components/search/SearchBar";
 import Link from 'next/link';
 
 interface ProvinceDetailClientProps {
@@ -100,12 +99,6 @@ export default function ProvinceDetailClient({ province, products }: ProvinceDet
             <span className="shrink-0 rounded-full border border-border bg-white px-3 py-1.5 text-xs font-semibold text-primary">
               {products.length} pieces available
             </span>
-            <div className="w-full max-w-sm sm:w-64">
-              <SearchBar
-                placeholder={`Search in ${province.name}...`}
-                provinceCode={province.code}
-              />
-            </div>
           </div>
           <ProductGrid
             products={products}

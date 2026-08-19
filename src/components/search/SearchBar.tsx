@@ -13,6 +13,7 @@ interface IndexProduct {
   subcategorySlug: string;
   image: string;
   provinces: string[];
+  price?: number;
 }
 
 interface IndexCategories {
@@ -167,6 +168,7 @@ export default function SearchBar({ className = "", provinceCode, placeholder, i
                   <span className="block text-xs text-muted truncate">
                     {p.categorySlug}
                     {p.subcategorySlug ? ` › ${p.subcategorySlug}` : ""}
+                    {typeof p.price === "number" ? ` — $${Number(p.price).toFixed(0)} CAD` : ""}
                   </span>
                 </span>
               </button>

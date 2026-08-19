@@ -49,7 +49,7 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.08em] text-foreground/80 transition-colors hover:text-primary"
+                  className="whitespace-nowrap text-[12px] font-semibold capitalize text-foreground/80 transition-colors hover:text-primary"
                 >
                   {link.label}
                 </Link>
@@ -60,7 +60,7 @@ export default function Header() {
           {/* Right side: Search + Province + Cart + Mobile Toggle */}
           <div className="flex shrink-0 items-center gap-2">
             {/* Site-wide search */}
-            <div className="hidden md:block w-44 xl:w-56">
+            <div className="hidden lg:block w-48">
               <SearchBar />
             </div>
             <button

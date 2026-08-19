@@ -14,6 +14,7 @@ interface IndexProduct {
   subcategorySlug: string;
   image: string;
   provinces: string[];
+  price?: number;
 }
 
 interface IndexCategory {
@@ -172,8 +173,11 @@ export default function SearchResultsClient() {
                 {p.subcategorySlug ? ` › ${p.subcategorySlug}` : ""}
               </p>
               <h2 className="mt-1 font-semibold text-foreground line-clamp-2">{p.title}</h2>
+              {typeof p.price === "number" && (
+                <p className="mt-1 font-bold text-primary">${Number(p.price).toFixed(2)} CAD</p>
+              )}
               {p.provinces.length > 0 && (
-                <p className="mt-1.5 text-xs text-muted">
+                <p className="mt-1 text-xs text-muted">
                   Available in {p.provinces.map((c) => provinceNames[c] ?? c).join(", ")}
                 </p>
               )}

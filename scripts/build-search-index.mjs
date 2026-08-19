@@ -47,11 +47,31 @@ function mergeProducts() {
   return merged;
 }
 
+function readPrice(product) {
+  // priceByProvince: { ON: 299, QC: 399 } (dashboard shape)
+  const pbp = product.priceByProvince;
+  if (pbp && typeof pbp === "object" && !Array.isArray(pbp)) {
+    if (typeof pbp.ON === "number") return pbp.ON;
+    const codes = Object.keys(pbp);
+    for (const code of codes) {
+      const v = pbp[code];
+      if (typeof v === "number") return v;
+    }
+  }
+  return product.price ?? undefined;
+}
+
 function provinceCodesFor(merged) {
-  // Dashboard records store provinces like { ON: { delivery:true, cities:[...], price:123 } }
+  // Dashboard records store provinces in either shape:
+  //  - provinceAvailability: ["ON", "QC"]  (dashboard overlay)
+  //  - provinces: { ON: { delivery:true, cities:[...], price:123 } }  (legacy)
+  const pa = merged.provinceAvailability;
+  if (Array.isArray(pa) && pa.length) {
+    return pa.map(String);
+  }
   const p = merged.provinces;
   if (!p) return [];
-  if (Array.isArray(p)) return p;
+  if (Array.isArray(p)) return p.map(String);
   return Object.keys(p).filter((code) => {
     const cfg = p[code];
     if (cfg && typeof cfg === "object") {
@@ -80,6 +100,7 @@ for (const product of merged) {
     subcategorySlug: String(product.subcategorySlug || ""),
     image: Array.isArray(images) && images.length ? images[0] : "",
     provinces: provinceCodesFor(product),
+    price: readPrice(product),
   });
 }
 

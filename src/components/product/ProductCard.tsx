@@ -12,9 +12,9 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const { selectedProvince } = useProvince();
-  const provinceCode = "ON";
-
+    const { selectedProvince } = useProvince();
+  const provinceCode = selectedProvince?.code ?? "ON";
+  const provinceName = selectedProvince?.name ?? "Ontario";
   // Check province availability and price
   const price = product.priceByProvince[provinceCode as keyof typeof product.priceByProvince];
   const isAvailable = price !== undefined;
@@ -40,7 +40,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         {!isAvailable && (
           <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
               <span className="bg-error text-white text-xs font-bold px-3 py-1.5 rounded-lg">
-              Not Available in Ontario
+              Not Available in {provinceName}
               </span>
           </div>
         )}
@@ -82,7 +82,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
 
         <div className="mt-3 flex items-center justify-between rounded-lg bg-primary/5 px-2.5 py-2 text-[11px]">
-          <span className="font-semibold text-primary">Delivery availability: Ontario</span>
+          <span className="font-semibold text-primary">Delivery availability: {provinceName}</span>
           <span className="text-muted">{product.stockQuantity ?? 1} in stock</span>
         </div>
       </div>

@@ -40,7 +40,7 @@ export default function HeaderProvincesDropdown({ provinces }: HeaderProvincesDr
 
   return (
     <div className="relative" ref={dropdownRef} onMouseEnter={scheduleOpen} onMouseLeave={cancelOpen} onMouseDown={scheduleOpen}>
-      <button onClick={() => setIsOpen(!isOpen)} className={`flex items-center gap-1 whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.08em] transition-colors ${isOpen ? "text-primary" : "text-foreground hover:text-primary"}`}>
+      <button onClick={() => setIsOpen(!isOpen)} className={`flex items-center gap-1 whitespace-nowrap text-[12px] font-semibold capitalize transition-colors ${isOpen ? "text-primary" : "text-foreground hover:text-primary"}`}>
         Shop by Province
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`h-4 w-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}>
           <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />

@@ -56,16 +56,23 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   const [viewerCount, setViewerCount] = useState(3 + (metricSeed(product.id) % 21));
 
   const selectedColour = getFurnitureColour(selectedColourId);
+  // Only show the finish colours actually selected for this product in the dashboard.
+  const selectedColoursList = Array.isArray(product.colours) && product.colours.length ? product.colours : null;
+  const displayColours = selectedColoursList
+    ? furnitureColours.filter((fc) =>
+        selectedColoursList.some((pc) => String(pc.name || "").toLowerCase() === fc.name.toLowerCase())
+      )
+    : null;
   const selectedDimensions = useMemo(() => formatDimensions(selectedSize?.dimensions ?? ""), [selectedSize]);
   const provinceCode = selectedProvince?.code ?? "ON";
-  const basePrice = product.priceByProvince[provinceCode as keyof typeof product.priceByProvince] || 0;
+  const basePrice = product.priceByProvince[provinceCode as keyof typeof product.priceByProvince] ?? product.priceByProvince["ON" as keyof typeof product.priceByProvince] ?? 0;
   const currentPrice = basePrice + (selectedSize?.priceAdjustment ?? 0);
   const productSeed = metricSeed(product.id);
   const soldCount = currentPrice >= 500 ? 1 + (productSeed % 5) : 9 + (productSeed % 9);
   const location = getProductLocation(product, provinceCode);
   const isAvailableInProvince = location.available;
   const provinceName = selectedProvince?.name ?? "Ontario";
-  const availabilityText = location.cities.length > 0 ? `Currently available in ${provinceName}: ${location.cities.join(", ")}.` : `Currently available across ${provinceName}.`;
+  const availabilityText = `Currently available across ${provinceName}.`;
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -149,13 +156,14 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         <div className="relative" id="color-selector">
           <h3 className="text-sm font-semibold text-foreground mb-2">Colour</h3>
           <button type="button" onClick={() => setColourPopupOpen((open) => !open)} className="flex w-full items-center justify-between rounded-xl border border-border bg-white px-4 py-3 text-left shadow-sm transition hover:border-primary">
-            <span className="flex items-center gap-3">{selectedColourId !== DEFAULT_COLOUR_ID && "image" in selectedColour && <img src={withBasePath(selectedColour.image)} alt="" className="h-9 w-9 rounded-full border border-black/10 bg-white object-cover shadow-inner" />}<span><strong className="block text-sm">{selectedColour.name}</strong><span className="text-xs text-muted">Choose from {furnitureColours.length} uploaded finish colours</span></span></span><span className="text-muted">{colourPopupOpen ? "▲" : "▼"}</span>
+            <span className="flex items-center gap-3">{selectedColourId !== DEFAULT_COLOUR_ID && "image" in selectedColour && <img src={withBasePath(selectedColour.image)} alt="" className="h-9 w-9 rounded-full border border-black/10 bg-white object-cover shadow-inner" />}<span><strong className="block text-sm">{selectedColour.name}</strong><span className="text-xs text-muted">{displayColours ? `Choose from ${displayColours.length} available finish${displayColours.length === 1 ? "" : "es"}` : "Choose a finish colour"}</span></span></span><span className="text-muted">{colourPopupOpen ? "▲" : "▼"}</span>
           </button>
           {colourPopupOpen && (
             <div className="absolute z-40 mt-2 w-full rounded-2xl border border-border bg-white p-4 shadow-2xl">
               <button type="button" onClick={() => { setSelectedColourId(DEFAULT_COLOUR_ID); setColourPopupOpen(false); }} className={`mb-4 flex w-full items-center justify-between rounded-xl border-2 p-3 text-left ${selectedColourId === DEFAULT_COLOUR_ID ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"}`}><span><strong className="block text-sm">Default / As shown in image</strong><span className="text-xs text-muted">Keep the same colour as shown in the image</span></span>{selectedColourId === DEFAULT_COLOUR_ID && <span className="rounded-full bg-primary px-2 py-1 text-xs font-bold text-white">✓</span>}</button>
+              {(displayColours && displayColours.length > 0) ? (
               <div className="grid grid-cols-4 gap-3 sm:grid-cols-8">
-                {furnitureColours.map((colour) => (
+                {displayColours.map((colour) => (
                   <button key={colour.id} type="button" title={colour.name} onClick={() => { setSelectedColourId(colour.id); setColourPopupOpen(false); }} className={`group relative flex flex-col items-center gap-1 rounded-lg p-1 transition hover:bg-muted-light ${selectedColourId === colour.id ? "ring-2 ring-primary" : ""}`}>
                     <img src={withBasePath(colour.image)} alt={colour.name} className="h-10 w-10 rounded-full border-2 border-white bg-white object-cover shadow-md ring-1 ring-black/10 transition group-hover:scale-110" />
                     <span className="text-[9px] font-semibold leading-tight text-center">{colour.name}</span>
@@ -163,6 +171,9 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   </button>
                 ))}
               </div>
+              ) : (
+              <p className="text-xs text-muted py-2">No specific finish colours are listed for this item — keep the default shown in the image, or message us for custom finish options.</p>
+              )}
             </div>
           )}
         </div>

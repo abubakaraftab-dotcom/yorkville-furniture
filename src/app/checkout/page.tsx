@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useProvince } from "@/context/ProvinceContext";
@@ -34,11 +34,29 @@ export default function CheckoutPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [availabilityPopup, setAvailabilityPopup] = useState("");
+  const [cityQuery, setCityQuery] = useState("");
+  const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
+  const citiesRef = useRef<HTMLDivElement | null>(null);
   const provinces = getAllProvinces();
   const cartProducts = cart.map((item) => getProductBySlug(item.slug)).filter(Boolean);
   const isProvinceAvailable = (provinceCode: string) => cartProducts.length > 0 && cartProducts.every((product) => getProductLocation(product!, provinceCode).available);
   const isCityAvailable = (cityName: string) => cartProducts.length > 0 && cartProducts.every((product) => getProductLocation(product!, formData.province, cityName).available);
   const selectedProvinceData = getProvinceByCode(formData.province);
+  // All Ontario delivery cities for the searchable type box (case-insensitive filter by typed text)
+  const allOntarioCities = Object.keys(deliveryCitiesData as Record<string, number>);
+  const filteredCities = allOntarioCities
+    .filter((city) => city.toLowerCase().startsWith(cityQuery.trim().toLowerCase()))
+    .slice(0, 40);
+  // Close the city dropdown when clicking outside
+  useEffect(() => {
+    const onClickOutside = (event: MouseEvent) => {
+      if (citiesRef.current && !citiesRef.current.contains(event.target as Node)) {
+        setCityDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  }, []);
 
   // Helper to safely get delivery charge (returns null if city not found)
   const getDeliveryCharge = (city: string): number | null => {
@@ -304,24 +322,56 @@ export default function CheckoutPage() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div>
+              <div ref={citiesRef} className="relative">
                 <label className="block text-sm font-semibold mb-1 text-foreground">
                   City <span className="text-error">*</span>
                 </label>
-                <select
+                <input
                   required
-                  name="city"
-                  value={formData.city}
-                  onChange={handleInputChange}
+                  type="text"
+                  autoComplete="off"
+                  placeholder="Start typing your city…"
+                  value={cityQuery || formData.city}
+                  onChange={(e) => {
+                    setCityQuery(e.target.value);
+                    setCityDropdownOpen(true);
+                    if (formData.city && e.target.value !== formData.city) {
+                      setFormData((prev) => ({ ...prev, city: "" }));
+                    }
+                  }}
+                  onFocus={() => setCityDropdownOpen(true)}
                   className="w-full border border-border rounded-lg bg-white px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-                >
-                  <option value="">Select an available city</option>
-                  {(selectedProvinceData?.cities || []).map((city) => {
-                    const available = isCityAvailable(city.name);
-                    return <option key={city.slug} value={city.name} disabled={!available}>{city.name}{available ? "" : " — not available for this order"}</option>;
-                  })}
-                </select>
-                <button type="button" onClick={() => setAvailabilityPopup("Some locations are dimmed because one or more products in this order are not currently available there. Message us on WhatsApp and we will check when availability may be possible.")} className="mt-2 text-left text-xs font-semibold text-muted underline decoration-dotted underline-offset-2">Why are some locations unavailable?</button>
+                  aria-label="City (start typing to filter)"
+                />
+                {cityDropdownOpen && (
+                  <ul className="absolute z-40 mt-1 max-h-56 w-full overflow-y-auto rounded-lg border border-border bg-white py-1 shadow-lg">
+                    {filteredCities.length === 0 && (
+                      <li className="px-3 py-2 text-xs text-muted">No matching cities found — try a different starting letter.</li>
+                    )}
+                    {filteredCities.map((cityName) => {
+                      const available = isCityAvailable(cityName);
+                      const selected = formData.city === cityName;
+                      return (
+                        <li key={cityName}>
+                          <button
+                            type="button"
+                            disabled={!available}
+                            onClick={() => {
+                              setFormData((prev) => ({ ...prev, city: cityName }));
+                              setCityQuery(cityName);
+                              setCityDropdownOpen(false);
+                            }}
+                            className={`flex w-full items-center justify-between px-3 py-2 text-left text-sm transition ${selected ? "bg-primary/10 font-semibold text-primary" : "text-foreground hover:bg-muted-light"} ${!available ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
+                          >
+                            <span>{cityName}</span>
+                            {selected && <span aria-hidden="true">✓</span>}
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+                <button type="button" onClick={() => setAvailabilityPopup("Some locations appear grey because one or more products in this order are not currently available there. Message us on WhatsApp and we will check when availability may be possible.")} className="mt-2 text-left text-xs font-semibold text-muted underline decoration-dotted underline-offset-2">Why are some locations unavailable?</button>
                 {formData.city && deliveryCharge !== null && (
                   <p className="mt-2 flex items-center gap-2 text-sm font-medium text-emerald-700">
                     <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100" aria-hidden="true">✓</span>
@@ -441,8 +491,8 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* COD and WhatsApp Notices */}
-            <div className="mt-6 p-4 rounded-xl bg-accent/5 border border-accent/10 space-y-3">
+            {/* COD Notice */}
+            <div className="mt-6 p-4 rounded-xl bg-accent/5 border border-accent/10">
               <div className="flex gap-2">
                 <span className="text-lg leading-none">💰</span>
                 <div>
@@ -451,18 +501,6 @@ export default function CheckoutPage() {
                   </h4>
                   <p className="text-xs text-muted mt-0.5">
                     No credit card needed online. Pay at your door when your items arrive.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-2">
-                <span className="text-lg leading-none">🟢</span>
-                <div>
-                  <h4 className="font-bold text-accent-dark text-xs uppercase tracking-wider">
-                    WhatsApp Message Confirmation
-                  </h4>
-                  <p className="text-xs text-muted mt-0.5">
-                    After clicking Place Order, please send the pre-filled WhatsApp message to confirm delivery with our staff.
                   </p>
                 </div>
               </div>

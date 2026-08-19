@@ -74,7 +74,7 @@ export default function HeaderCategoriesDropdown({ categories }: HeaderCategorie
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center gap-1 whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.08em] transition-colors ${
+        className={`flex items-center gap-1 whitespace-nowrap text-[12px] font-semibold capitalize transition-colors ${
           isOpen ? "text-primary" : "text-foreground hover:text-primary"
         }`}
       >
