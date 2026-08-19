@@ -103,7 +103,9 @@ export default function ProductDashboardClient() {
   const [adding, setAdding] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [expandedProvinces, setExpandedProvinces] = useState<string[]>(["Ontario"]);
+  const [expandedProvinces, setExpandedProvinces] = useState<string[]>([
+    "Ontario",
+  ]);
   const products = useMemo(
     () => mergeCatalogChanges(baseProducts),
     [baseProducts, catalogState, notice],
@@ -390,11 +392,7 @@ export default function ProductDashboardClient() {
     </svg>
   );
   const spinnerIcon = (
-    <svg
-      className="h-4 w-4 animate-spin"
-      viewBox="0 0 24 24"
-      fill="none"
-    >
+    <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
       <circle
         className="opacity-25"
         cx="12"
@@ -586,10 +584,18 @@ export default function ProductDashboardClient() {
                 document.getElementById("dashboard-import-package")?.click()
               }
               className="flex items-center gap-2 rounded-xl border border-[#ded7cc] bg-white px-5 py-3 text-sm font-semibold"
-              style={imported ? { borderColor: "#16a34a", color: "#16a34a" } : undefined}
+              style={
+                imported
+                  ? { borderColor: "#16a34a", color: "#16a34a" }
+                  : undefined
+              }
             >
               {importing ? spinnerIcon : imported ? checkmarkIcon : null}
-              {importing ? "Importing…" : imported ? "Imported" : "Import dashboard package"}
+              {importing
+                ? "Importing…"
+                : imported
+                  ? "Imported"
+                  : "Import dashboard package"}
             </button>
             <input
               id="dashboard-import-package"
@@ -600,13 +606,21 @@ export default function ProductDashboardClient() {
             />
             <button
               type="button"
-              disabled={exporting || exporting === exported}
+              disabled={exporting}
               onClick={exportPackage}
               className="flex items-center gap-2 rounded-xl border border-[#1e2422] bg-white px-5 py-3 text-sm font-semibold"
-              style={exported ? { borderColor: "#16a34a", color: "#16a34a" } : undefined}
+              style={
+                exported
+                  ? { borderColor: "#16a34a", color: "#16a34a" }
+                  : undefined
+              }
             >
               {exporting ? spinnerIcon : exported ? checkmarkIcon : null}
-              {exporting ? "Exporting…" : exported ? "Exported" : "Export update package"}
+              {exporting
+                ? "Exporting…"
+                : exported
+                  ? "Exported"
+                  : "Export update package"}
             </button>
           </div>
         </header>
@@ -1253,7 +1267,6 @@ export default function ProductDashboardClient() {
             </form>
           ) : (
             <div className="space-y-6">
-
               <section className="rounded-3xl bg-white p-6 shadow-lg">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#9b6b3d]">
                   Website media
@@ -1268,48 +1281,61 @@ export default function ProductDashboardClient() {
                   are managed separately inside each product record.
                 </p>
                 <div className="mt-5 grid gap-4 md:grid-cols-3 lg:grid-cols-4">
-                  {(websiteMediaData as { media: { group: string; title: string; slot: string; path: string }[] }).media.map(
-                    (mediaItem) => (
-                      <div
-                        key={mediaItem.slot}
-                        className="rounded-2xl border border-slate-200 bg-[#f5f2ed] p-3"
-                      >
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#9b6b3d]">
-                          {mediaItem.group}
-                        </p>
-                        <p className="mt-1 truncate text-sm font-semibold text-[#1e2422]">
-                          {mediaItem.title}
-                        </p>
-                        <div className="mt-2 flex h-24 w-full items-center justify-center overflow-hidden rounded-xl bg-white">
-                          <img
-                            src={`/${mediaItem.path}`}
-                            alt={mediaItem.title}
-                            loading="lazy"
-                            className="max-h-full max-w-full rounded-xl object-contain"
-                          />
-                        </div>
-                        <p className="mt-2 truncate text-[10px] text-slate-500">
-                          {mediaItem.path}
-                        </p>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setMediaSlot(mediaItem.slot);
-                            setMediaTitle(mediaItem.title);
-                            setMediaPreview("");
-                            document
-                              .getElementById("dashboard-media-upload")
-                              ?.scrollIntoView({ behavior: "smooth", block: "center" });
-                          }}
-                          className="mt-3 w-full rounded-xl border border-[#1e2422] px-3 py-2 text-xs font-semibold hover:bg-[#1e2422] hover:text-white"
-                        >
-                          Change image
-                        </button>
+                  {(
+                    websiteMediaData as {
+                      media: {
+                        group: string;
+                        title: string;
+                        slot: string;
+                        path: string;
+                      }[];
+                    }
+                  ).media.map((mediaItem) => (
+                    <div
+                      key={mediaItem.slot}
+                      className="rounded-2xl border border-slate-200 bg-[#f5f2ed] p-3"
+                    >
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#9b6b3d]">
+                        {mediaItem.group}
+                      </p>
+                      <p className="mt-1 truncate text-sm font-semibold text-[#1e2422]">
+                        {mediaItem.title}
+                      </p>
+                      <div className="mt-2 flex h-24 w-full items-center justify-center overflow-hidden rounded-xl bg-white">
+                        <img
+                          src={`/${mediaItem.path}`}
+                          alt={mediaItem.title}
+                          loading="lazy"
+                          className="max-h-full max-w-full rounded-xl object-contain"
+                        />
                       </div>
-                    ),
-                  )}
+                      <p className="mt-2 truncate text-[10px] text-slate-500">
+                        {mediaItem.path}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setMediaSlot(mediaItem.slot);
+                          setMediaTitle(mediaItem.title);
+                          setMediaPreview("");
+                          document
+                            .getElementById("dashboard-media-upload")
+                            ?.scrollIntoView({
+                              behavior: "smooth",
+                              block: "center",
+                            });
+                        }}
+                        className="mt-3 w-full rounded-xl border border-[#1e2422] px-3 py-2 text-xs font-semibold hover:bg-[#1e2422] hover:text-white"
+                      >
+                        Change image
+                      </button>
+                    </div>
+                  ))}
                 </div>
-                <div id="dashboard-media-upload" className="mt-6 rounded-2xl border border-[#ded7cc] bg-[#f5f2ed] p-4">
+                <div
+                  id="dashboard-media-upload"
+                  className="mt-6 rounded-2xl border border-[#ded7cc] bg-[#f5f2ed] p-4"
+                >
                   <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#9b6b3d]">
                     Upload replacement
                   </p>
@@ -1319,13 +1345,20 @@ export default function ProductDashboardClient() {
                       onChange={(event) => setMediaSlot(event.target.value)}
                       className="rounded-xl border border-slate-200 bg-white px-3 py-3"
                     >
-                      {(websiteMediaData as { media: { group: string; title: string; slot: string; path: string }[] }).media.map(
-                        (option) => (
-                          <option key={option.slot} value={option.slot}>
-                            {option.title}
-                          </option>
-                        ),
-                      )}
+                      {(
+                        websiteMediaData as {
+                          media: {
+                            group: string;
+                            title: string;
+                            slot: string;
+                            path: string;
+                          }[];
+                        }
+                      ).media.map((option) => (
+                        <option key={option.slot} value={option.slot}>
+                          {option.title}
+                        </option>
+                      ))}
                     </select>
                     <input
                       value={mediaTitle}
@@ -1357,11 +1390,12 @@ export default function ProductDashboardClient() {
             Yorkville Furniture Canada
           </p>
           <p className="mt-2 text-sm font-semibold text-[#1e2422]">
-            Website project by <span className="font-bold">Muhammad Abubakar</span>
+            Website project by{" "}
+            <span className="font-bold">Muhammad Abubakar</span>
           </p>
           <p className="mt-1 text-xs text-slate-500">
-            Sky Marketing Company Canada &nbsp;·&nbsp; 0348-1835118 &nbsp;/&nbsp;
-            1 (647) 872-6713
+            Sky Marketing Company Canada &nbsp;·&nbsp; 0348-1835118
+            &nbsp;/&nbsp; 1 (647) 872-6713
           </p>
         </footer>
       </div>
