@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { getAllCategories } from "@/lib/categories";
 
+const withBasePath = (assetPath: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${assetPath}`;
+
 export default function CategoryShowcase() {
   const categories = getAllCategories().slice(0, 8);
 
@@ -22,7 +24,7 @@ export default function CategoryShowcase() {
             >
               {category.image ? (
                 <Image
-                  src={category.image}
+                  src={withBasePath(category.image)}
                   alt={category.name}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"

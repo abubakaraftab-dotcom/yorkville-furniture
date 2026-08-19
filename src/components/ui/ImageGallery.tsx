@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Image from "next/image";
 
+const withBasePath = (assetPath: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${assetPath}`;
+
 interface ImageGalleryProps {
   images: string[];
   title: string;
@@ -18,7 +20,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
       {/* Main Image */}
       <div className="relative aspect-[4/3] bg-muted-light rounded-xl overflow-hidden border border-border">
         <Image
-          src={displayImages[activeIdx]}
+          src={withBasePath(displayImages[activeIdx])}
           alt={`${title} - image ${activeIdx + 1}`}
           fill
           className="object-cover"
@@ -39,7 +41,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
               }`}
             >
               <Image
-                src={img}
+                src={withBasePath(img)}
                 alt={`${title} thumbnail ${i + 1}`}
                 fill
                 className="object-cover"

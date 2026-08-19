@@ -7,6 +7,8 @@ import { formatPrice } from "@/lib/formatters";
 import Badge from "@/components/ui/Badge";
 import { useProvince } from "@/context/ProvinceContext";
 
+const withBasePath = (assetPath: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${assetPath}`;
+
 interface ProductCardProps {
   product: Product;
 }
@@ -28,7 +30,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="relative aspect-[4/3] bg-muted-light overflow-hidden">
 
         <Image
-          src={product.images[0] || "/images/placeholders/furniture-placeholder.jpg"}
+          src={withBasePath(product.images[0] || "/images/placeholders/furniture-placeholder.jpg")}
           alt={product.title}
           fill
           className={`object-cover group-hover:scale-105 transition-transform duration-300 ${!isAvailable ? "grayscale" : ""}`}

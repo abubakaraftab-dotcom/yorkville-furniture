@@ -9,6 +9,8 @@ import Button from "@/components/ui/Button";
 import QuantitySelector from "@/components/ui/QuantitySelector";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 
+const withBasePath = (assetPath: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${assetPath}`;
+
 export default function CartPage() {
   const { cart, updateQuantity, removeFromCart, subtotal, isLoading } = useCart();
   const { selectedProvince } = useProvince();
@@ -52,7 +54,7 @@ export default function CartPage() {
               {/* Product Thumbnail */}
               <div className="relative w-24 h-24 sm:w-32 sm:h-32 shrink-0 bg-muted-light rounded-lg overflow-hidden border border-border">
                 <Image
-                  src={item.image || "/images/placeholders/furniture-placeholder.jpg"}
+                  src={withBasePath(item.image || "/images/placeholders/furniture-placeholder.jpg")}
                   alt={item.title}
                   fill
                   className="object-cover"

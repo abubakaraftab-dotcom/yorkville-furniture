@@ -447,7 +447,7 @@ export default function CheckoutPage() {
                   className="flex gap-3 text-sm pb-4 border-b border-border last:border-0 last:pb-0"
                 >
                   <div className="relative w-12 h-12 bg-muted-light rounded overflow-hidden shrink-0 border border-border">
-                    <img src={item.image || "/images/placeholders/furniture-placeholder.jpg"} alt={item.title} className="w-full h-full object-cover" />
+                    <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${item.image || "/images/placeholders/furniture-placeholder.jpg"}`} alt={item.title} className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1">
                     <h4 className="font-semibold text-foreground line-clamp-1">{item.title}</h4>
