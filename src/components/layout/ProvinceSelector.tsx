@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useProvince } from "@/context/ProvinceContext";
 
 const HOVER_DELAY_MS = 400;
 
 export default function ProvinceSelector() {
   const { selectedProvince, changeProvince, availableProvinces } = useProvince();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const openTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const currentProvince = selectedProvince ?? availableProvinces[0];
@@ -56,7 +58,7 @@ export default function ProvinceSelector() {
                 key={province.code}
                 type="button"
                 role="menuitem"
-                onClick={() => { changeProvince(province.code); setIsOpen(false); }}
+                onClick={() => { changeProvince(province.code); setIsOpen(false); router.push(`/provinces/${province.slug}`); }}
                 className={`flex w-full items-center rounded-lg px-3 py-2 text-left text-sm transition hover:bg-primary/5 ${currentProvince?.code === province.code ? "font-semibold text-primary" : "text-foreground"}`}
               >
                 <span>{province.name}</span>

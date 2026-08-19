@@ -10,6 +10,7 @@ import { getAllProvinces } from "@/lib/provinces";
 import ProvinceSelector from "./ProvinceSelector";
 import CartIcon from "@/components/cart/CartIcon";
 import SearchBar from "@/components/search/SearchBar";
+import { useProvince } from "@/context/ProvinceContext";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -24,6 +25,7 @@ const navLinks = [
 export default function Header() {
   const categories = getAllCategories();
   const provinces = getAllProvinces();
+  const { resetToHome } = useProvince();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -32,7 +34,7 @@ export default function Header() {
         <div className="flex min-h-[5.25rem] items-center justify-between gap-3">
           {/* Logo */}
 
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" onClick={resetToHome} className="flex items-center gap-2">
             <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/images/logo-clean-transparent.png`} alt="Yorkville Furniture Logo" className="h-11 w-auto shrink-0 object-contain" />
           </Link>
 

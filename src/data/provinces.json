@@ -5,14 +5,46 @@
       "slug": "ontario",
       "name": "Ontario",
       "cities": [
-        { "slug": "toronto", "name": "Toronto" },
-        { "slug": "ottawa", "name": "Ottawa" },
-        { "slug": "mississauga", "name": "Mississauga" },
-        { "slug": "brampton", "name": "Brampton" },
-        { "slug": "hamilton", "name": "Hamilton" },
-        { "slug": "london", "name": "London" },
-        { "slug": "markham", "name": "Markham" },
-        { "slug": "vaughan", "name": "Vaughan" }
+        {
+          "slug": "toronto",
+          "name": "Toronto"
+        },
+        {
+          "slug": "ottawa",
+          "name": "Ottawa"
+        },
+        {
+          "slug": "brampton",
+          "name": "Brampton"
+        },
+        {
+          "slug": "mississauga",
+          "name": "Mississauga"
+        },
+        {
+          "slug": "hamilton",
+          "name": "Hamilton"
+        },
+        {
+          "slug": "london",
+          "name": "London"
+        },
+        {
+          "slug": "markham",
+          "name": "Markham"
+        },
+        {
+          "slug": "vaughan",
+          "name": "Vaughan"
+        },
+        {
+          "slug": "kitchener",
+          "name": "Kitchener"
+        },
+        {
+          "slug": "windsor",
+          "name": "Windsor"
+        }
       ],
       "deliveryNote": "Free delivery for orders over $500 within the GTA"
     },
@@ -21,11 +53,26 @@
       "slug": "quebec",
       "name": "Quebec",
       "cities": [
-        { "slug": "montreal", "name": "Montreal" },
-        { "slug": "quebec-city", "name": "Quebec City" },
-        { "slug": "laval", "name": "Laval" },
-        { "slug": "gatineau", "name": "Gatineau" },
-        { "slug": "longueuil", "name": "Longueuil" }
+        {
+          "slug": "montreal",
+          "name": "Montreal"
+        },
+        {
+          "slug": "quebec-city",
+          "name": "Quebec City"
+        },
+        {
+          "slug": "laval",
+          "name": "Laval"
+        },
+        {
+          "slug": "gatineau",
+          "name": "Gatineau"
+        },
+        {
+          "slug": "longueuil",
+          "name": "Longueuil"
+        }
       ],
       "deliveryNote": "Delivery available to major Quebec cities"
     },
@@ -34,12 +81,30 @@
       "slug": "british-columbia",
       "name": "British Columbia",
       "cities": [
-        { "slug": "vancouver", "name": "Vancouver" },
-        { "slug": "surrey", "name": "Surrey" },
-        { "slug": "burnaby", "name": "Burnaby" },
-        { "slug": "richmond", "name": "Richmond" },
-        { "slug": "victoria", "name": "Victoria" },
-        { "slug": "kelowna", "name": "Kelowna" }
+        {
+          "slug": "vancouver",
+          "name": "Vancouver"
+        },
+        {
+          "slug": "surrey",
+          "name": "Surrey"
+        },
+        {
+          "slug": "burnaby",
+          "name": "Burnaby"
+        },
+        {
+          "slug": "richmond",
+          "name": "Richmond"
+        },
+        {
+          "slug": "victoria",
+          "name": "Victoria"
+        },
+        {
+          "slug": "kelowna",
+          "name": "Kelowna"
+        }
       ],
       "deliveryNote": "Delivery to Metro Vancouver and Vancouver Island"
     },
@@ -48,10 +113,22 @@
       "slug": "alberta",
       "name": "Alberta",
       "cities": [
-        { "slug": "calgary", "name": "Calgary" },
-        { "slug": "edmonton", "name": "Edmonton" },
-        { "slug": "red-deer", "name": "Red Deer" },
-        { "slug": "lethbridge", "name": "Lethbridge" }
+        {
+          "slug": "calgary",
+          "name": "Calgary"
+        },
+        {
+          "slug": "edmonton",
+          "name": "Edmonton"
+        },
+        {
+          "slug": "red-deer",
+          "name": "Red Deer"
+        },
+        {
+          "slug": "lethbridge",
+          "name": "Lethbridge"
+        }
       ],
       "deliveryNote": "Delivery to Calgary and Edmonton metro areas"
     }

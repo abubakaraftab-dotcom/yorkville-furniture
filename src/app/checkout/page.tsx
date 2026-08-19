@@ -397,6 +397,9 @@ export default function CheckoutPage() {
                     return <option key={province.code} value={province.code} disabled={!available}>{province.name}{available ? "" : " — not available for this order"}</option>;
                   })}
                 </select>
+                {cartProducts.some((product) => product && !getProductLocation(product, formData.province).available) && (
+                  <p className="mt-1.5 text-xs text-muted">Greyed-out provinces are not available for one or more items in this order. Message us on WhatsApp and we will check future availability.</p>
+                )}
               </div>
               <div>
                 <label className="block text-sm font-semibold mb-1 text-foreground">

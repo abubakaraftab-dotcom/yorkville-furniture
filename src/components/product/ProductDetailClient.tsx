@@ -72,7 +72,10 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   const location = getProductLocation(product, provinceCode);
   const isAvailableInProvince = location.available;
   const provinceName = selectedProvince?.name ?? "Ontario";
-  const availabilityText = `Currently available across ${provinceName}.`;
+  const availabilityCities = Array.isArray(location.cities) ? location.cities : [];
+  const availabilityText = availabilityCities.length
+    ? `Available for delivery in ${provinceName} — including ${availabilityCities.slice(0, 4).join(", ")}${availabilityCities.length > 4 ? ` and ${availabilityCities.length - 4} more ${availabilityCities.length - 4 === 1 ? "area" : "areas"}` : "."}`
+    : `Available for delivery across ${provinceName}.`;
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -131,9 +134,13 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         <PriceDisplay price={currentPrice} compareAtPrice={product.compareAtPrice} />
         <p className="text-foreground/80 leading-relaxed">{product.description.replace(/solid/gi, "premium")}</p>
 
-        <div className={`rounded-xl border p-4 text-sm ${isAvailableInProvince ? "border-emerald-200 bg-emerald-50 text-emerald-900" : "border-amber-200 bg-amber-50 text-amber-950"}`}>
-          <strong>{isAvailableInProvince ? `Delivery availability in ${provinceName}` : `${product.title} is not currently available in ${provinceName}`}</strong>
-          <p className="mt-1">{isAvailableInProvince ? availabilityText : `This product is not currently available in ${provinceName}. For another province or city, please visit our location pages or message us on WhatsApp.`} For location-specific options, <Link href="/provinces" className="font-semibold underline underline-offset-2 hover:text-emerald-700">view Shop by Province</Link>.</p>
+        {/* Compact location line — concise status instead of the large availability box */}
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 rounded-xl border border-border bg-white px-4 py-3 text-[13px] text-foreground/80">
+          {isAvailableInProvince ? (
+            <span>📍 Available in {provinceName}{availabilityCities.length > 0 ? ` · ${availabilityCities.slice(0, 3).join(", ")}` : ""}</span>
+          ) : (
+            <span>📍 Not currently available in {provinceName} — <Link href="/provinces" className="font-semibold text-primary underline underline-offset-2">check other provinces</Link> or <button type="button" onClick={handleWhatsAppInquiry} className="font-semibold text-emerald-700 underline underline-offset-2">chat with us on WhatsApp</button></span>
+          )}
         </div>
 
         {product.sizes.length > 0 && (
