@@ -24,9 +24,9 @@ export default function AboutPage() {
       <div className="w-full flex items-center justify-center py-8 sm:py-12">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/images/logo-full-white.jpg"
+          src="/images/logo-clean-white.png"
           alt="Yorkville Furniture Logo"
-          className="w-full max-w-xs sm:max-w-md object-contain rounded-lg"
+          className="w-full max-w-xs sm:max-w-md object-contain rounded-lg shadow-sm border border-border/50"
         />
       </div>
 
