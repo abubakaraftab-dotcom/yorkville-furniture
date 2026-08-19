@@ -33,7 +33,7 @@ export default function Header() {
           {/* Logo */}
 
           <Link href="/" className="flex items-center gap-2">
-            <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/images/logo-white-card.png`} alt="Yorkville Furniture Logo" className="h-14 w-auto shrink-0 object-contain rounded-md border border-[#e7e1da]" />
+            <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/images/logo-white-card.png`} alt="Yorkville Furniture Logo" className="h-20 w-auto shrink-0 object-contain rounded-md border border-[#e7e1da] bg-white" />
           </Link>
 
           {/* Desktop Nav */}
