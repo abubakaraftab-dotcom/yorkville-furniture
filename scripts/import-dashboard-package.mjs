@@ -15,7 +15,28 @@ if (!fs.existsSync(packagePath)) {
 
 const payload = JSON.parse(fs.readFileSync(packagePath, "utf8"));
 console.log(`Importing: ${packagePath} (${(fs.statSync(packagePath).size / 1024).toFixed(1)} KB)`);
-const records = payload.records || payload.changes?.records;
+
+// Accept BOTH the current format ({records, deletedIds}) and the legacy format
+// ({products: {id: record}, changes: {deletedIds}, media}). Legacy packages
+// exported by older dashboards are auto-converted so nothing is wasted.
+let records = payload.records;
+let deletedIds = payload.deletedIds || [];
+if (!records && payload.changes && typeof payload.changes === "object") {
+  const legacyProductIds = Object.keys(payload.changes).filter((key) => key !== "deletedIds");
+  if (legacyProductIds.length) {
+    console.log("Legacy dashboard package detected (" + legacyProductIds.length + " product(s)). Converting to the current format automatically.");
+    records = {};
+    for (const id of legacyProductIds) {
+      const entry = payload.changes[id];
+      records[String(id)] = entry && typeof entry === "object" ? (entry.record || entry) : entry;
+    }
+    deletedIds = payload.changes.deletedIds || [];
+  }
+} else if (!records && payload.products && typeof payload.products === "object") {
+  console.log("Legacy dashboard package detected (" + Object.keys(payload.products).length + " product(s)). Converting to the current format automatically.");
+  records = payload.products;
+  deletedIds = payload.changes?.deletedIds || [];
+}
 const recordCount = records && typeof records === "object" ? Object.keys(records).length : 0;
 const mediaCountInPackage = (payload.media || []).length;
 const format = payload.format || "unknown";
@@ -68,7 +89,7 @@ const overlay = {
   version: 1,
   exportedAt: payload.exportedAt || payload.generatedAt || new Date().toISOString(),
   records: publishedRecords,
-  deletedIds: (payload.deletedIds || payload.changes?.deletedIds || []).map(String),
+  deletedIds: deletedIds.map(String),
 };
 fs.writeFileSync(outputPath, `${JSON.stringify(overlay, null, 2)}\n`);
 
