@@ -43,4 +43,3 @@ next-env.d.ts
 
 out/
 out.zip
-package-lock.json

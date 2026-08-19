@@ -19,13 +19,24 @@ jobs:
           node-version: 20
           cache: npm
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Install dependencies (regenerate lock file if drifted)
+        run: npm ci --no-audit || (echo "Lock file drifted; regenerating from package.json..." && npm install --package-lock-only --no-audit && npm ci --no-audit)
 
       - name: Build static site
         env:
           NEXT_PUBLIC_BASE_PATH: /test-deploy
         run: npm run build
+
+      - name: Push regenerated lock file back (only if changed)
+        if: hashFiles('package-lock.json') != ''
+        run: |
+          if [ -n "$(git status --porcelain package-lock.json)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add package-lock.json
+            git commit -m "ci: regenerate package-lock.json after drift" || exit 0
+            git push origin main || exit 0
+          fi
 
       - name: Upload test site to Hostinger
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
