@@ -19,7 +19,6 @@ const navLinks = [
   { href: "/provinces", label: "Shop by Province" },
   { href: "/custom-build", label: "Custom Build" },
   { href: "/blog", label: "Blog" },
-  { href: "/contact", label: "Contact" },
 ];
 
 export default function Header() {
@@ -35,7 +34,7 @@ export default function Header() {
           {/* Logo */}
 
           <Link href="/" onClick={resetToHome} className="flex items-center gap-2">
-            <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/images/logo-clean-transparent.png`} alt="Yorkville Furniture Logo" className="h-11 w-auto shrink-0 object-contain" />
+            <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/images/logo-clean-transparent.png`} alt="Yorkville Furniture Logo" className="h-9 w-auto shrink-0 object-contain" />
           </Link>
 
           {/* Desktop Nav */}
@@ -51,7 +50,7 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="whitespace-nowrap text-[12px] font-semibold capitalize text-foreground/80 transition-colors hover:text-primary"
+                  className="whitespace-nowrap text-[13px] font-semibold capitalize text-foreground/80 transition-colors hover:text-primary"
                 >
                   {link.label}
                 </Link>

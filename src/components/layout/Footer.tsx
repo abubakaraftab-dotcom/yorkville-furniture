@@ -27,10 +27,9 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/images/logo-clean-white-inverted.png?v=2`} alt="Yorkville Furniture Logo" className="h-16 w-auto object-contain" />
+              <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/images/logo-clean-white-inverted.png?v=3`} alt="Yorkville Furniture Logo" className="h-14 w-auto object-contain" />
 
             </Link>
-            <p className="text-white/70 text-sm mb-4">{siteConfig.tagline}</p>
             <div className="space-y-2 text-sm text-white/70">
               <p>{siteConfig.address.street}</p>
               <p>
