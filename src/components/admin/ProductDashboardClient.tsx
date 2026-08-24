@@ -101,6 +101,14 @@ export default function ProductDashboardClient() {
   const [importing, setImporting] = useState(false);
   const [catalogState, setCatalogState] = useState(readCatalogState());
   const [adding, setAdding] = useState(false);
+
+  // Initialize IndexedDB on mount
+  useEffect(() => {
+    const { initLocalCatalog } = require("@/lib/localCatalog");
+    initLocalCatalog().then(() => {
+      setCatalogState(readCatalogState());
+    });
+  }, []);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [expandedProvinces, setExpandedProvinces] = useState<string[]>([
@@ -294,7 +302,7 @@ export default function ProductDashboardClient() {
       );
     }
   };
-  const save = (event: React.FormEvent) => {
+  const save = async (event: React.FormEvent) => {
     event.preventDefault();
     if (
       !editing?.title.trim() ||
@@ -316,7 +324,8 @@ export default function ProductDashboardClient() {
         .trim()
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)/g, "");
-    saveProductRecord({
+    
+    await saveProductRecord({
       ...editing,
       slug,
       shortDescription:
@@ -325,18 +334,17 @@ export default function ProductDashboardClient() {
       altText:
         (editing as Product & { altText?: string }).altText || editing.title,
     });
+    
+    setSaved(true);
     setTimeout(() => {
-      setSaved(true);
-      setTimeout(() => {
-        setEditing(null);
-        setSaving(false);
-        setSaved(false);
-        setCatalogState(readCatalogState());
-        setNotice(
-          "Product saved locally. Export the overlay package when you are ready to publish it.",
-        );
-      }, 650);
-    }, 450);
+      setEditing(null);
+      setSaving(false);
+      setSaved(false);
+      setCatalogState(readCatalogState());
+      setNotice(
+        "Product saved locally. Export the overlay package when you are ready to publish it.",
+      );
+    }, 650);
   };
   const startAdding = () => {
     if (adding) return;
@@ -356,19 +364,19 @@ export default function ProductDashboardClient() {
     }, 500);
   };
   const handleImport = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    setImporting(true);
-    try {
-      const payload = JSON.parse(await file.text());
-      importCatalogPackage(payload);
-      setCatalogState(readCatalogState());
-      setImported(true);
-      setNotice(
-        "Dashboard package imported locally. Review the catalogue before exporting again.",
-      );
-      setError("");
-    } catch (importError) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      setImporting(true);
+      try {
+        const payload = JSON.parse(await file.text());
+        await importCatalogPackage(payload);
+        setCatalogState(readCatalogState());
+        setImported(true);
+        setNotice(
+          "Dashboard package imported locally. Review the catalogue before exporting again.",
+        );
+        setError("");
+      } catch (importError) {
       setError(
         importError instanceof Error
           ? importError.message
@@ -408,7 +416,7 @@ export default function ProductDashboardClient() {
       />
     </svg>
   );
-  const exportPackage = () => {
+  const exportPackage = async () => {
     const state = readCatalogState();
     const overlay = {
       format: "yorkville-dashboard-catalog",
@@ -424,22 +432,20 @@ export default function ProductDashboardClient() {
         "Copy this overlay package into the repository and run npm run import-dashboard -- yorkville-dashboard-package.json, then review, commit, and test deploy.",
     };
     setExporting(true);
-    setTimeout(() => {
-      try {
-        downloadTextFile(
-          "yorkville-dashboard-package.json",
-          JSON.stringify(payload, null, 2),
-        );
-        markCatalogExported();
-        setCatalogState(readCatalogState());
-        setExported(true);
-        setNotice(
-          "Overlay package downloaded. Baseline products remain protected and only dashboard changes will be published.",
-        );
-      } finally {
-        setExporting(false);
-      }
-    }, 450);
+    try {
+      downloadTextFile(
+        "yorkville-dashboard-package.json",
+        JSON.stringify(payload, null, 2),
+      );
+      await markCatalogExported();
+      setCatalogState(readCatalogState());
+      setExported(true);
+      setNotice(
+        "Overlay package downloaded. Baseline products remain protected and only dashboard changes will be published.",
+      );
+    } finally {
+      setExporting(false);
+    }
     setTimeout(() => setExported(false), 2500);
   };
   const handleMedia = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -451,8 +457,8 @@ export default function ProductDashboardClient() {
       const mediaSlots = (websiteMediaData as { media: { slot: string; path: string; title: string }[] }).media;
       const slot = mediaSlots.find((option) => option.slot === mediaSlot);
       // Always use the site's canonical path for this slot so the storefront never breaks.
-      const canonicalPath = slot ? slot.path : `public/images/${mediaSlot === "hero" ? "Hero" : "categories"}/${file.name.toLowerCase().replace(/\s+/g, "-")}`;
-      saveMediaRecord({
+      const canonicalPath = slot?.path || `/images/custom/${mediaSlot}.jpg`;
+      await saveMediaRecord({
         id: `${mediaSlot}-${Date.now()}`,
         slot: mediaSlot,
         title: mediaTitle || slot?.title || file.name,
@@ -793,8 +799,9 @@ export default function ProductDashboardClient() {
                     Edit
                   </button>
                   <button
-                    onClick={() => {
-                      removeProductRecord(product.id);
+                    onClick={async () => {
+                      await removeProductRecord(product.id);
+                      setCatalogState(readCatalogState());
                       setNotice(
                         "Product hidden locally. Export the package to publish the deletion.",
                       );
