@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+const withBasePath = (assetPath: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${assetPath}`;
+
 const slides = [
   {
     image: "/images/products/modern-grey-sectional-sofa-main.jpg",
@@ -60,7 +62,7 @@ export default function HeroBanner() {
             aria-hidden={index !== activeSlide}
           >
             <Image
-              src={item.image}
+              src={withBasePath(item.image)}
               alt=""
               fill
               priority={index === 0}

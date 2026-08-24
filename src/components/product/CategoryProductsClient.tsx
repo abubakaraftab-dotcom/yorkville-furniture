@@ -107,9 +107,18 @@ function CategoryProductsContent({
 
       <ProductGrid
         products={filteredProducts}
-        emptyMessage={`No products available in this category for ${
-          selectedProvince?.name || "your province"
-        }. Try changing your delivery location in the header.`}
+        emptyMessage={`No items are currently available locally in ${
+          selectedSubcategory
+            ? `“${category.subcategories?.find((sub) => sub.slug === selectedSubcategory)?.name ?? "this subcategory"}”`
+            : `“${category.name}”`
+        } for ${selectedProvince?.name || "your province"}. Browse our full catalogue or `}
+        emptyAction={
+          selectedProvince ? (
+            <a href="/provinces" className="font-semibold text-primary underline underline-offset-2">view items available in your province</a>
+          ) : (
+            <a href="/products" className="font-semibold text-primary underline underline-offset-2">browse all products</a>
+          )
+        }
       />
     </div>
   );

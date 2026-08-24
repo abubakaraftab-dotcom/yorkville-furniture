@@ -19,6 +19,16 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.storeName}`,
   },
   description: siteConfig.seo.defaultDescription,
+  icons: {
+    icon: [
+      { url: "/favicon-64.png", sizes: "64x64", type: "image/png" },
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: { url: "/favicon-64.png", sizes: "64x64" },
+  },
+  openGraph: {
+    images: ["/logo-dark.png"],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -6,6 +6,8 @@ import Image from "next/image";
 import { Category } from "@/types/category";
 import { useRouter } from "next/navigation";
 
+const withBasePath = (assetPath: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${assetPath}`;
+
 interface CategoriesListClientProps {
   categories: Category[];
 }
@@ -42,7 +44,7 @@ export default function CategoriesListClient({ categories }: CategoriesListClien
             >
               {category.image ? (
                 <Image
-                  src={category.image}
+                  src={withBasePath(category.image)}
                   alt={category.name}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"

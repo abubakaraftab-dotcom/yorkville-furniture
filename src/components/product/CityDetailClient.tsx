@@ -4,14 +4,11 @@ import { useState, useRef, useEffect, useMemo } from "react";
 import { useProvince } from "@/context/ProvinceContext";
 import type { Province, City } from "@/types/province";
 import type { Product } from "@/types/product";
-import type { Category } from "@/types/category";
 import ProductGrid from "@/components/product/ProductGrid";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
 import { getCategoriesByProvince } from "@/lib/categories";
 
-// First 10 Ontario priority cities must always lead the "Shop by cities" list.
 const PRIORITY_CITIES = [
   "Toronto",
   "Ottawa",
@@ -25,15 +22,14 @@ const PRIORITY_CITIES = [
   "Windsor",
 ];
 
-interface ProvinceDetailClientProps {
+interface CityDetailClientProps {
   province: Province;
+  city: City;
   products: Product[];
 }
 
-export default function ProvinceDetailClient({ province, products }: ProvinceDetailClientProps) {
+export default function CityDetailClient({ province, city, products }: CityDetailClientProps) {
   const { selectedProvince, selectedCity, changeProvince, selectCity, clearCity, isLoading } = useProvince();
-  const router = useRouter();
-  const pathname = usePathname();
 
   const [citiesOpen, setCitiesOpen] = useState(false);
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
@@ -41,34 +37,23 @@ export default function ProvinceDetailClient({ province, products }: ProvinceDet
   const leaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Synchronise the global location with the province being viewed.
+  // Sync global location with this city page: province first, then city.
   useEffect(() => {
     if (isLoading) return;
     if (selectedProvince?.code !== province.code) {
       changeProvince(province.code);
     }
-  }, [province.code, isLoading, selectedProvince, changeProvince]);
-
-  // Spec rule: a city URL must set its parent province as the location
-  // context so that prices, availability and search scope follow it.
-  const currentCitySlug = useMemo(() => {
-    const parts = pathname.split("/").filter(Boolean);
-    return parts.length >= 3 ? parts[2] : null;
-  }, [pathname]);
-
-  useEffect(() => {
-    if (!currentCitySlug) {
-      clearCity();
-      return;
-    }
-    const city = province.cities.find((c) => c.slug === currentCitySlug);
-    if (city && selectedCity !== city.name) {
+    if (selectedCity !== city.name) {
       selectCity(city.name);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentCitySlug]);
+  }, [isLoading, province.code, city.name]);
 
-  // Local products scoped to this province's catalogue (search support).
+  useEffect(() => () => {
+    if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
+    if (leaveTimerRef.current) clearTimeout(leaveTimerRef.current);
+  }, []);
+
   const filteredProducts = useMemo(() => {
     const query = searchTerm.trim().toLowerCase();
     if (!query) return products;
@@ -80,12 +65,8 @@ export default function ProvinceDetailClient({ province, products }: ProvinceDet
     });
   }, [products, searchTerm]);
 
-  const priorityCities = province.cities.filter((city) =>
-    PRIORITY_CITIES.includes(city.name)
-  );
-  const otherCities = province.cities.filter(
-    (city) => !PRIORITY_CITIES.includes(city.name)
-  );
+  const priorityCities = province.cities.filter((c) => PRIORITY_CITIES.includes(c.name));
+  const otherCities = province.cities.filter((c) => !PRIORITY_CITIES.includes(c.name));
   const availableCategories = getCategoriesByProvince(province.code);
 
   const startCategoryHover = (slug: string) => {
@@ -97,15 +78,6 @@ export default function ProvinceDetailClient({ province, products }: ProvinceDet
     if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
     leaveTimerRef.current = setTimeout(() => setHoveredCategory(null), 300);
   };
-  useEffect(
-    () => () => {
-      if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
-      if (leaveTimerRef.current) clearTimeout(leaveTimerRef.current);
-    },
-    []
-  );
-
-  const isProvinceActive = selectedProvince?.code === province.code;
 
   return (
     <div className="bg-[#FAFAF9]">
@@ -113,35 +85,27 @@ export default function ProvinceDetailClient({ province, products }: ProvinceDet
         <Breadcrumbs
           items={[
             { label: "Shop by province", href: "/provinces" },
-            { label: province.name },
+            { label: province.name, href: `/provinces/${province.slug}` },
+            { label: city.name },
           ]}
         />
 
         {/* Region banner — pale blue-grey, per spec */}
         <div className="bg-[#E9F0F2] border border-[#DCE6EA] rounded-2xl px-6 py-6 sm:px-8 sm:py-8 mb-8">
           <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/70">
-            📍 Shop by province
+            📍 Furniture available in
           </p>
           <h1 className="text-2xl sm:text-3xl font-bold font-serif text-foreground mt-1">
-            Furniture available in {province.name}
+            {city.name}, {province.name}
           </h1>
           <p className="text-sm text-muted mt-2 max-w-2xl leading-relaxed">
-            Browse everything stocked for {province.name}. Prices, delivery options
-            and availability below reflect this province only.
-            {isProvinceActive && " Your location is set to this province."}
+            Everything below is stocked and delivered to {city.name}, {province.name}.
+            Your location is set to this city — prices and availability reflect it.
           </p>
-          {!isProvinceActive && (
-            <button
-              onClick={() => { changeProvince(province.code); clearCity(); }}
-              className="mt-4 inline-flex items-center gap-1.5 bg-primary hover:bg-primary/90 text-white font-semibold px-4 py-2.5 rounded-lg transition-colors cursor-pointer text-sm"
-            >
-              Set {province.name} as my delivery province
-            </button>
-          )}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Left sidebar: Shop by cities + Categories */}
+          {/* Left sidebar */}
           <aside className="lg:col-span-1 space-y-5">
             {/* Shop by cities panel */}
             <div className="bg-[#F0F5F6] border border-[#E3ECF0] rounded-xl p-5">
@@ -149,17 +113,17 @@ export default function ProvinceDetailClient({ province, products }: ProvinceDet
                 Shop by cities
               </h2>
               <ul className="space-y-0.5">
-                {priorityCities.map((city) => (
-                  <li key={city.slug}>
+                {priorityCities.map((c) => (
+                  <li key={c.slug}>
                     <Link
-                      href={`/provinces/${province.slug}/${city.slug}`}
+                      href={`/provinces/${province.slug}/${c.slug}`}
                       className={`flex items-center gap-2 py-1.5 px-2 rounded-lg text-[13px] transition-colors ${
-                        currentCitySlug === city.slug
+                        c.slug === city.slug
                           ? "font-semibold text-primary bg-white"
                           : "text-foreground/80 hover:bg-white/70 hover:text-primary"
                       }`}
                     >
-                      🏡 {city.name}
+                      🏡 {c.name}
                     </Link>
                   </li>
                 ))}
@@ -184,17 +148,17 @@ export default function ProvinceDetailClient({ province, products }: ProvinceDet
                   </button>
                   {citiesOpen && (
                     <ul className="mt-1 max-h-64 overflow-y-auto rounded-lg bg-white/60 divide-y divide-border/60">
-                      {otherCities.map((city) => (
-                        <li key={city.slug}>
+                      {otherCities.map((c) => (
+                        <li key={c.slug}>
                           <Link
-                            href={`/provinces/${province.slug}/${city.slug}`}
+                            href={`/provinces/${province.slug}/${c.slug}`}
                             className={`flex items-center gap-2 py-1.5 px-2 text-[13px] transition-colors ${
-                              currentCitySlug === city.slug
+                              c.slug === city.slug
                                 ? "font-semibold text-primary"
                                 : "text-foreground/80 hover:text-primary"
                             }`}
                           >
-                            🏡 {city.name}
+                            🏡 {c.name}
                           </Link>
                         </li>
                       ))}
@@ -204,7 +168,7 @@ export default function ProvinceDetailClient({ province, products }: ProvinceDet
               )}
             </div>
 
-            {/* Categories panel — only categories with local products */}
+            {/* Categories panel */}
             <div className="bg-[#F4EFE6] border border-[#E9E2D4] rounded-xl p-5">
               <h2 className="text-[11px] font-bold uppercase tracking-[0.16em] text-primary mb-3">
                 Categories
@@ -263,19 +227,15 @@ export default function ProvinceDetailClient({ province, products }: ProvinceDet
           <div className="lg:col-span-3">
             <div className="bg-white border border-border rounded-2xl p-5 sm:p-6">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-                <div>
-                  <h2 className="text-xl font-bold font-serif text-foreground">
-                    {currentCitySlug
-                      ? `Furniture available in ${province.cities.find((c) => c.slug === currentCitySlug)?.name}, ${province.name}`
-                      : `Available furniture in ${province.name}`}
-                  </h2>
-                </div>
+                <h2 className="text-xl font-bold font-serif text-foreground">
+                  Available items in {city.name}
+                </h2>
                 <span className="shrink-0 rounded-full border border-border bg-[#FAFAF9] px-3 py-1.5 text-xs font-semibold text-primary">
                   {filteredProducts.length} pieces available
                 </span>
               </div>
 
-              {/* Compact search — scoped to this province's catalogue */}
+              {/* Compact search scoped to the city catalogue */}
               <div className="mt-4 relative">
                 <svg
                   viewBox="0 0 24 24"
@@ -294,20 +254,16 @@ export default function ProvinceDetailClient({ province, products }: ProvinceDet
                   type="search"
                   value={searchTerm}
                   onChange={(event) => setSearchTerm(event.target.value)}
-                  placeholder={`Search furniture in ${province.name}…`}
+                  placeholder={`Search furniture in ${city.name}…`}
                   className="w-full rounded-lg border border-border bg-[#FAFAF9] py-2 pl-9 pr-3 text-[13px] text-foreground placeholder:text-muted focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
-                  aria-label={`Search furniture in ${province.name}`}
+                  aria-label={`Search furniture in ${city.name}`}
                 />
               </div>
 
               <div className="mt-5">
                 <ProductGrid
                   products={filteredProducts}
-                  emptyMessage={
-                    searchTerm.trim()
-                      ? `No results for “${searchTerm.trim()}” in ${province.name}.`
-                      : `We currently have no items available locally for ${province.name}.`
-                  }
+                  emptyMessage={`No items currently available in ${city.name}.`}
                 />
               </div>
             </div>

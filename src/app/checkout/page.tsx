@@ -397,6 +397,9 @@ export default function CheckoutPage() {
                     return <option key={province.code} value={province.code} disabled={!available}>{province.name}{available ? "" : " — not available for this order"}</option>;
                   })}
                 </select>
+                {cartProducts.some((product) => product && !getProductLocation(product, formData.province).available) && (
+                  <p className="mt-1.5 text-xs text-muted">Greyed-out provinces are not available for one or more items in this order. Message us on WhatsApp and we will check future availability.</p>
+                )}
               </div>
               <div>
                 <label className="block text-sm font-semibold mb-1 text-foreground">
@@ -444,7 +447,7 @@ export default function CheckoutPage() {
                   className="flex gap-3 text-sm pb-4 border-b border-border last:border-0 last:pb-0"
                 >
                   <div className="relative w-12 h-12 bg-muted-light rounded overflow-hidden shrink-0 border border-border">
-                    <img src={item.image || "/images/placeholders/furniture-placeholder.jpg"} alt={item.title} className="w-full h-full object-cover" />
+                    <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${item.image || "/images/placeholders/furniture-placeholder.jpg"}`} alt={item.title} className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1">
                     <h4 className="font-semibold text-foreground line-clamp-1">{item.title}</h4>
