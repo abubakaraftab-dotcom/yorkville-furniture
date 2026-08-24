@@ -1,9 +1,16 @@
 "use client";
 
+// We keep the keys for backward compatibility/session, but catalog and media 
+// will move to IndexedDB to avoid QuotaExceededError.
 export const CATALOG_STORAGE_KEY = "yorkville_local_catalog_v2";
 export const MEDIA_STORAGE_KEY = "yorkville_local_media_v1";
 export const ADMIN_SESSION_KEY = "yorkville_admin_session";
 export const SUPPORTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
+
+const DB_NAME = "YorkvilleDashboardDB";
+const DB_VERSION = 1;
+const STORE_CATALOG = "catalog";
+const STORE_MEDIA = "media";
 
 export type LocalCatalogState = {
   records: Record<string, Record<string, unknown>>;
@@ -26,22 +33,103 @@ export type LocalMediaRecord = {
   updatedAt: string;
 };
 
-const emptyState = (): LocalCatalogState => ({ records: {}, deletedIds: [], pendingIds: [], recentExportedIds: [], lastExportedAt: null });
+const emptyState = (): LocalCatalogState => ({ 
+  records: {}, 
+  deletedIds: [], 
+  pendingIds: [], 
+  recentExportedIds: [], 
+  lastExportedAt: null 
+});
+
+// IndexedDB Helper
+function openDB(): Promise<IDBDatabase> {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(DB_NAME, DB_VERSION);
+    request.onupgradeneeded = () => {
+      const db = request.result;
+      if (!db.objectStoreNames.contains(STORE_CATALOG)) db.createObjectStore(STORE_CATALOG);
+      if (!db.objectStoreNames.contains(STORE_MEDIA)) db.createObjectStore(STORE_MEDIA);
+    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function getFromDB<T>(storeName: string, key: string): Promise<T | null> {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(storeName, "readonly");
+    const store = transaction.objectStore(storeName);
+    const request = store.get(key);
+    request.onsuccess = () => resolve(request.result || null);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function setToDB<T>(storeName: string, key: string, value: T): Promise<void> {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(storeName, "readwrite");
+    const store = transaction.objectStore(storeName);
+    const request = store.put(value, key);
+    request.onsuccess = () => resolve();
+    request.onerror = () => reject(request.error);
+  });
+}
+
+// Global in-memory cache to support synchronous reads where necessary, 
+// though we'll move to async patterns.
+let cachedCatalog: LocalCatalogState | null = null;
+let cachedMedia: LocalMediaRecord[] | null = null;
+
+export async function initLocalCatalog(): Promise<void> {
+  if (typeof window === "undefined") return;
+  
+  // 1. Try to load from IndexedDB
+  const dbState = await getFromDB<LocalCatalogState>(STORE_CATALOG, "current");
+  if (dbState) {
+    cachedCatalog = dbState;
+  } else {
+    // 2. Migration: If DB is empty, check localStorage
+    try {
+      const raw = JSON.parse(window.localStorage.getItem(CATALOG_STORAGE_KEY) || "null");
+      if (raw) {
+        cachedCatalog = {
+          records: raw.records || {},
+          deletedIds: raw.deletedIds || [],
+          pendingIds: raw.pendingIds || [],
+          recentExportedIds: raw.recentExportedIds || [],
+          lastExportedAt: raw.lastExportedAt || null,
+        };
+        // Save to DB and clear localStorage to prevent future quota issues
+        await setToDB(STORE_CATALOG, "current", cachedCatalog);
+        window.localStorage.removeItem(CATALOG_STORAGE_KEY);
+      }
+    } catch (e) {
+      console.error("Migration failed", e);
+    }
+  }
+
+  // Same for Media
+  const dbMedia = await getFromDB<LocalMediaRecord[]>(STORE_MEDIA, "current");
+  if (dbMedia) {
+    cachedMedia = dbMedia;
+  } else {
+    try {
+      const raw = JSON.parse(window.localStorage.getItem(MEDIA_STORAGE_KEY) || "null");
+      if (raw) {
+        cachedMedia = raw;
+        await setToDB(STORE_MEDIA, "current", cachedMedia);
+        window.localStorage.removeItem(MEDIA_STORAGE_KEY);
+      }
+    } catch (e) {
+      console.error("Media migration failed", e);
+    }
+  }
+}
 
 export function readCatalogState(): LocalCatalogState {
-  if (typeof window === "undefined") return emptyState();
-  try {
-    const raw = JSON.parse(window.localStorage.getItem(CATALOG_STORAGE_KEY) || "{}");
-    return {
-      records: raw.records || {},
-      deletedIds: raw.deletedIds || [],
-      pendingIds: raw.pendingIds || [],
-      recentExportedIds: raw.recentExportedIds || [],
-      lastExportedAt: raw.lastExportedAt || null,
-    };
-  } catch {
-    return emptyState();
-  }
+  return cachedCatalog || emptyState();
 }
 
 export function readCatalogChanges(): LocalCatalogChanges {
@@ -49,14 +137,17 @@ export function readCatalogChanges(): LocalCatalogChanges {
   return { records: state.records, deletedIds: state.deletedIds };
 }
 
-export function writeCatalogState(state: LocalCatalogState) {
-  window.localStorage.setItem(CATALOG_STORAGE_KEY, JSON.stringify(state));
-  window.dispatchEvent(new Event("yorkville-catalog-changed"));
+export async function writeCatalogState(state: LocalCatalogState) {
+  cachedCatalog = state;
+  if (typeof window !== "undefined") {
+    await setToDB(STORE_CATALOG, "current", state);
+    window.dispatchEvent(new Event("yorkville-catalog-changed"));
+  }
 }
 
-export function writeCatalogChanges(changes: LocalCatalogChanges) {
+export async function writeCatalogChanges(changes: LocalCatalogChanges) {
   const current = readCatalogState();
-  writeCatalogState({ ...current, ...changes });
+  await writeCatalogState({ ...current, ...changes });
 }
 
 export function mergeCatalogChanges<T extends { id: string | number }>(baseProducts: T[]): T[] {
@@ -77,51 +168,53 @@ export function nextDashboardId(baseIds: Array<string | number>, localIds: Array
   return Math.max(0, ...allIds) + 1;
 }
 
-export function saveProductRecord(product: Record<string, unknown>) {
+export async function saveProductRecord(product: Record<string, unknown>) {
   const state = readCatalogState();
   const id = String(product.id);
   state.records[id] = { ...product, updatedAt: new Date().toISOString() };
   state.deletedIds = state.deletedIds.filter((deletedId) => deletedId !== id);
   state.pendingIds = Array.from(new Set([...state.pendingIds, id]));
-  writeCatalogState(state);
+  await writeCatalogState(state);
 }
 
-export function removeProductRecord(id: string | number) {
+export async function removeProductRecord(id: string | number) {
   const state = readCatalogState();
   const key = String(id);
   state.deletedIds = Array.from(new Set([...state.deletedIds, key]));
   delete state.records[key];
   state.pendingIds = Array.from(new Set([...state.pendingIds, key]));
-  writeCatalogState(state);
+  await writeCatalogState(state);
 }
 
-export function restoreProductRecord(id: string | number) {
+export async function restoreProductRecord(id: string | number) {
   const state = readCatalogState();
   const key = String(id);
   state.deletedIds = state.deletedIds.filter((deletedId) => deletedId !== key);
   state.pendingIds = Array.from(new Set([...state.pendingIds, key]));
-  writeCatalogState(state);
+  await writeCatalogState(state);
 }
 
-export function markCatalogExported() {
+export async function markCatalogExported() {
   const state = readCatalogState();
   const exportedIds = [...state.pendingIds].reverse();
   state.recentExportedIds = Array.from(new Set([...exportedIds, ...state.recentExportedIds])).slice(0, 5);
   state.pendingIds = [];
   state.lastExportedAt = new Date().toISOString();
-  writeCatalogState(state);
+  await writeCatalogState(state);
 }
 
 export function readMediaRecords(): LocalMediaRecord[] {
-  if (typeof window === "undefined") return [];
-  try { return JSON.parse(window.localStorage.getItem(MEDIA_STORAGE_KEY) || "[]"); } catch { return []; }
+  return cachedMedia || [];
 }
 
-export function saveMediaRecord(record: LocalMediaRecord) {
+export async function saveMediaRecord(record: LocalMediaRecord) {
   const records = readMediaRecords().filter((item) => item.id !== record.id);
   records.push(record);
-  window.localStorage.setItem(MEDIA_STORAGE_KEY, JSON.stringify(records));
-  window.dispatchEvent(new Event("yorkville-media-changed"));
+  cachedMedia = records;
+  if (typeof window !== "undefined") {
+    await setToDB(STORE_MEDIA, "current", records);
+    window.dispatchEvent(new Event("yorkville-media-changed"));
+  }
 }
 
 export function normalizeImageFile(file: File, maxEdge = 1600, quality = 0.88): Promise<{ dataUrl: string; mimeType: string; width: number; height: number; name: string }> {
@@ -146,13 +239,18 @@ export function normalizeImageFile(file: File, maxEdge = 1600, quality = 0.88): 
   });
 }
 
-export function importCatalogPackage(payload: { records?: Record<string, Record<string, unknown>>; deletedIds?: string[] }) {
+export async function importCatalogPackage(payload: { records?: Record<string, Record<string, unknown>>; deletedIds?: string[] }) {
   const current = readCatalogState();
   const incomingRecords = payload.records || {};
   const incomingDeleted = payload.deletedIds || [];
   const records = { ...current.records, ...incomingRecords };
   incomingDeleted.forEach((id) => delete records[String(id)]);
-  writeCatalogState({ ...current, records, deletedIds: Array.from(new Set([...current.deletedIds, ...incomingDeleted.map(String)])), pendingIds: Array.from(new Set([...current.pendingIds, ...Object.keys(incomingRecords), ...incomingDeleted.map(String)])) });
+  await writeCatalogState({ 
+    ...current, 
+    records, 
+    deletedIds: Array.from(new Set([...current.deletedIds, ...incomingDeleted.map(String)])), 
+    pendingIds: Array.from(new Set([...current.pendingIds, ...Object.keys(incomingRecords), ...incomingDeleted.map(String)])) 
+  });
 }
 
 export function downloadTextFile(filename: string, content: string, type = "application/json") {

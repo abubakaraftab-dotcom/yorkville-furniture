@@ -27,6 +27,14 @@ if errorlevel 1 (
 for /f "tokens=*" %%V in ('node -v') do echo Using Node.js: %%V
 node -v >> "%LOG%" 2>&1
 
+if exist "%ROOT%node_modules" (
+  echo.
+  echo Fast Start: node_modules found. Skipping update and install.
+  echo (To update, delete the node_modules folder and run this again.)
+  echo.
+  goto :stage6
+)
+
 rem ---------- Stage 1: download the latest code ----------
 if not exist "%WORK%" mkdir "%WORK%"
 
@@ -106,6 +114,7 @@ if errorlevel 1 (
   goto :cleanup
 )
 
+:stage6
 rem ---------- Stage 6: start the dashboard ----------
 echo.
 echo Starting the dashboard. Keep this window open.
